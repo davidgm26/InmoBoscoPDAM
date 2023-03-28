@@ -23,4 +23,9 @@ public class CreditCard {
 
     private Date validDate;
 
+
+    @OneToOne
+    @JoinColumn(name = "FK_OWNER", updatable = false, nullable = false)
+    private Owner creditCardOwner;
+
 }

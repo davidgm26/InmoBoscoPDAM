@@ -1,23 +1,31 @@
 package com.salesianostriana.pdam.inmoboscoapi.models;
 
-import lombok.Builder;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Collection;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.UUID;
+import javax.persistence.*;
+import java.util.*;
 import java.util.stream.Collectors;
 
+@MappedSuperclass
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator",
+            parameters = {
+                    @Parameter(
+                            name = "uuid_gen_strategy_class",
+                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
+                    )
+            }
+    )
     private UUID id;
 
     private EnumSet<UserRole> rol;
@@ -30,6 +38,7 @@ public class User implements UserDetails {
     private Date birthdate;
     private String phone;
     private String mail;
+
 
     @Builder.Default
     private boolean accountNonExpired = true;

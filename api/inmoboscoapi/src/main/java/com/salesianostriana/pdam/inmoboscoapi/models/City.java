@@ -2,10 +2,9 @@ package com.salesianostriana.pdam.inmoboscoapi.models;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -18,4 +17,12 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    private String name;
+
+    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Property> dwellings = new ArrayList<>();
+
+
 }
