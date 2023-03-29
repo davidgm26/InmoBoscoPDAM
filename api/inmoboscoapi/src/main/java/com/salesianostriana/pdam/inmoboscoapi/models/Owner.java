@@ -1,16 +1,16 @@
 package com.salesianostriana.pdam.inmoboscoapi.models;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
-@Builder
+//@DiscriminatorValue("O")
+@SuperBuilder
 public class Owner extends User{
 
     @ManyToMany

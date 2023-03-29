@@ -24,5 +24,9 @@ public class City {
     @Builder.Default
     private List<Property> dwellings = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "province_id")
+    private Province province;
+
 
 }
