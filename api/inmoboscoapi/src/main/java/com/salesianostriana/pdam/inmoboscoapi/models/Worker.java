@@ -1,11 +1,9 @@
 package com.salesianostriana.pdam.inmoboscoapi.models;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
@@ -13,7 +11,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 //@DiscriminatorValue("W")
 @SuperBuilder
-public class Workers extends User{
+public class Worker extends User{
 
     private String workerID;
 

@@ -31,7 +31,8 @@ public class Property {
     private int totalBaths;
     private int totalVisits;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "type_id",foreignKey = @ForeignKey(name = "PROPERTY_TYPE") )
     private Type propertyType;
 
     @ManyToOne

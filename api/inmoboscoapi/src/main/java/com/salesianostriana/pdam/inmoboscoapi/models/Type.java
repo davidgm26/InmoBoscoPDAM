@@ -1,9 +1,25 @@
 package com.salesianostriana.pdam.inmoboscoapi.models;
 
+import lombok.*;
 
-public enum Type {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-    CASA,PISO,CHALET;
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
+public class Type {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String type;
 
 
 
