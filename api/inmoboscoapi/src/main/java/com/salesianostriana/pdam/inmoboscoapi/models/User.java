@@ -4,11 +4,14 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,7 +21,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @SuperBuilder
-public class User {
+@EntityListeners(AuditingEntityListener.class)
+public class User implements UserDetails{
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -32,11 +36,16 @@ public class User {
                     )
             }
     )
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     private EnumSet<UserRole> rol;
+
+
     private String name;
+
     private String surname;
+
     private String username;
     private String password;
     private String dni;
@@ -44,17 +53,58 @@ public class User {
     private Date birthdate;
     private String phone;
     private String mail;
-/*
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @Builder.Default
+    private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
+
     @Builder.Default
     private boolean accountNonExpired = true;
-
     @Builder.Default
     private boolean accountNonLocked = true;
-
     @Builder.Default
     private boolean credentialsNonExpired = true;
-
     @Builder.Default
     private boolean enabled = true;
-*/
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return rol.stream()
+                .map(role -> "ROLE " + role)
+                .map(SimpleGrantedAuthority::new)
+                //.toList();
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 }
