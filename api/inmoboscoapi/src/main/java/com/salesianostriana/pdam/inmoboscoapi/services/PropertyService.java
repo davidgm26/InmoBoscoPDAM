@@ -40,4 +40,9 @@ public class PropertyService {
         Optional<Property> P = findById(id);
         propertyRepository.deleteById(id);
     }
+
+
+
+
+
 }
