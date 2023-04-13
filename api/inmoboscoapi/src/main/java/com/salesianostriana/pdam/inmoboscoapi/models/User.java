@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,20 +40,20 @@ public class User implements UserDetails{
     @Column(columnDefinition = "uuid")
     private UUID id;
 
-    private EnumSet<UserRole> rol;
+    private Set<UserRole> rol;
 
 
-    private String name;
+    private String firstname;
 
-    private String surname;
+    private String lastname;
 
     private String username;
     private String password;
     private String dni;
     private String avatar;
-    private Date birthdate;
+    private LocalDate birthdate;
     private String phone;
-    private String mail;
+    private String email;
 
     @CreatedDate
     private LocalDateTime createdAt;
