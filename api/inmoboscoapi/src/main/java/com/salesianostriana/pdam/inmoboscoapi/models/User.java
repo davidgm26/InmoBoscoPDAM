@@ -41,6 +41,8 @@ public class User implements UserDetails{
     @Column(columnDefinition = "uuid")
     private UUID id;
 
+    //@Convert(converter = EnumSetUserRoleConverter.class)
+    //AttributeConverter
     private EnumSet<UserRole> rol;
 
 
@@ -53,7 +55,7 @@ public class User implements UserDetails{
     private String dni;
     private String avatar;
     private LocalDate birthdate;
-    private String phone;
+    private String phoneNumber;
     private String email;
 
     @CreatedDate
