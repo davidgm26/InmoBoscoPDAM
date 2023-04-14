@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 
 @Entity
+@Table(name = "USER_ENTITY")
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
@@ -40,7 +41,7 @@ public class User implements UserDetails{
     @Column(columnDefinition = "uuid")
     private UUID id;
 
-    private Set<UserRole> rol;
+    private EnumSet<UserRole> rol;
 
 
     private String firstname;

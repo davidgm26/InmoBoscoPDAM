@@ -1,10 +1,10 @@
 package com.salesianostriana.pdam.inmoboscoapi.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+@NoArgsConstructor @AllArgsConstructor
 @Data
 public class CreateUserRequest {
 
