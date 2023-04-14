@@ -26,8 +26,10 @@ public class CreateUserRequest {
 
     private String avatar;
 
-    private LocalDate birthdate;
+    private String birthdate;
 
     private String email;
+
+
 
 }
