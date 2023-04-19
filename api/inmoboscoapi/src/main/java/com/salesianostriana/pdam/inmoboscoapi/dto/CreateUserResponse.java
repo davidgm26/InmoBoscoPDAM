@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.EnumSet;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Data
@@ -15,19 +16,21 @@ import java.util.stream.Collectors;
 @SuperBuilder
 public class CreateUserResponse {
 
-    private String firstname;
+    protected String firstname;
 
-    private String lastname;
+    protected String lastname;
 
-    private String password;
+    protected String password;
 
-    private String username;
+    protected String username;
 
-    private String avatar;
+    protected String avatar;
 
-    private String email;
+    protected String email;
 
-    private String rol;
+    protected String rol;
+
+    protected UUID id;
 
     public static CreateUserResponse createUserResponseFromUser(User u){
         return CreateUserResponse.builder()

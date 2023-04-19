@@ -1,5 +1,6 @@
 package com.salesianostriana.pdam.inmoboscoapi.models;
 
+import com.salesianostriana.pdam.inmoboscoapi.others.RoleConverterAttribute;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
@@ -39,39 +40,39 @@ public class User implements UserDetails{
             }
     )
     @Column(columnDefinition = "uuid")
-    private UUID id;
+    protected UUID id;
 
-    //@Convert(converter = EnumSetUserRoleConverter.class)
-    //AttributeConverter
-    private EnumSet<UserRole> rol;
+    @Convert(converter = RoleConverterAttribute.class)
+
+    protected EnumSet<UserRole> rol;
 
 
-    private String firstname;
+    protected String firstname;
 
-    private String lastname;
+    protected String lastname;
 
-    private String username;
-    private String password;
-    private String dni;
-    private String avatar;
-    private LocalDate birthdate;
-    private String phoneNumber;
-    private String email;
+    protected String username;
+    protected String password;
+    protected String dni;
+    protected String avatar;
+    protected LocalDate birthdate;
+    protected String phoneNumber;
+    protected String email;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    protected LocalDateTime createdAt;
 
     @Builder.Default
-    private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
+    protected LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
 
     @Builder.Default
-    private boolean accountNonExpired = true;
+    protected boolean accountNonExpired = true;
     @Builder.Default
-    private boolean accountNonLocked = true;
+    protected boolean accountNonLocked = true;
     @Builder.Default
-    private boolean credentialsNonExpired = true;
+    protected boolean credentialsNonExpired = true;
     @Builder.Default
-    private boolean enabled = true;
+    protected boolean enabled = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

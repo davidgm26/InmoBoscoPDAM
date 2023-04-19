@@ -35,7 +35,9 @@ public class UserService {
                 .birthdate(LocalDate.parse(createUserRequest.getBirthdate()))
                 .rol(roles)
                 .build();
-        return userRepository.save(user);
+         userRepository.save(user);
+
+         return user;
     }
 
     public User createUserWithWorkerRole(CreateUserRequest createUserRequest){
@@ -55,9 +57,9 @@ public class UserService {
         return data.stream().map(CreateUserResponse::createUserResponseFromUser).collect(Collectors.toList());
     }
 
-    public CreateUserResponse findUserById(UUID id) {
+    public Optional<User> findUserById(UUID id) {
         /*TODO: ESTE METODO HAY QUE MODIFICARLO CUANDO NOS PONGAMOS CON LA GESTION DE ERRORES*/
-        return userRepository.findById(id).map(CreateUserResponse::createUserResponseFromUser).orElseThrow();
+        return userRepository.findById(id);
     }
 
     public Optional<User> findUserByUsername(String username) {

@@ -30,6 +30,4 @@ public class CreateUserRequest {
 
     private String email;
 
-
-
 }
