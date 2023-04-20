@@ -14,12 +14,13 @@ public class JwtUserResponse extends CreateUserResponse{
     private String token;
 
     public JwtUserResponse (CreateUserResponse createUserResponse){
-        id=createUserResponse.getId();
+        id =createUserResponse.getId();
         username = createUserResponse.getUsername();
         firstname = createUserResponse.getFirstname();
         lastname = createUserResponse.getLastname();
         avatar = createUserResponse.getAvatar();
         email = createUserResponse.getEmail();
+        rol = createUserResponse.getRol();
     }
 
     public static JwtUserResponse of (User user , String token){

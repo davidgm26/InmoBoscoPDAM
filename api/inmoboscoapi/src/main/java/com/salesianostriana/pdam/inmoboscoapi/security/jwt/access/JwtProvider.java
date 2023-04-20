@@ -1,9 +1,11 @@
-package com.salesianostriana.pdam.inmoboscoapi.security.jwt;
+package com.salesianostriana.pdam.inmoboscoapi.security.jwt.access;
+
+
 
 import com.salesianostriana.pdam.inmoboscoapi.models.User;
+import com.salesianostriana.pdam.inmoboscoapi.security.errorhandling.JwtTokenException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -28,7 +30,7 @@ public class JwtProvider {
     private String jwtSecret;
 
     @Value("${jwt.duration}")
-    private int jwtLifeInDays;
+    private int jwtLifeInMinutes;
 
     private JwtParser jwtParser;
 
@@ -44,20 +46,28 @@ public class JwtProvider {
                 .build();
     }
 
+
     public String generateToken(Authentication authentication) {
 
-        User user = (User) authentication.getPrincipal();
+        User user = (User)authentication.getPrincipal();
 
+        return generateToken(user);
+
+    }
+
+    public String generateToken(User user) {
         Date tokenExpirationDateTime =
-                Date.from(LocalDateTime
-                        .now()
-                        .plusDays(jwtLifeInDays)
-                        .atZone(ZoneId.systemDefault())
-                        .toInstant());
-
+                Date.from(
+                        LocalDateTime
+                                .now()
+                                //.plusMinutes(jwtLifeInMinutes)
+                                .plusDays(jwtLifeInMinutes)
+                                .atZone(ZoneId.systemDefault())
+                                .toInstant()
+                );
 
         return Jwts.builder()
-                .setHeaderParam("typ",TOKEN_TYPE)
+                .setHeaderParam("typ", TOKEN_TYPE)
                 .setSubject(user.getId().toString())
                 .setIssuedAt(new Date())
                 .setExpiration(tokenExpirationDateTime)
@@ -66,29 +76,26 @@ public class JwtProvider {
 
     }
 
-    public boolean validateToken(String token){
-        try{
-            jwtParser.parseClaimsJwt(token);
+
+    public UUID getUserIdFromJwtToken(String token) {
+        return UUID.fromString(
+                jwtParser.parseClaimsJws(token).getBody().getSubject()
+        );
+    }
+
+
+    public boolean validateToken(String token) {
+
+        try {
+            jwtParser.parseClaimsJws(token);
             return true;
-        }catch (SignatureException | MalformedJwtException | ExpiredJwtException
-                | UnsupportedJwtException | IllegalArgumentException ex){
-            log.info("Error con el token" + ex.getMessage());
-
+        } catch (SignatureException | MalformedJwtException | ExpiredJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
+            log.info("Error con el token: " + ex.getMessage());
+            throw new JwtTokenException(ex.getMessage());
         }
+        //return false;
 
-        return false;
     }
-
-
-    public UUID getUserIdFromJwtToken(String token){
-        return UUID.fromString(jwtParser.parseClaimsJwt(token).getBody().getSubject());
-    }
-
-
-
-
-
-
 
 
 

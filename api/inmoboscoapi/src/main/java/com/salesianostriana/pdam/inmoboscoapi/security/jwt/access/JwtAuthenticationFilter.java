@@ -1,15 +1,20 @@
-package com.salesianostriana.pdam.inmoboscoapi.security.jwt;
+package com.salesianostriana.pdam.inmoboscoapi.security.jwt.access;
+
 
 import com.salesianostriana.pdam.inmoboscoapi.models.User;
+import com.salesianostriana.pdam.inmoboscoapi.security.errorhandling.JwtTokenException;
 import com.salesianostriana.pdam.inmoboscoapi.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -27,6 +32,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserService userService;
     private final JwtProvider jwtProvider;
 
+    @Autowired
+    @Qualifier("handlerExceptionResolver")
+    private HandlerExceptionResolver resolver;
+
+
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
@@ -34,7 +45,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
-
                 UUID userId = jwtProvider.getUserIdFromJwtToken(token);
 
                 Optional<User> result = userService.findUserById(userId);
@@ -43,18 +53,28 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     User user = result.get();
 
                     UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(user,
+                            new UsernamePasswordAuthenticationToken(
+                                    user,
                                     null,
-                                    user.getAuthorities());
+                                    user.getAuthorities()
+                            );
 
                     authentication.setDetails(new WebAuthenticationDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
+
             }
-        } catch (Exception ex){
-            log.info(("Authentication error using token JWT:" + ex.getMessage()));
+
+            filterChain.doFilter(request, response);
+
+        } catch (JwtTokenException ex) {
+            log.info("Authentication error using token JWT: " + ex.getMessage());
+            resolver.resolveException(request, response, null, ex);
         }
+
+
+
     }
 
     private String getJwtTokenFromRequest(HttpServletRequest request) {

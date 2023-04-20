@@ -35,9 +35,9 @@ public class UserService {
                 .birthdate(LocalDate.parse(createUserRequest.getBirthdate()))
                 .rol(roles)
                 .build();
-         userRepository.save(user);
+        return userRepository.save(user);
 
-         return user;
+
     }
 
     public User createUserWithWorkerRole(CreateUserRequest createUserRequest){

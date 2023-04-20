@@ -20,10 +20,7 @@ public class CreateUserResponse {
 
     protected String lastname;
 
-    protected String password;
-
     protected String username;
-
     protected String avatar;
 
     protected String email;
@@ -36,11 +33,11 @@ public class CreateUserResponse {
         return CreateUserResponse.builder()
                 .firstname(u.getFirstname())
                 .lastname(u.getLastname())
-                .password(u.getPassword())
                 .username(u.getUsername())
                 .avatar(u.getAvatar())
                 .email(u.getEmail())
                 .rol(convertRoleToString(u.getRol()))
+                .id(u.getId())
                 .build();
     }
 

@@ -5,7 +5,7 @@ import com.salesianostriana.pdam.inmoboscoapi.dto.CreateUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.dto.JwtUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.dto.LoginRequest;
 import com.salesianostriana.pdam.inmoboscoapi.models.User;
-import com.salesianostriana.pdam.inmoboscoapi.security.jwt.JwtProvider;
+import com.salesianostriana.pdam.inmoboscoapi.security.jwt.access.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,11 +70,14 @@ public class UserController {
                         content = @Content)
         })
         */
+
     @PostMapping("/auth/register")
     public ResponseEntity<CreateUserResponse> createUserwithUserRole(@RequestBody CreateUserRequest createUserRequest) {
 
         User u = userService.createUserWithUserRole(createUserRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                CreateUserResponse.createUserResponseFromUser(u));
     }
 
     @PostMapping("/auth/register/admin")
