@@ -4,10 +4,12 @@ import com.salesianostriana.pdam.inmoboscoapi.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.dto.CreateUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.models.User;
 import com.salesianostriana.pdam.inmoboscoapi.models.UserRole;
+import com.salesianostriana.pdam.inmoboscoapi.others.StorageService;
 import com.salesianostriana.pdam.inmoboscoapi.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -22,7 +24,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles) {
+    private final StorageService storageService;
+
+    public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles, MultipartFile file) {
+
+        String img = storageService.store(file);
+
         User user = User.builder()
                 .firstname(createUserRequest.getFirstname())
                 .lastname(createUserRequest.getLastname())
@@ -30,7 +37,7 @@ public class UserService {
                 .password(passwordEncoder.encode(createUserRequest.getPassword()))
                 .phoneNumber(createUserRequest.getPhoneNumber())
                 .dni(createUserRequest.getDni())
-                .avatar(createUserRequest.getAvatar())
+                .avatar(img)
                 .email(createUserRequest.getEmail())
                 .birthdate(LocalDate.parse(createUserRequest.getBirthdate()))
                 .rol(roles)
@@ -40,15 +47,15 @@ public class UserService {
 
     }
 
-    public User createUserWithWorkerRole(CreateUserRequest createUserRequest){
-        return createUser(createUserRequest, EnumSet.of(UserRole.WORKER));
+    public User createUserWithWorkerRole(CreateUserRequest createUserRequest, MultipartFile file){
+        return createUser(createUserRequest, EnumSet.of(UserRole.WORKER), file);
     }
 
-    public User createUserWithOwnerRole(CreateUserRequest createUserRequest){
-        return createUser(createUserRequest, EnumSet.of(UserRole.OWNER));
+    public User createUserWithOwnerRole(CreateUserRequest createUserRequest, MultipartFile file){
+        return createUser(createUserRequest, EnumSet.of(UserRole.OWNER), file);
     }
-    public User createUserWithUserRole(CreateUserRequest createUserRequest){
-        return createUser(createUserRequest, EnumSet.of(UserRole.USER));
+    public User createUserWithUserRole(CreateUserRequest createUserRequest,  MultipartFile file){
+        return createUser(createUserRequest, EnumSet.of(UserRole.USER),file);
     }
 
     public List<CreateUserResponse> findAllUsers() {

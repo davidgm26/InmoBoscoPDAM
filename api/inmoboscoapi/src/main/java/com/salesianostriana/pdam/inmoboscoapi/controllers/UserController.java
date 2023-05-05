@@ -5,6 +5,7 @@ import com.salesianostriana.pdam.inmoboscoapi.dto.CreateUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.dto.JwtUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.dto.LoginRequest;
 import com.salesianostriana.pdam.inmoboscoapi.models.User;
+import com.salesianostriana.pdam.inmoboscoapi.others.StorageService;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.access.JwtProvider;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshToken;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshTokenException;
@@ -19,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import com.salesianostriana.pdam.inmoboscoapi.services.UserService;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +33,7 @@ public class UserController {
 
     private final RefreshTokenService refreshTokenService;
 
+    private final StorageService storageService;
     /*
         @Operation(summary = "creación de un nuevo usuario")
         @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -78,9 +81,14 @@ public class UserController {
         */
 
     @PostMapping("/auth/register")
-    public ResponseEntity<CreateUserResponse> createUserwithUserRole(@RequestBody CreateUserRequest createUserRequest) {
+    public ResponseEntity<CreateUserResponse> createUserwithUserRole(@RequestPart ("createUserRequest") CreateUserRequest createUserRequest,
+                                                                     @RequestPart ("file") MultipartFile file) {
 
-        User u = userService.createUserWithUserRole(createUserRequest);
+        if(file.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+
+        User u = userService.createUserWithUserRole(createUserRequest,file);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 CreateUserResponse.createUserResponseFromUser(u));
