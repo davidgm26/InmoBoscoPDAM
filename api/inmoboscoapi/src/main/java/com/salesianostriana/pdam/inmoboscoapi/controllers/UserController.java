@@ -6,6 +6,10 @@ import com.salesianostriana.pdam.inmoboscoapi.dto.JwtUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.dto.LoginRequest;
 import com.salesianostriana.pdam.inmoboscoapi.models.User;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.access.JwtProvider;
+import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshToken;
+import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshTokenException;
+import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshTokenRequest;
+import com.salesianostriana.pdam.inmoboscoapi.services.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +28,8 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
 
     private final JwtProvider jwtProvider;
+
+    private final RefreshTokenService refreshTokenService;
 
     /*
         @Operation(summary = "creación de un nuevo usuario")
@@ -79,21 +85,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 CreateUserResponse.createUserResponseFromUser(u));
     }
-
     @PostMapping("/auth/register/admin")
     public ResponseEntity<CreateUserResponse> createUserwithWorkerRole(@RequestBody CreateUserRequest createUserRequest) {
 
         User u = userService.createUserWithWorkerRole(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
     }
-
     @PostMapping("/auth/register/owner")
     public ResponseEntity<CreateUserResponse> createUserwithOwnerRole(@RequestBody CreateUserRequest createUserRequest) {
 
         User u = userService.createUserWithOwnerRole(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
     }
-
     @PostMapping("/auth/login")
     public ResponseEntity<JwtUserResponse> login(@RequestBody LoginRequest loginRequest) {
         Authentication authentication =
@@ -109,10 +112,42 @@ public class UserController {
 
         User user = (User) authentication.getPrincipal();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(JwtUserResponse.of(user,token));
+        refreshTokenService.deleteByUser(user);
+
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(JwtUserResponse.of(user,token,refreshToken.getToken()));
 
     }
 
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+        String refreshToken = refreshTokenRequest.getRefreshToken();
+
+        return refreshTokenService.findByToken(refreshToken)
+                .map(refreshTokenService::verify)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = jwtProvider.generateToken(user);
+                    refreshTokenService.deleteByUser(user);
+                    RefreshToken refreshToken2 = refreshTokenService.createRefreshToken(user);
+                    return ResponseEntity.status(HttpStatus.CREATED)
+                            .body(JwtUserResponse.builder()
+                                    .token(token)
+                                    .refreshToken(refreshToken2.getToken())
+                                    .build());
+                })
+                .orElseThrow(() -> new RefreshTokenException("Refresh token not found"));
+
+    }
+
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout (){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        refreshTokenService.deleteByUser(user);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

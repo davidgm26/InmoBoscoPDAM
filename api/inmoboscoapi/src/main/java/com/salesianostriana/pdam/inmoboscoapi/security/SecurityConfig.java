@@ -21,7 +21,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -41,12 +40,13 @@ public class SecurityConfig {
 
 
         AuthenticationManager authenticationManager =
-            authenticationManagerBuilder.authenticationProvider(authenticationProvider())
-                    .build();
+                authenticationManagerBuilder.authenticationProvider(authenticationProvider())
+                        .build();
 
         return authenticationManager;
 
     }
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -62,22 +62,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-                .cors(Customizer.withDefaults())
+        http.cors(Customizer.withDefaults())
                 .csrf().disable()
-                        .exceptionHandling()
-                                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                                .accessDeniedHandler(jwtAccessDeniedHandler)
-                        .and()
-                                .sessionManagement()
-                                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                        .and()
-                                .authorizeRequests()
-                                .antMatchers("/inmueble/**").hasRole("USER")
-                                .antMatchers("/auth/register").permitAll()
-                                .antMatchers("/auth/register/admin").hasRole("ADMIN")
-                                .antMatchers("/admin/**").hasRole("ADMIN")
-                                .anyRequest().authenticated();
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/property/**").hasRole("USER")
+                .antMatchers("/auth/register","/logout").permitAll()
+                .antMatchers("/auth/register/admin").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -89,7 +88,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web -> web.ignoring().antMatchers("/h2-console/**", "/auth/register", "/auth/login"));
+        return (web -> web.ignoring().antMatchers("/h2-console/**", "/auth/register", "/auth/login", "/refreshtoken"));
     }
 
 

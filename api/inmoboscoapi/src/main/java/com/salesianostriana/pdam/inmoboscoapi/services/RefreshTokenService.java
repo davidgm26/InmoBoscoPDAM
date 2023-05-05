@@ -38,12 +38,12 @@ public class RefreshTokenService {
         refreshToken.setToken(UUID.randomUUID().toString());
         refreshToken.setExpiryDate(Instant.now().plusSeconds(durationInMinutes*60));
 
-        return refreshToken = refreshTokenRepository.save(refreshToken);
+        return refreshTokenRepository.save(refreshToken);
 
     }
 
     public RefreshToken verify(RefreshToken refreshToken){
-        if (refreshToken.getExpiryDate().compareTo(Instant.now())>0){
+        if (refreshToken.getExpiryDate().compareTo(Instant.now())<0){
             refreshTokenRepository.delete(refreshToken);
             throw new RefreshTokenException("Expired refresh token: " + refreshToken.getToken() + " Please, login again");
         }
