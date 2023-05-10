@@ -26,9 +26,9 @@ public class UserService {
 
     private final StorageService storageService;
 
-    public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles, MultipartFile file) {
+    public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles) {
 
-        String img = storageService.store(file);
+
 
         User user = User.builder()
                 .firstname(createUserRequest.getFirstname())
@@ -37,7 +37,7 @@ public class UserService {
                 .password(passwordEncoder.encode(createUserRequest.getPassword()))
                 .phoneNumber(createUserRequest.getPhoneNumber())
                 .dni(createUserRequest.getDni())
-                .avatar(img)
+                .avatar("default.jpeg")
                 .email(createUserRequest.getEmail())
                 .birthdate(LocalDate.parse(createUserRequest.getBirthdate()))
                 .rol(roles)
@@ -47,15 +47,15 @@ public class UserService {
 
     }
 
-    public User createUserWithWorkerRole(CreateUserRequest createUserRequest, MultipartFile file){
-        return createUser(createUserRequest, EnumSet.of(UserRole.WORKER), file);
+    public User createUserWithWorkerRole(CreateUserRequest createUserRequest){
+        return createUser(createUserRequest, EnumSet.of(UserRole.WORKER));
     }
 
-    public User createUserWithOwnerRole(CreateUserRequest createUserRequest, MultipartFile file){
-        return createUser(createUserRequest, EnumSet.of(UserRole.OWNER), file);
+    public User createUserWithOwnerRole(CreateUserRequest createUserRequest){
+        return createUser(createUserRequest, EnumSet.of(UserRole.OWNER));
     }
-    public User createUserWithUserRole(CreateUserRequest createUserRequest,  MultipartFile file){
-        return createUser(createUserRequest, EnumSet.of(UserRole.USER),file);
+    public User createUserWithUserRole(CreateUserRequest createUserRequest){
+        return createUser(createUserRequest, EnumSet.of(UserRole.USER));
     }
 
     public List<CreateUserResponse> findAllUsers() {
@@ -94,6 +94,11 @@ public class UserService {
         if (userRepository.existsById(id)) userRepository.deleteById(id);
     }
 
+
+    public void setAvatarToUser(String name, User user) {
+        user.setAvatar(name);
+        userRepository.save(user);
+    }
 }
 
 
