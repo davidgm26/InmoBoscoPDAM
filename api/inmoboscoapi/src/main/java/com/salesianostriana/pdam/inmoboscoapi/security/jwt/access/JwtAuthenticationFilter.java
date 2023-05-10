@@ -1,9 +1,9 @@
 package com.salesianostriana.pdam.inmoboscoapi.security.jwt.access;
 
 
-import com.salesianostriana.pdam.inmoboscoapi.models.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.security.errorhandling.JwtTokenException;
-import com.salesianostriana.pdam.inmoboscoapi.services.UserService;
+import com.salesianostriana.pdam.inmoboscoapi.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
