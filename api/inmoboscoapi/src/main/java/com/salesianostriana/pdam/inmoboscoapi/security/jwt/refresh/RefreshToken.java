@@ -1,6 +1,6 @@
 package com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh;
 
-import com.salesianostriana.pdam.inmoboscoapi.models.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.data.annotation.CreatedDate;
