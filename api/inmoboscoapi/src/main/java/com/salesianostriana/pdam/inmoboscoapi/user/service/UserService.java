@@ -1,8 +1,11 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.service;
 
+import com.salesianostriana.pdam.inmoboscoapi.exception.PasswordNotMatchException;
+import com.salesianostriana.pdam.inmoboscoapi.exception.UserNotFoundException;
 import com.salesianostriana.pdam.inmoboscoapi.user.UserRole;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
+import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserPassword;
 import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +41,9 @@ public class UserService {
         return userRepository.save(user);
 
 
+    }
+    public User save (User u){
+        return userRepository.save(u);
     }
 
     public User createUserWithWorkerRole(CreateUserRequest createUserRequest){
@@ -79,6 +86,16 @@ public class UserService {
             return userRepository.save(u);
         }).or(Optional::empty);
 
+    }
+
+    public User editPassword (EditUserPassword editUserPassword, User u){
+        if(!passwordEncoder.matches(editUserPassword.getNewPassword(), editUserPassword.getRepeatNewPassword()))
+            throw new PasswordNotMatchException();
+        return userRepository.findFirstByUsername(u.getUsername()).map(user -> {
+            user.setPassword(passwordEncoder.encode(editUserPassword.getNewPassword()));
+            user.setLastPasswordChangeAt(LocalDateTime.now());
+            return save(user);
+        }).orElseThrow(() -> new UserNotFoundException(u.getId()));
     }
 
     public void deleteUserByID(UUID id) {

@@ -44,7 +44,6 @@ public class User implements UserDetails{
     protected UUID id;
 
     @Convert(converter = RoleConverterAttribute.class)
-
     protected EnumSet<UserRole> rol;
 
 
