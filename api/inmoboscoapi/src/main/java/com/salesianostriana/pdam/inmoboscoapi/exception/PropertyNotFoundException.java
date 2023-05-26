@@ -2,14 +2,14 @@ package com.salesianostriana.pdam.inmoboscoapi.exception;
 
 import javax.persistence.EntityNotFoundException;
 
-public class InmuebleNotFoundException extends EntityNotFoundException {
+public class PropertyNotFoundException extends EntityNotFoundException {
 
 
-    public InmuebleNotFoundException(){
+    public PropertyNotFoundException(){
         super("No se han encontrado inmbuebles");
     }
 
-    public InmuebleNotFoundException(Long id){
+    public PropertyNotFoundException(Long id){
         super("No se han encontrado inmbuebles con el id: " + id);
     }
 

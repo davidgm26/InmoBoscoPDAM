@@ -1,12 +1,12 @@
 package com.salesianostriana.pdam.inmoboscoapi.error.controller;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.salesianostriana.dam.proyectointerdisciplinar.inmobosco.error.impl.ApiErrorImpl;
-import com.salesianostriana.dam.proyectointerdisciplinar.inmobosco.error.impl.ApiValidationSubError;
-import com.salesianostriana.dam.proyectointerdisciplinar.inmobosco.exception.EmptyInmuebleListException;
-import com.salesianostriana.dam.proyectointerdisciplinar.inmobosco.exception.InmuebleNotFoundException;
-import com.salesianostriana.dam.proyectointerdisciplinar.inmobosco.exception.SameUserNameException;
-import com.salesianostriana.dam.proyectointerdisciplinar.inmobosco.security.errorhandling.JwtTokenException;
+import com.salesianostriana.pdam.inmoboscoapi.error.impl.ApiErrorImpl;
+import com.salesianostriana.pdam.inmoboscoapi.error.impl.ApiValidationSubError;
+import com.salesianostriana.pdam.inmoboscoapi.exception.EmptyPropertyListException;
+import com.salesianostriana.pdam.inmoboscoapi.exception.PropertyNotFoundException;
+import com.salesianostriana.pdam.inmoboscoapi.exception.SameUserNameException;
+import com.salesianostriana.pdam.inmoboscoapi.security.errorhandling.JwtTokenException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,7 +49,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
         return buildApiError(exception, request, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({InmuebleNotFoundException.class, EmptyInmuebleListException.class})
+    @ExceptionHandler({PropertyNotFoundException.class, EmptyPropertyListException.class})
     public ResponseEntity<?> handleNotFoundException(EntityNotFoundException exception, WebRequest request) {
         return buildApiError(exception, request, HttpStatus.NOT_FOUND);
     }

@@ -1,6 +1,5 @@
 package com.salesianostriana.pdam.inmoboscoapi.city.model;
 
-import com.salesianostriana.pdam.inmoboscoapi.comments.model.Province;
 import com.salesianostriana.pdam.inmoboscoapi.property.model.Property;
 import lombok.*;
 
@@ -25,10 +24,5 @@ public class City {
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
     @Builder.Default
     private List<Property> dwellings = new ArrayList<>();
-
-    @ManyToOne
-    @JoinColumn(name = "province_id")
-    private Province province;
-
 
 }

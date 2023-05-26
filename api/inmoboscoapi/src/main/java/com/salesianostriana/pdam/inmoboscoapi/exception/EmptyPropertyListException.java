@@ -2,9 +2,9 @@ package com.salesianostriana.pdam.inmoboscoapi.exception;
 
 import javax.persistence.EntityNotFoundException;
 
-public class EmptyInmuebleListException extends EntityNotFoundException {
+public class EmptyPropertyListException extends EntityNotFoundException {
 
-    public EmptyInmuebleListException(){
+    public EmptyPropertyListException(){
         super("No se han encontrado inmuebles");
     }
 

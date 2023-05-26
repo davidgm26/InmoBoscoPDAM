@@ -2,16 +2,16 @@ package com.salesianostriana.pdam.inmoboscoapi.error.impl;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.salesianostriana.dam.proyectointerdisciplinar.inmobosco.error.model.ApiError;
-import com.salesianostriana.dam.proyectointerdisciplinar.inmobosco.error.model.ApiSubError;
+import com.salesianostriana.pdam.inmoboscoapi.error.model.ApiError;
+import com.salesianostriana.pdam.inmoboscoapi.error.model.ApiSubError;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.Local;
+
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.List;
 

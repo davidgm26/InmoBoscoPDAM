@@ -1,7 +1,7 @@
 package com.salesianostriana.pdam.inmoboscoapi.error.impl;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.salesianostriana.dam.proyectointerdisciplinar.inmobosco.error.model.ApiSubError;
+import com.salesianostriana.pdam.inmoboscoapi.error.model.ApiSubError;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
