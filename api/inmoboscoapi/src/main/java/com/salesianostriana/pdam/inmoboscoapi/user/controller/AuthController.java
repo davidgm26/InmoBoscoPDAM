@@ -38,6 +38,7 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
 
 
+
     @PostMapping("/register/admin")
     public ResponseEntity<CreateUserResponse> createUserwithWorkerRole(@RequestBody CreateUserRequest createUserRequest) {
 
@@ -52,6 +53,51 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
     }
 
+    /*
+        @Operation(summary = "creación de un nuevo usuario")
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                content = {@Content(mediaType = "application/json",
+                        schema = @Schema(implementation = CrearUsuarioRequest.class),
+                        examples = {@ExampleObject(
+                                value = """
+                                            {code
+                                                "nombre":"David",
+                                                "apellidos":"García María",
+                                                "password":"12345678",
+                                                "passwordRepeat":"12345678",
+                                                "userName": "Martinex",
+                                                "dni":"85995544X",
+                                                "edad":21,
+                                                "avatar":"https://robohash.org/81.36.52.170.png",\s
+                                                "telefono":"648627905",
+                                                "email": "vivaelsevilla@gmail.com"
+                                            }
+                                        """
+                        )})}
+        )
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "201",
+                        description = "Se ha creado correctamente el nuevo usuario con rol de usuario",
+                        content = {@Content(mediaType = "application/json",
+                                schema = @Schema(implementation = CrearUsuarioResponse.class),
+                                examples = {@ExampleObject(
+                                        value = """
+                                                {
+                                                    "firstname": "David",
+                                                    "lastname": "García María",
+                                                    "username": "Martinex",
+                                                    "avatar": "https://robohash.org/81.36.52.170.png",
+                                                    "email": "vivaelsevilla@gmail.com",
+                                                    "rol": "USER",
+                                                    "id": "ac169001-8857-1cde-8188-57fd36c50000"
+                                                }
+                                                                                            """
+                                )})}),
+                @ApiResponse(responseCode = "400",
+                        description = "Ha habido algún error al intentar crear al nuevo usuario",
+                        content = @Content)
+        })
+        */
     @PostMapping("/register/user")
     public ResponseEntity<CreateUserResponse> createUserwithUserRole(@RequestBody CreateUserRequest createUserRequest) {
 

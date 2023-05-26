@@ -8,9 +8,11 @@ import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserPassword;
 import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.repository.UserRepository;
+import com.salesianostriana.pdam.inmoboscoapi.others.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,7 +27,10 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final StorageService storageService;
+
     public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles) {
+
         User user = User.builder()
                 .firstname(createUserRequest.getFirstname())
                 .lastname(createUserRequest.getLastname())
@@ -33,11 +38,12 @@ public class UserService {
                 .password(passwordEncoder.encode(createUserRequest.getPassword()))
                 .phoneNumber(createUserRequest.getPhoneNumber())
                 .dni(createUserRequest.getDni())
-                .avatar(createUserRequest.getAvatar())
+                .avatar("default.jpeg")
                 .email(createUserRequest.getEmail())
                 .birthdate(LocalDate.parse(createUserRequest.getBirthdate()))
                 .rol(roles)
                 .build();
+
         return userRepository.save(user);
 
 
@@ -103,6 +109,11 @@ public class UserService {
         if (userRepository.existsById(id)) userRepository.deleteById(id);
     }
 
+
+    public void setAvatarToUser(String name, User user) {
+        user.setAvatar(name);
+        userRepository.save(user);
+    }
 }
 
 
