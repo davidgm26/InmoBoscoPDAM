@@ -2,7 +2,7 @@ package com.salesianostriana.pdam.inmoboscoapi.security.jwt.access;
 
 
 
-import com.salesianostriana.pdam.inmoboscoapi.models.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.security.errorhandling.JwtTokenException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

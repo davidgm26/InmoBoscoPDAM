@@ -1,7 +1,6 @@
 package com.salesianostriana.pdam.inmoboscoapi.others;
 
-import com.salesianostriana.pdam.inmoboscoapi.models.User;
-import com.salesianostriana.pdam.inmoboscoapi.models.UserRole;
+import com.salesianostriana.pdam.inmoboscoapi.user.UserRole;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
