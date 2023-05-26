@@ -2,10 +2,14 @@ package com.salesianostriana.pdam.inmoboscoapi.user.controller;
 
 import com.salesianostriana.pdam.inmoboscoapi.security.dto.JwtUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.security.dto.LoginRequest;
+import com.salesianostriana.pdam.inmoboscoapi.dto.*;
+import com.salesianostriana.pdam.inmoboscoapi.others.MediaTypeUrlResource;
+import com.salesianostriana.pdam.inmoboscoapi.others.StorageService;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.access.JwtProvider;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshToken;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshTokenException;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshTokenRequest;
+import com.salesianostriana.pdam.inmoboscoapi.security.service.FileService;
 import com.salesianostriana.pdam.inmoboscoapi.security.service.RefreshTokenService;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
@@ -17,8 +21,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import org.springframework.core.io.Resource;
+import javax.persistence.EntityNotFoundException;
+import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,8 +39,10 @@ public class UserController {
 
     private final JwtProvider jwtProvider;
 
-    private final RefreshTokenService refreshTokenService;
+    private final StorageService storageService;
 
+    private final RefreshTokenService refreshTokenService;
+    private final FileService fileService;
     /*
         @Operation(summary = "creación de un nuevo usuario")
         @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -85,26 +97,29 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 CreateUserResponse.createUserResponseFromUser(u));
     }
+
     @PostMapping("/auth/register/admin")
     public ResponseEntity<CreateUserResponse> createUserwithWorkerRole(@RequestBody CreateUserRequest createUserRequest) {
 
         User u = userService.createUserWithWorkerRole(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
     }
+
     @PostMapping("/auth/register/owner")
     public ResponseEntity<CreateUserResponse> createUserwithOwnerRole(@RequestBody CreateUserRequest createUserRequest) {
 
         User u = userService.createUserWithOwnerRole(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
     }
+
     @PostMapping("/auth/login")
     public ResponseEntity<JwtUserResponse> login(@RequestBody LoginRequest loginRequest) {
         Authentication authentication =
                 authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                loginRequest.getUsername(), loginRequest.getPassword()
-        )
-        );
+                        new UsernamePasswordAuthenticationToken(
+                                loginRequest.getUsername(), loginRequest.getPassword()
+                        )
+                );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -116,7 +131,20 @@ public class UserController {
 
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(JwtUserResponse.of(user,token,refreshToken.getToken()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(JwtUserResponse.of(user, token, refreshToken.getToken()));
+
+    }
+
+    @PostMapping("/profile/img")
+    public ResponseEntity<?> loadAvatarimg(@RequestPart("file") MultipartFile file, @AuthenticationPrincipal User user) {
+
+        User u = userService.findUserById(user.getId()).orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        FileResponse fileResponse = fileService.uploadFile(file);
+
+        userService.setAvatarToUser(fileResponse.getName(),user);
+
+        return ResponseEntity.created(URI.create(fileResponse.getUri())).body(fileResponse);
 
     }
 
@@ -141,9 +169,20 @@ public class UserController {
 
     }
 
+    @GetMapping("/profile/img")
+    public ResponseEntity<Resource> getUserImg(@AuthenticationPrincipal User user){
+        User user1 = userService.findUserByUsername(user.getUsername()).orElseThrow(()-> new EntityNotFoundException("User not found"));
+
+        MediaTypeUrlResource resource =
+                (MediaTypeUrlResource) storageService.loadAsResource(user1.getAvatar());
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("Content-Type", resource.getType())
+                .body(resource);
+    }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout (){
+    public ResponseEntity<?> logout() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         refreshTokenService.deleteByUser(user);
         return ResponseEntity.noContent().build();

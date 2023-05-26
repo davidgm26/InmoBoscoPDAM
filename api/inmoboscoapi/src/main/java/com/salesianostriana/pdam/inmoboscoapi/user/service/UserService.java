@@ -1,13 +1,23 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.service;
 
+<<<<<<< HEAD:api/inmoboscoapi/src/main/java/com/salesianostriana/pdam/inmoboscoapi/user/service/UserService.java
 import com.salesianostriana.pdam.inmoboscoapi.user.UserRole;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.repository.UserRepository;
+=======
+import com.salesianostriana.pdam.inmoboscoapi.dto.CreateUserRequest;
+import com.salesianostriana.pdam.inmoboscoapi.dto.CreateUserResponse;
+import com.salesianostriana.pdam.inmoboscoapi.models.User;
+import com.salesianostriana.pdam.inmoboscoapi.models.UserRole;
+import com.salesianostriana.pdam.inmoboscoapi.others.StorageService;
+import com.salesianostriana.pdam.inmoboscoapi.repositories.UserRepository;
+>>>>>>> PDAM-7-subida-de-archivos:api/inmoboscoapi/src/main/java/com/salesianostriana/pdam/inmoboscoapi/services/UserService.java
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -21,7 +31,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final StorageService storageService;
+
     public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles) {
+
+
+
         User user = User.builder()
                 .firstname(createUserRequest.getFirstname())
                 .lastname(createUserRequest.getLastname())
@@ -29,7 +44,7 @@ public class UserService {
                 .password(passwordEncoder.encode(createUserRequest.getPassword()))
                 .phoneNumber(createUserRequest.getPhoneNumber())
                 .dni(createUserRequest.getDni())
-                .avatar(createUserRequest.getAvatar())
+                .avatar("default.jpeg")
                 .email(createUserRequest.getEmail())
                 .birthdate(LocalDate.parse(createUserRequest.getBirthdate()))
                 .rol(roles)
@@ -86,6 +101,11 @@ public class UserService {
         if (userRepository.existsById(id)) userRepository.deleteById(id);
     }
 
+
+    public void setAvatarToUser(String name, User user) {
+        user.setAvatar(name);
+        userRepository.save(user);
+    }
 }
 
 
