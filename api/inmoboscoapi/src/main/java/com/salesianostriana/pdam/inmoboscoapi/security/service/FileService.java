@@ -1,7 +1,7 @@
 package com.salesianostriana.pdam.inmoboscoapi.security.service;
 
 import com.salesianostriana.pdam.inmoboscoapi.dto.FileResponse;
-import com.salesianostriana.pdam.inmoboscoapi.others.StorageService;
+import com.salesianostriana.pdam.inmoboscoapi.others.Storage.StorageService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

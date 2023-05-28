@@ -1,6 +1,6 @@
 package com.salesianostriana.pdam.inmoboscoapi.security.service;
 
-import com.salesianostriana.pdam.inmoboscoapi.user.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.security.repository.RefreshTokenRepository;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshToken;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshTokenException;

@@ -2,7 +2,7 @@ package com.salesianostriana.pdam.inmoboscoapi.security.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
-import com.salesianostriana.pdam.inmoboscoapi.user.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

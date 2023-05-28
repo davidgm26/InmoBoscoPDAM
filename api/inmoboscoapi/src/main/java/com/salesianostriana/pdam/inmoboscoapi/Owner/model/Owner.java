@@ -2,7 +2,7 @@ package com.salesianostriana.pdam.inmoboscoapi.Owner.model;
 
 import com.salesianostriana.pdam.inmoboscoapi.creditCard.model.CreditCard;
 import com.salesianostriana.pdam.inmoboscoapi.property.model.Property;
-import com.salesianostriana.pdam.inmoboscoapi.user.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

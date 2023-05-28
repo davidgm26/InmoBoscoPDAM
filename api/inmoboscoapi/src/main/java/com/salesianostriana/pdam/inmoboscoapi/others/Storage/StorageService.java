@@ -1,4 +1,4 @@
-package com.salesianostriana.pdam.inmoboscoapi.others;
+package com.salesianostriana.pdam.inmoboscoapi.others.Storage;
 
 
 import org.springframework.web.multipart.MultipartFile;

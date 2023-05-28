@@ -9,7 +9,7 @@ import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshTokenR
 import com.salesianostriana.pdam.inmoboscoapi.security.service.RefreshTokenService;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
-import com.salesianostriana.pdam.inmoboscoapi.user.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

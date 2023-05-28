@@ -31,6 +31,8 @@ public class Property {
     private double price;
     private ArrayList<String> img = new ArrayList<>();
     private double m2;
+
+    @Column(columnDefinition="TEXT", length = 1000)
     private String description;
     private int totalBedRooms;
 

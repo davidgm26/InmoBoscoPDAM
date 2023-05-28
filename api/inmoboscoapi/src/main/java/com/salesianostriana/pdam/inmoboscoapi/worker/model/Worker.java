@@ -1,6 +1,6 @@
 package com.salesianostriana.pdam.inmoboscoapi.worker.model;
 
-import com.salesianostriana.pdam.inmoboscoapi.user.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

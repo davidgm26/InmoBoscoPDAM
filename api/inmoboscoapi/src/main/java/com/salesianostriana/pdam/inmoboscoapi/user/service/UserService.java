@@ -7,9 +7,9 @@ import com.salesianostriana.pdam.inmoboscoapi.user.UserRole;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserPassword;
-import com.salesianostriana.pdam.inmoboscoapi.user.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.repository.UserRepository;
-import com.salesianostriana.pdam.inmoboscoapi.others.StorageService;
+import com.salesianostriana.pdam.inmoboscoapi.others.Storage.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final PasswordEncoder passwordEncoder;
-
     private final UserRepository userRepository;
 
     private final StorageService storageService;
