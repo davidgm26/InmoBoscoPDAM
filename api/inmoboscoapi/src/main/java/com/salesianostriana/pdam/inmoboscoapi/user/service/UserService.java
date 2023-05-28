@@ -1,12 +1,13 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.service;
 
 import com.salesianostriana.pdam.inmoboscoapi.exception.PasswordNotMatchException;
+import com.salesianostriana.pdam.inmoboscoapi.exception.SameUserNameException;
 import com.salesianostriana.pdam.inmoboscoapi.exception.UserNotFoundException;
 import com.salesianostriana.pdam.inmoboscoapi.user.UserRole;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserPassword;
-import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.repository.UserRepository;
 import com.salesianostriana.pdam.inmoboscoapi.others.StorageService;
 import lombok.RequiredArgsConstructor;
@@ -31,23 +32,29 @@ public class UserService {
 
     public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles) {
 
-        User user = User.builder()
-                .firstname(createUserRequest.getFirstname())
-                .lastname(createUserRequest.getLastname())
-                .username(createUserRequest.getUsername())
-                .password(passwordEncoder.encode(createUserRequest.getPassword()))
-                .phoneNumber(createUserRequest.getPhoneNumber())
-                .dni(createUserRequest.getDni())
-                .avatar("default.jpeg")
-                .email(createUserRequest.getEmail())
-                .birthdate(LocalDate.parse(createUserRequest.getBirthdate()))
-                .rol(roles)
-                .build();
-
-        return userRepository.save(user);
+        if (findUserByUsername(createUserRequest.getUsername()).isEmpty()) {
 
 
+            User user = User.builder()
+                    .firstname(createUserRequest.getFirstname())
+                    .lastname(createUserRequest.getLastname())
+                    .username(createUserRequest.getUsername())
+                    .password(passwordEncoder.encode(createUserRequest.getPassword()))
+                    .phoneNumber(createUserRequest.getPhoneNumber())
+                    .dni(createUserRequest.getDni())
+                    .avatar("default.jpeg")
+                    .email(createUserRequest.getEmail())
+                    .birthdate(LocalDate.parse(createUserRequest.getBirthdate()))
+                    .rol(roles)
+                    .build();
+
+            return userRepository.save(user);
+        }
+
+        throw new SameUserNameException();
     }
+
+
     public User save (User u){
         return userRepository.save(u);
     }

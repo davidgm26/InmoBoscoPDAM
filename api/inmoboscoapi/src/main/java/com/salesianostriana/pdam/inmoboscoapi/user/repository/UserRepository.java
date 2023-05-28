@@ -1,6 +1,6 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.repository;
 
-import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

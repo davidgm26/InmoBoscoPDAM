@@ -9,8 +9,7 @@ import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshTokenR
 import com.salesianostriana.pdam.inmoboscoapi.security.service.RefreshTokenService;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
-import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserRequest;
-import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,12 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityNotFoundException;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -123,6 +118,8 @@ public class AuthController {
         refreshTokenService.deleteByUser(user);
 
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
+
+        System.out.println(user.getRol());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(JwtUserResponse.of(user, token, refreshToken.getToken()));
 

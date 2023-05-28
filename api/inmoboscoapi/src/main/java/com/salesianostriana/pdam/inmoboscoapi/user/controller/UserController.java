@@ -11,7 +11,7 @@ import com.salesianostriana.pdam.inmoboscoapi.security.service.FileService;
 import com.salesianostriana.pdam.inmoboscoapi.security.service.RefreshTokenService;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserRequest;
-import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

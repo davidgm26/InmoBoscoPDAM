@@ -39,11 +39,8 @@ public class SecurityConfig {
                 http.getSharedObject(AuthenticationManagerBuilder.class);
 
 
-        AuthenticationManager authenticationManager =
-                authenticationManagerBuilder.authenticationProvider(authenticationProvider())
-                        .build();
-
-        return authenticationManager;
+        return authenticationManagerBuilder.authenticationProvider(authenticationProvider())
+                .build();
 
     }
 
@@ -72,7 +69,7 @@ public class SecurityConfig {
                             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                         .authorizeRequests()
-                        .antMatchers("/property/**").hasAnyRole("OWNER","WORKER","USER")
+                        //.antMatchers("/property/**").hasRole("USER")
                         .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -85,7 +82,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web -> web.ignoring().antMatchers("/h2-console/**", "/auth/**"));
+        return (web -> web.ignoring().antMatchers("/h2-console/**", "/auth/**","/property/**"));
     }
 
 

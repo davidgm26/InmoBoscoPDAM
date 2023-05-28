@@ -1,4 +1,4 @@
-package com.salesianostriana.pdam.inmoboscoapi.user.model;
+package com.salesianostriana.pdam.inmoboscoapi.user;
 
 import com.salesianostriana.pdam.inmoboscoapi.user.UserRole;
 import com.salesianostriana.pdam.inmoboscoapi.others.RoleConverterAttribute;

@@ -1,5 +1,5 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.dto;
-import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
+import com.salesianostriana.pdam.inmoboscoapi.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
