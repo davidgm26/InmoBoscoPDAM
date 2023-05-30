@@ -48,7 +48,7 @@ export class AuthComponent implements OnInit {
         localStorage.setItem('refresh_token', resp.refreshToken);
         this.router.navigate(['home'])
       }else{
-        this.ngxtoast.error('No tiene autorización para iniciar sesión')
+        this.ngxtoast.error('No tiene autorización para iniciar sesión','Error')
       }
     })
   }

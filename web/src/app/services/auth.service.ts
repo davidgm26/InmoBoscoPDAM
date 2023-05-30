@@ -17,7 +17,7 @@ export class AuthService {
 
   doLogin(loginDto: LoginDto): Observable<LoginResponse>{
 
-    return this.htpp.post<LoginResponse>(environment.API_Base_Url,loginDto)
+    return this.htpp.post<LoginResponse>(`${environment.API_Base_Url}/auth/login`,loginDto);
 
   }
 }
