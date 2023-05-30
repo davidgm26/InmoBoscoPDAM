@@ -7,9 +7,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthComponent implements OnInit {
 
+  username = '';
+  password = '';
+
+  type ='password';
+
+  isHide= true;
+
+  aceptar = false;
+
   constructor() { }
 
   ngOnInit(): void {
-  }
 
+  }
+  changeVisibility() {
+
+    this.isHide = !this.isHide
+
+    if (this.isHide) {
+        this.type='password';
+    } else {
+        this.type='text';
+    }
+  }
 }
+
