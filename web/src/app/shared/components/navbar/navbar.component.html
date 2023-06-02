@@ -1,0 +1,20 @@
+<nav class="navbar">
+    <ul class="nav-menu space-between center">
+      <li>
+        <a routerLink="/">Inicio</a>
+      </li>
+      <li>
+        <a routerLink="/perfil">Perfil</a>
+      </li>
+      <li>
+        <a>Configuración</a>
+        <ul class="submenu">
+          <li><a>Usuarios</a></li>
+          <li><a>Propiedades</a></li>
+        </ul>
+      </li>
+      <li class="logout-option">
+        <a (click)="doLogOut()" class="">Cerrar sesión</a>
+      </li>
+    </ul>
+  </nav>
