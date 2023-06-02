@@ -20,6 +20,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -34,17 +36,20 @@ public class AuthController {
 
 
 
-    @PostMapping("/register/admin")
+    @PostMapping("/register/worker")
     public ResponseEntity<CreateUserResponse> createUserwithWorkerRole(@RequestBody CreateUserRequest createUserRequest) {
 
         User u = userService.createUserWithWorkerRole(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
     }
 
-    @PostMapping("/register/owner")
-    public ResponseEntity<CreateUserResponse> createUserwithOwnerRole(@RequestBody CreateUserRequest createUserRequest) {
 
-        User u = userService.createUserWithOwnerRole(createUserRequest);
+    /*Sacar el usuario del contexto de seguridaa*/
+    @PutMapping("/register/owner/{id}")
+    public ResponseEntity<CreateUserResponse> createUserwithOwnerRole() {
+        User u = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(u.getUsername());
+        userService.addOwnerRole(u.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
     }
 

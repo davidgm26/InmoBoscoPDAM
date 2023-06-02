@@ -77,10 +77,17 @@ public class User implements UserDetails{
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return rol.stream()
-                .map(role -> "ROLE " + role)
+                .map(role -> "ROLE_" + role)
                 .map(SimpleGrantedAuthority::new)
                 //.toList();
                 .collect(Collectors.toList());
+    }
+
+    public void addUserRole(UserRole role){
+        rol.add(role);
+    }
+    public void removeRole(UserRole role){
+        rol.remove(role);
     }
 
     @Override
