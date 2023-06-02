@@ -72,8 +72,9 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response,@AuthenticationPrincipal User user) {
-
+    public ResponseEntity<?> logout() {
+        User u = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        refreshTokenService.deleteByUser(u);
         return ResponseEntity.noContent().build();
     }
 
@@ -91,7 +92,6 @@ public class UserController {
 
     @PutMapping("/profile")
     public CreateUserResponse editUserInfo(@RequestBody EditUserRequest newInfo, @AuthenticationPrincipal User user) {
-
         return CreateUserResponse.createUserResponseFromUser(EditUserRequest
                 .createUserFromEditUserRequest(newInfo, user));
 
