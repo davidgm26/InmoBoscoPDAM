@@ -62,8 +62,11 @@ public class UserService {
         return createUser(createUserRequest, EnumSet.of(UserRole.WORKER));
     }
 
-    public User createUserWithOwnerRole(CreateUserRequest createUserRequest){
-        return createUser(createUserRequest, EnumSet.of(UserRole.OWNER));
+    public void addOwnerRole(UUID id){;
+        User user = findUserById(id).orElseThrow(()-> new UserNotFoundException(id));
+        user.addUserRole(UserRole.OWNER);
+        save(user);
+
     }
     public User createUserWithUserRole(CreateUserRequest createUserRequest){
         return createUser(createUserRequest, EnumSet.of(UserRole.USER));
@@ -87,8 +90,6 @@ public class UserService {
 
     public CreateUserResponse editUserFindByUsername(String username) {
         /*TODO: ESTE METODO HAY QUE MODIFICARLO CUANDO NOS PONGAMOS CON LA GESTION DE ERRORES*/
-
-        /*TODO:PRGUNTAR SI AQUI MERECE LA PENA LA ENTIDAD AL COMPLETO EN VEZ DEL DTOs*/
         return userRepository.findFirstByUsername(username).map(CreateUserResponse::createUserResponseFromUser).orElseThrow();
     }
 

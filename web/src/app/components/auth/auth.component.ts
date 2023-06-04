@@ -41,22 +41,20 @@ export class AuthComponent implements OnInit {
       username: this.loginForm.get('username')?.value!,
       password: this.loginForm.get('password')?.value!
     }
+    this.authService.doLogin(loginRequest).subscribe(resp =>{
+        if(resp.rol  == 'USER'){
+          localStorage.setItem('token',resp.token);
+          localStorage.setItem('refresh_token', resp.refreshToken);
+          this.router.navigate(['home'])
+        }else{
+          this.ngxtoast.error('No tiene autorización para iniciar sesión','Error')
+        }
 
-    if(this.authService.doLogin == null){
-      this.ngxtoast.error('La contraseña o el nombre de usuario introducidos son incorrectos')
-    }else{
-          this.authService.doLogin(loginRequest).subscribe(resp =>{
-      if(resp.rol  == 'WORKER'){
-        localStorage.setItem('token',resp.token);
-        localStorage.setItem('refresh_token', resp.refreshToken);
-        this.router.navigate(['home'])
-      }else{
-        this.ngxtoast.error('No tiene autorización para iniciar sesión','Error')
-      }
-    })
+    },(error: any) =>{
+      this.ngxtoast.error('Este usuario no se encuentra registrado','Error')
     }
-
+    )
   }
 
-
 }
+

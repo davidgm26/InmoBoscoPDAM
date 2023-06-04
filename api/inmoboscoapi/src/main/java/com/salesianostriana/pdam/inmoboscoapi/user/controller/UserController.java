@@ -17,12 +17,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.util.List;
 
@@ -55,27 +59,6 @@ public class UserController {
 
     }
 
-    @PostMapping("/refreshtoken")
-    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
-        String refreshToken = refreshTokenRequest.getRefreshToken();
-
-        return refreshTokenService.findByToken(refreshToken)
-                .map(refreshTokenService::verify)
-                .map(RefreshToken::getUser)
-                .map(user -> {
-                    String token = jwtProvider.generateToken(user);
-                    refreshTokenService.deleteByUser(user);
-                    RefreshToken refreshToken2 = refreshTokenService.createRefreshToken(user);
-                    return ResponseEntity.status(HttpStatus.CREATED)
-                            .body(JwtUserResponse.builder()
-                                    .token(token)
-                                    .refreshToken(refreshToken2.getToken())
-                                    .build());
-                })
-                .orElseThrow(() -> new RefreshTokenException("Refresh token not found"));
-
-    }
-
     @GetMapping("/profile/img")
     public ResponseEntity<Resource> getUserImg(@AuthenticationPrincipal User user){
         User user1 = userService.findUserByUsername(user.getUsername()).orElseThrow(()-> new EntityNotFoundException("User not found"));
@@ -90,8 +73,8 @@ public class UserController {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        refreshTokenService.deleteByUser(user);
+        User u = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        refreshTokenService.deleteByUser(u);
         return ResponseEntity.noContent().build();
     }
 
@@ -109,7 +92,6 @@ public class UserController {
 
     @PutMapping("/profile")
     public CreateUserResponse editUserInfo(@RequestBody EditUserRequest newInfo, @AuthenticationPrincipal User user) {
-
         return CreateUserResponse.createUserResponseFromUser(EditUserRequest
                 .createUserFromEditUserRequest(newInfo, user));
 
