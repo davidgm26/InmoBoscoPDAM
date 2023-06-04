@@ -39,11 +39,8 @@ public class SecurityConfig {
                 http.getSharedObject(AuthenticationManagerBuilder.class);
 
 
-        AuthenticationManager authenticationManager =
-                authenticationManagerBuilder.authenticationProvider(authenticationProvider())
-                        .build();
-
-        return authenticationManager;
+        return authenticationManagerBuilder.authenticationProvider(authenticationProvider())
+                .build();
 
     }
 
@@ -64,16 +61,16 @@ public class SecurityConfig {
 
         http.cors(Customizer.withDefaults())
                 .csrf().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/property/**").hasAnyRole("USER","OWNER","WORKER")
-                .anyRequest().authenticated();
+                    .exceptionHandling()
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .accessDeniedHandler(jwtAccessDeniedHandler)
+                    .and()
+                        .sessionManagement()
+                            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
+                        .authorizeRequests()
+                        .antMatchers("/property/**").hasRole("USER")
+                        .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
