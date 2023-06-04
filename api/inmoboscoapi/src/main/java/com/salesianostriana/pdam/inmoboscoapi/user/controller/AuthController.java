@@ -1,5 +1,6 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.controller;
 
+import com.salesianostriana.pdam.inmoboscoapi.exception.NotLoggedUser;
 import com.salesianostriana.pdam.inmoboscoapi.security.dto.JwtUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.security.dto.LoginRequest;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.access.JwtProvider;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,15 +46,18 @@ public class AuthController {
     }
 
 
-    /*Sacar el usuario del contexto de seguridaa*/
-    @PutMapping("/register/owner/{id}")
-    public ResponseEntity<CreateUserResponse> createUserwithOwnerRole() {
-        User u = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(u.getUsername());
-        userService.addOwnerRole(u.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
-    }
+    /*Sacar el usuario del contexto de seguridad
 
+    @PutMapping("/register/owner")
+    public ResponseEntity<CreateUserResponse> createUserwithOwnerRole(@AuthenticationPrincipal User user) {
+        if(user == null){
+            throw new NotLoggedUser();
+        }else{
+            userService.addOwnerRole(user.getId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(user));
+        }
+    }
+*/
     /*
         @Operation(summary = "creación de un nuevo usuario")
         @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -123,8 +128,6 @@ public class AuthController {
         refreshTokenService.deleteByUser(user);
 
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
-
-        System.out.println(user.getRol());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(JwtUserResponse.of(user, token, refreshToken.getToken()));
 
