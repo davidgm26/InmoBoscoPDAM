@@ -42,7 +42,10 @@ export class AuthComponent implements OnInit {
       password: this.loginForm.get('password')?.value!
     }
 
-    this.authService.doLogin(loginRequest).subscribe(resp =>{
+    if(this.authService.doLogin == null){
+      this.ngxtoast.error('La contraseña o el nombre de usuario introducidos son incorrectos')
+    }else{
+          this.authService.doLogin(loginRequest).subscribe(resp =>{
       if(resp.rol  == 'WORKER'){
         localStorage.setItem('token',resp.token);
         localStorage.setItem('refresh_token', resp.refreshToken);
@@ -51,6 +54,8 @@ export class AuthComponent implements OnInit {
         this.ngxtoast.error('No tiene autorización para iniciar sesión','Error')
       }
     })
+    }
+
   }
 
 
