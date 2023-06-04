@@ -24,7 +24,6 @@ public class PropertyResponse {
     protected String city;
 
     public static PropertyResponse convertPropertyResponseFromProperty(Property p){
-
         return PropertyResponse.builder()
                 .city(p.getCity().getName())
                 .lat(p.getLat())

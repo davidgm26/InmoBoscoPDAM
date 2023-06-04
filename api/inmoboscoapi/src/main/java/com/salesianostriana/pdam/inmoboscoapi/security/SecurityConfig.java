@@ -69,7 +69,7 @@ public class SecurityConfig {
                             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                         .authorizeRequests()
-                        .antMatchers("/property/**").hasRole("USER")
+                        //.antMatchers().hasRole("USER")
                         .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -82,7 +82,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web -> web.ignoring().antMatchers("/h2-console/**", "/auth/**"));
+        return (web -> web.ignoring().antMatchers("/h2-console/**","/auth/**","/property/**"));
     }
 
 

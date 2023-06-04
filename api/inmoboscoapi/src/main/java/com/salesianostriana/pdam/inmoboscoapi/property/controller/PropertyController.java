@@ -1,5 +1,6 @@
 package com.salesianostriana.pdam.inmoboscoapi.property.controller;
 
+import com.salesianostriana.pdam.inmoboscoapi.property.dto.CreatePropertyRequest;
 import com.salesianostriana.pdam.inmoboscoapi.property.dto.PropertyResponse;
 import com.salesianostriana.pdam.inmoboscoapi.property.model.Property;
 import com.salesianostriana.pdam.inmoboscoapi.property.service.PropertyService;
@@ -98,8 +99,10 @@ public class PropertyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Property>> getOneProperty(@PathVariable Long id){
-        return ResponseEntity.ok(propertyService.findById(id));
+    public ResponseEntity<Optional<PropertyResponse>> getOneProperty(@PathVariable Long id){
+        return ResponseEntity.ok(propertyService.findById(id).map(
+                PropertyResponse::convertPropertyResponseFromProperty
+        ));
     }
 
     @PostMapping("/")
@@ -108,8 +111,9 @@ public class PropertyController {
     }
 
     @PutMapping("/{id}")
-    public Property editProperty(@RequestBody Property property,@PathVariable Long id){
-        return propertyService.editProperty(property,id);
+    public ResponseEntity<PropertyResponse> editProperty(@RequestBody CreatePropertyRequest property, @PathVariable Long id){
+        Property prop = propertyService.editProperty(property,id);
+        return ResponseEntity.ok(PropertyResponse.convertPropertyResponseFromProperty(prop));
     }
 
     @DeleteMapping("/{id}")

@@ -105,7 +105,6 @@ public class AuthController {
         */
     @PostMapping("/register/user")
     public ResponseEntity<CreateUserResponse> createUserwithUserRole(@RequestBody CreateUserRequest createUserRequest) {
-
         User u = userService.createUserWithUserRole(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
     }

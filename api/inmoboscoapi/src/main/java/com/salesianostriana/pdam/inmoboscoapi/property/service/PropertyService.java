@@ -1,6 +1,8 @@
 package com.salesianostriana.pdam.inmoboscoapi.property.service;
 
+import com.salesianostriana.pdam.inmoboscoapi.city.service.CityRepository;
 import com.salesianostriana.pdam.inmoboscoapi.exception.EmptyPropertyListException;
+import com.salesianostriana.pdam.inmoboscoapi.property.dto.CreatePropertyRequest;
 import com.salesianostriana.pdam.inmoboscoapi.search.spec.GenericSpecificationBuilder;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteria;
 import com.salesianostriana.pdam.inmoboscoapi.property.TypeRepository;
@@ -23,6 +25,8 @@ public class PropertyService {
     private final PropertyRepository propertyRepository;
 
     private final TypeRepository typeRepository;
+
+    private final CityRepository cityRepository;
 
 
     public Page<PropertyResponse> findAll(List<SearchCriteria> params, Pageable pageable){
@@ -48,10 +52,19 @@ public class PropertyService {
         return propertyRepository.save(property);
     }
 
-    public Property editProperty(Property property,Long id){
+    public Property editProperty(CreatePropertyRequest property, Long id){
         return propertyRepository.findById(id).map(prop -> {
-            prop.setCity(property.getCity());
+            prop.setLat(property.getLat());
+            prop.setLon(property.getLon());
+            prop.setName(property.getName());
+            prop.setTitle(property.getTitle());
+            prop.setPrice(property.getPrice());
             prop.setM2(property.getM2());
+            prop.setPropertyType(typeRepository.findFirstByTypeContainsIgnoreCase(property.getPropertyType()));
+            prop.setCity(cityRepository.findFirstByNameContainsIgnoreCase(property.getCity()));prop.setDescription(property.getDescription());
+            prop.setTotalBaths(property.getTotalBaths());
+            prop.setTotalBedRooms(property.getTotalBedRooms());
+            prop.setDescription(property.getDescription());
             return propertyRepository.save(prop);
         }).orElseThrow();
     }
