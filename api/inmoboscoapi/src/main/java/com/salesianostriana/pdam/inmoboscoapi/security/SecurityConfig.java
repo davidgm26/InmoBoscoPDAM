@@ -82,7 +82,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web -> web.ignoring().antMatchers("/h2-console/**","/auth/**","/property/**"));
+        return (web -> web.ignoring().antMatchers("/h2-console/**","/auth/**","/property/**","/city/"));
     }
 
 

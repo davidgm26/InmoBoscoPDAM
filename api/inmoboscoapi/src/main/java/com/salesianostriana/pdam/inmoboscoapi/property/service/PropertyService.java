@@ -1,7 +1,8 @@
 package com.salesianostriana.pdam.inmoboscoapi.property.service;
 
-import com.salesianostriana.pdam.inmoboscoapi.city.service.CityRepository;
+import com.salesianostriana.pdam.inmoboscoapi.city.repository.CityRepository;
 import com.salesianostriana.pdam.inmoboscoapi.exception.EmptyPropertyListException;
+import com.salesianostriana.pdam.inmoboscoapi.exception.PropertyNotFoundException;
 import com.salesianostriana.pdam.inmoboscoapi.property.dto.CreatePropertyRequest;
 import com.salesianostriana.pdam.inmoboscoapi.search.spec.GenericSpecificationBuilder;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteria;
@@ -16,7 +17,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -44,8 +44,8 @@ public class PropertyService {
 
     }
 
-    public Optional<Property> findById(Long id){
-        return propertyRepository.findById(id);
+    public Property findById(Long id){
+        return propertyRepository.findById(id).orElseThrow(()-> new PropertyNotFoundException(id));
     }
 
     public Property createProperty(Property property){
@@ -66,11 +66,11 @@ public class PropertyService {
             prop.setTotalBedRooms(property.getTotalBedRooms());
             prop.setDescription(property.getDescription());
             return propertyRepository.save(prop);
-        }).orElseThrow();
+        }).orElseThrow(()-> new PropertyNotFoundException(id));
+
     }
 
     public void deleteProperty(Long id){
-        Optional<Property> P = findById(id);
         propertyRepository.deleteById(id);
     }
 

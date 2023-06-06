@@ -1,4 +1,4 @@
-package com.salesianostriana.pdam.inmoboscoapi.city.service;
+package com.salesianostriana.pdam.inmoboscoapi.city.repository;
 
 import com.salesianostriana.pdam.inmoboscoapi.city.model.City;
 import org.springframework.data.jpa.repository.JpaRepository;

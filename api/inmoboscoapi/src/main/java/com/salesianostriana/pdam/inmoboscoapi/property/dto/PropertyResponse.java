@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PropertyResponse {
 
+    protected long id;
     protected String lat;
     protected String lon;
     protected String name;
@@ -25,6 +26,7 @@ public class PropertyResponse {
 
     public static PropertyResponse convertPropertyResponseFromProperty(Property p){
         return PropertyResponse.builder()
+                .id(p.getId())
                 .city(p.getCity().getName())
                 .lat(p.getLat())
                 .lon(p.getLon())

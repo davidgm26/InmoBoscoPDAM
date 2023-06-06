@@ -1,0 +1,72 @@
+<h2 mat-dialog-title>Editar Propiedad</h2>
+<mat-dialog-content [formGroup]="editForm" class="form-content">
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <mat-label>Latitud</mat-label>
+      <input matInput formControlName="lat">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Longitud</mat-label>
+      <input matInput formControlName="lon">
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title">
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <mat-label>Precio</mat-label>
+      <input matInput formControlName="price">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>M2</mat-label>
+      <input matInput formControlName="m2">
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <mat-label>Tipo de Propiedad</mat-label>
+      <mat-select formControlName="propertyType">
+        <mat-option value="Casa">Casa</mat-option>
+        <mat-option value="Piso">Piso</mat-option>
+        <mat-option value="Apartamento">Apartamento</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Ciudad</mat-label>
+      <input matInput formControlName="city">
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <mat-label>Total de Habitaciones</mat-label>
+      <input matInput formControlName="totalBedRooms">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Total de Baños</mat-label>
+      <input matInput formControlName="totalBaths">
+    </mat-form-field>
+  </div>
+  <mat-form-field class="form-field">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button (click)="onSave()">Guardar</button>
+</mat-dialog-actions>
