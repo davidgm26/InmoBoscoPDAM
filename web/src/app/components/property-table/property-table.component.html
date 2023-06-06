@@ -1,0 +1,43 @@
+<mat-paginator [length]="totalElements"
+               [pageSize]="pageSize"
+               [pageIndex]="page"
+               [pageSizeOptions]="[5, 10, 20]"
+               showFirstLastButtons
+               class="table">
+</mat-paginator>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Precio venta</th>
+      <th>Baños</th>
+      <th>Habitaciones</th>
+      <th>Ciudad</th>
+      <th>Tipo</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let property of propertyList">
+      <td>{{property.id}}</td>
+      <td>{{ property.name }}</td>
+      <td>{{ property.description }}</td>
+      <td>{{ property.price }}</td>
+      <td>{{ property.totalBaths }}</td>
+      <td>{{ property.totalBedRooms }}</td>
+      <td>{{ property.city}}</td>
+      <td>{{ property.propertyType}}</td>
+
+      <td>
+        <button class="btn-edit"(click)="editProperty(property)">Editar</button>
+      </td>
+      <td>
+        <button class="btn-delete"(click)="deleteProperty(property)">Borrar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

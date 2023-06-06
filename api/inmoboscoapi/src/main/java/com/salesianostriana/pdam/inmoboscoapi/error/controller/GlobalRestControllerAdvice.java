@@ -46,12 +46,12 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({SameUserNameException.class})
     public ResponseEntity<?> handleSameUsernameException(SameUserNameException exception, WebRequest request) {
-        return buildApiError(exception, request, HttpStatus.BAD_REQUEST);
+        return buildApiError(exception.getMessage(), request, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({PropertyNotFoundException.class, EmptyPropertyListException.class})
-    public ResponseEntity<?> handleNotFoundException(EntityNotFoundException exception, WebRequest request) {
-        return buildApiError(exception, request, HttpStatus.NOT_FOUND);
+    @ExceptionHandler({PropertyNotFoundException.class})
+    public ResponseEntity<?> handleNotFoundException(PropertyNotFoundException exception, WebRequest request) {
+        return buildApiError(exception.getMessage(), request, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({AccessDeniedException.class})
@@ -107,18 +107,18 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
         return buildApiErrorWithSubErrors("Validation error. Please check the sublist.", request, status, ex.getAllErrors());
     }
 
-    private final ResponseEntity<Object> buildApiError(Exception ex, WebRequest request, HttpStatus status) {
+    private final ResponseEntity<Object> buildApiError(String msg, WebRequest request, HttpStatus status) {
         return ResponseEntity.status(status)
                 .body(ApiErrorImpl.builder()
                         .status(status)
-                        .message(ex.getMessage())
+                        .message(msg)
                         .path(((ServletWebRequest) request).getRequest().getRequestURI())
                         .build());
     }
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return buildApiError(ex, request, status);
+        return buildApiError(ex.getMessage(), request, status);
     }
 
     private final ResponseEntity<Object> buildApiErrorWithSubErrors(String message, WebRequest request, HttpStatus status, List<ObjectError> subErrors) {
