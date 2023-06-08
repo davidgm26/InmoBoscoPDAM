@@ -29,6 +29,8 @@ public class CreateUserResponse {
 
     protected UUID id;
 
+    protected boolean enabled;
+
     public static CreateUserResponse createUserResponseFromUser(User u){
         return CreateUserResponse.builder()
                 .firstname(u.getFirstname())
@@ -38,6 +40,7 @@ public class CreateUserResponse {
                 .email(u.getEmail())
                 .rol(convertRoleToString(u.getRol()))
                 .id(u.getId())
+                .enabled(u.isEnabled())
                 .build();
     }
 
@@ -46,6 +49,7 @@ public class CreateUserResponse {
                 .map(UserRole::name)
                 .collect(Collectors.joining(","));
     }
+
 
 
 }

@@ -49,7 +49,7 @@ public class UserController {
     @PostMapping("/profile/img")
     public ResponseEntity<?> loadAvatarimg(@RequestPart("file") MultipartFile file, @AuthenticationPrincipal User user) {
 
-        User u = userService.findUserById(user.getId()).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        User u = userService.findUserById(user.getId());
 
         FileResponse fileResponse = fileService.uploadFile(file);
 

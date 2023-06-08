@@ -1,9 +1,13 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.service;
 
+import com.salesianostriana.pdam.inmoboscoapi.exception.EmptyUserListException;
 import com.salesianostriana.pdam.inmoboscoapi.exception.PasswordNotMatchException;
 import com.salesianostriana.pdam.inmoboscoapi.exception.SameUserNameException;
 import com.salesianostriana.pdam.inmoboscoapi.exception.UserNotFoundException;
+import com.salesianostriana.pdam.inmoboscoapi.search.spec.GenericSpecificationBuilder;
+import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteria;
 import com.salesianostriana.pdam.inmoboscoapi.user.UserRole;
+import com.salesianostriana.pdam.inmoboscoapi.user.dto.AllUserDataDto;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserPassword;
@@ -11,6 +15,9 @@ import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.repository.UserRepository;
 import com.salesianostriana.pdam.inmoboscoapi.others.Storage.StorageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +54,7 @@ public class UserService {
                     .rol(roles)
                     .build();
 
-            return userRepository.save(user);
+            return save(user);
         }
 
         throw new SameUserNameException();
@@ -63,7 +70,7 @@ public class UserService {
     }
 
     public void addOwnerRole(UUID id){;
-        User user = findUserById(id).orElseThrow(()-> new UserNotFoundException(id));
+        User user = findUserById(id);
         user.addUserRole(UserRole.OWNER);
         save(user);
 
@@ -78,14 +85,27 @@ public class UserService {
         return data.stream().map(CreateUserResponse::createUserResponseFromUser).collect(Collectors.toList());
     }
 
-    public Optional<User> findUserById(UUID id) {
+    public User findUserById(UUID id) {
         /*TODO: ESTE METODO HAY QUE MODIFICARLO CUANDO NOS PONGAMOS CON LA GESTION DE ERRORES*/
-        return userRepository.findById(id);
+        return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
     }
 
     public Optional<User> findUserByUsername(String username) {
         /*TODO: ESTE METODO HAY QUE MODIFICARLO CUANDO NOS PONGAMOS CON LA GESTION DE ERRORES*/
         return userRepository.findFirstByUsername(username);
+    }
+    public User editUserFindById(UUID id , CreateUserRequest createUserRequest) {
+        User  user = findUserById(id);
+        user.setFirstname(createUserRequest.getFirstname());
+        user.setLastname(createUserRequest.getLastname());
+        user.setUsername(createUserRequest.getUsername());
+        user.setDni(createUserRequest.getDni());
+        user.setPhoneNumber(createUserRequest.getPhoneNumber());
+        user.setEmail(createUserRequest.getEmail());
+        user.setBirthdate(LocalDate.parse(createUserRequest.getBirthdate()));
+
+        return save(user);
+
     }
 
     public CreateUserResponse editUserFindByUsername(String username) {
@@ -113,13 +133,35 @@ public class UserService {
 
     public void deleteUserByID(UUID id) {
         /*TODO: ESTE METODO HAY QUE MODIFICARLO CUANDO NOS PONGAMOS CON LA GESTION DE ERRORES*/
-        if (userRepository.existsById(id)) userRepository.deleteById(id);
+        if (userRepository.existsById(id)){
+            userRepository.deleteById(id);
+        }
     }
 
 
     public void setAvatarToUser(String name, User user) {
         user.setAvatar(name);
         userRepository.save(user);
+    }
+
+    public Page<AllUserDataDto> getAllUsers(List<SearchCriteria> params, Pageable pageable) {
+        GenericSpecificationBuilder<User> userGenericSpecificationBuilder =
+                new GenericSpecificationBuilder<>(params);
+
+        Specification<User> spec =userGenericSpecificationBuilder.build();
+        Page<AllUserDataDto> result = userRepository.findAll(spec,pageable).map(AllUserDataDto::fromUser);
+
+        if(result.isEmpty())
+            throw new EmptyUserListException();
+
+        return result;
+
+    }
+
+    public User changeUserStatus(UUID id) {
+        User user = findUserById(id);
+        user.setEnabled(!user.isEnabled());
+        return userRepository.save(user);
     }
 }
 
