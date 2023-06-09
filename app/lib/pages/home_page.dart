@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_authentication/blocs/authentication/authentication.dart';
-import 'package:flutter_bloc_authentication/config/locator.dart';
-import 'package:flutter_bloc_authentication/services/services.dart';
-import '../models/models.dart';
+import 'package:inmobosco/Inmueble/inmueble.dart';
+import 'package:inmobosco/repositories/inmbueble_repository.dart';
+import 'package:inmobosco/blocs/authentication/authentication.dart';
+import 'package:inmobosco/blocs/inmuebles/inmuebles_bloc.dart';
+import 'package:inmobosco/blocs/inmuebles/inmuebles_event.dart';
 
 class HomePage extends StatelessWidget {
   final User user;
@@ -15,15 +16,20 @@ class HomePage extends StatelessWidget {
     final authBloc = BlocProvider.of<AuthenticationBloc>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('InmoBosco'),
       ),
-      body: SafeArea(
+      body:
+      BlocProvider(create: (_) => InmuebleBloc(InmuebleRepository())
+      ..add(InmuebleFetched()),
+      child: InmuebleList())
+      
+      /* SafeArea(
         minimum: const EdgeInsets.all(16),
         child: Center(
           child: Column(
             children: <Widget>[
               Text(
-                'Welcome, ${user.fullName}',
+                'Welcome, ${user.nombre}',
                 style: TextStyle(
                   fontSize: 24
                 ),
@@ -51,7 +57,7 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      ),*/
     );
   }
 }

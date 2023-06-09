@@ -2,11 +2,11 @@
 
 import 'dart:convert';
 
-import 'package:flutter_bloc_authentication/models/login.dart';
+import 'package:inmobosco/models/login.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:flutter_bloc_authentication/rest/rest.dart';
+import 'package:inmobosco/rest/rest.dart';
 
 @Order(-1)
 @singleton
@@ -16,7 +16,6 @@ class AuthenticationRepository {
 
   AuthenticationRepository() {
     _client = GetIt.I.get<RestClient>();
-    //_client = RestClient();
   }
 
   Future<dynamic> doLogin(String username, String password) async {

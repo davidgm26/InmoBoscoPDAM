@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_bloc_authentication/rest/rest_client.dart';
-
+import 'package:inmobosco/rest/rest.dart';
 import 'authentication_event.dart';
 import 'authentication_state.dart';
 import '../../services/services.dart';

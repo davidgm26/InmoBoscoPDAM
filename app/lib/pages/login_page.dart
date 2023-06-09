@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_authentication/config/locator.dart';
+import 'package:inmobosco/config/locator.dart';
 import '../blocs/blocs.dart';
 import '../services/services.dart';
+
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text('Inicio de sesión'),
       ),
       body: SafeArea(
           minimum: const EdgeInsets.all(16),
@@ -19,17 +20,18 @@ class LoginPage extends StatelessWidget {
               if (state is AuthenticationNotAuthenticated) {
                 return _AuthForm();
               }
-              if (state is AuthenticationFailure || state is SessionExpiredState) {
+              if (state is AuthenticationFailure ||
+                  state is SessionExpiredState) {
                 var msg = (state as AuthenticationFailure).message;
                 return Center(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
+                  children:<Widget>[
                     Text(msg),
                     TextButton(
                       //textColor: Theme.of(context).primaryColor,
-                      child: Text('Retry'),
+                      child: Text('Vuelve a iniciar sesión'),
                       onPressed: () {
                         authBloc.add(AppLoaded());
                       },
@@ -83,7 +85,8 @@ class __SignInFormState extends State<_SignInForm> {
 
     _onLoginButtonPressed() {
       if (_key.currentState!.validate()) {
-        _loginBloc.add(LoginInWithEmailButtonPressed(email: _emailController.text, password: _passwordController.text));
+        _loginBloc.add(LoginInWithEmailButtonPressed(
+            email: _emailController.text, password: _passwordController.text));
       } else {
         setState(() {
           _autoValidate = true;
@@ -106,14 +109,20 @@ class __SignInFormState extends State<_SignInForm> {
           }
           return Form(
             key: _key,
-            autovalidateMode: _autoValidate ? AutovalidateMode.always : AutovalidateMode.disabled,
+            autovalidateMode: _autoValidate
+                ? AutovalidateMode.always
+                : AutovalidateMode.disabled,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                Image.network(
+                      'https://www.salesianos.es/wp-content/uploads/2020/02/icon-300x300.png',
+                      height: 220,
+                    ),
                   TextFormField(
                     decoration: InputDecoration(
-                      labelText: 'Email address',
+                      labelText: 'Nombre de usuario',
                       filled: true,
                       isDense: true,
                     ),
@@ -122,7 +131,7 @@ class __SignInFormState extends State<_SignInForm> {
                     autocorrect: false,
                     validator: (value) {
                       if (value == null) {
-                        return 'Email is required.';
+                        return 'Correo electrónico es necesario.';
                       }
                       return null;
                     },
@@ -132,7 +141,7 @@ class __SignInFormState extends State<_SignInForm> {
                   ),
                   TextFormField(
                     decoration: InputDecoration(
-                      labelText: 'Password',
+                      labelText: 'Contraseña',
                       filled: true,
                       isDense: true,
                     ),
@@ -149,13 +158,10 @@ class __SignInFormState extends State<_SignInForm> {
                     height: 16,
                   ),
                   //RaisedButton(
-                  ElevatedButton(  
-                    //color: Theme.of(context).primaryColor,
-                    //textColor: Colors.white,
-                    //padding: const EdgeInsets.all(16),
-                    //shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(8.0)),
-                    child: Text('LOG IN'),
-                    onPressed: state is LoginLoading ? () {} : _onLoginButtonPressed,
+                  ElevatedButton(
+                    child: Text('Iniciar Sesión'),
+                    onPressed:
+                        state is LoginLoading ? () {} : _onLoginButtonPressed,
                   )
                 ],
               ),
@@ -166,14 +172,8 @@ class __SignInFormState extends State<_SignInForm> {
     );
   }
 
+
   void _showError(String error) {
-    /*Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text(error),
-      backgroundColor: Theme.of(context).errorColor,
-    ));*/
-
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
-
-
   }
 }

@@ -4,9 +4,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_authentication/config/locator.dart';
-import 'package:flutter_bloc_authentication/main.dart';
-import 'package:flutter_bloc_authentication/services/localstorage_service.dart';
+import 'package:inmobosco/config/locator.dart';
+import 'package:inmobosco/main.dart';
+import 'package:inmobosco/services/localstorage_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:injectable/injectable.dart';
@@ -22,7 +22,7 @@ class ApiConstants {
 
 }
 
-class HeadersApiInterceptor implements InterceptorContract {
+class HeadersApiInterceptor implements InterceptorContract{
   @override
   Future<RequestData> interceptRequest({required RequestData data}) async {
     try {

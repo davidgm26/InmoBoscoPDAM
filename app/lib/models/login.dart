@@ -1,39 +1,36 @@
 class LoginResponse {
   String? id;
   String? username;
-  String? fullName;
+  String? nombre;
   String? createdAt;
   String? avatar;
   String? token;
-  String? refreshToken;
 
   LoginResponse(
       {this.id,
       this.username,
-      this.fullName,
+      this.nombre,
       this.createdAt,
       this.avatar,
       this.token,
-      this.refreshToken});
+});
 
   LoginResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     username = json['username'];
-    fullName = json['fullName'];
+    nombre = json['nombre'];
     createdAt = json['createdAt'];
     avatar = json['avatar'];
     token = json['token'];
-    refreshToken = json['refreshToken'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['username'] = username;
-    data['fullName'] = fullName;
+    data['nombre'] = nombre;
     data['token'] = token;
     data['avatar'] = avatar;
-    data['refreshToken'] = refreshToken;
     return data;
   }
   
@@ -58,3 +55,4 @@ class LoginRequest {
     return data;
   }
 }
+

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_authentication/config/locator.dart';
-import 'package:flutter_bloc_authentication/blocs/blocs.dart';
-import 'package:flutter_bloc_authentication/services/services.dart';
-import 'package:flutter_bloc_authentication/pages/pages.dart';
+import 'package:inmobosco/config/locator.dart';
+import 'package:inmobosco/blocs/blocs.dart';
+import 'package:inmobosco/services/services.dart';
+import 'package:inmobosco/pages/pages.dart';
 
 
 
@@ -64,8 +64,9 @@ class MyApp extends StatelessWidget {
     //GlobalContext.ctx = context;
     return MaterialApp(
       title: 'Authentication Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.red,
       ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
@@ -76,7 +77,6 @@ class MyApp extends StatelessWidget {
               user: state.user,
             );
           }
-          // otherwise show login page
           return LoginPage();
         },
       ),

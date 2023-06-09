@@ -2,12 +2,12 @@
 
 import 'dart:convert';
 
-import 'package:flutter_bloc_authentication/config/locator.dart';
-import 'package:flutter_bloc_authentication/models/login.dart';
-import 'package:flutter_bloc_authentication/models/user.dart';
+import 'package:inmobosco/config/locator.dart';
+import 'package:inmobosco/models/login.dart';
+import 'package:inmobosco/models/user.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:flutter_bloc_authentication/rest/rest.dart';
+import 'package:inmobosco/rest/rest.dart';
 
 @Order(-1)
 @singleton
