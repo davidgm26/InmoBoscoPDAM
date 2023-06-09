@@ -1,0 +1,55 @@
+<div class="contenedor-central">
+  <button class="btn-add-user" (click)="createUser()">Añadir Usuario</button>
+<mat-paginator [length]="totalElements"
+               [pageSize]="pageSize"
+               [pageIndex]="page"
+               [pageSizeOptions]="[5, 10, 20]"
+               (page)="loadData($event.pageIndex, $event.pageSize)"
+               showFirstLastButtons
+               class="table">
+</mat-paginator>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Rol</th>
+      <th>Usuario</th>
+      <th>Correo</th>
+      <th>Telefono</th>
+      <th>Dni</th>
+      <th>Fecha de nacimiento</th>
+      <th></th>
+      <th></th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of userList">
+      <td>{{user.rol}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.phoneNumber }}</td>
+      <td>{{user.dni}}</td>
+      <td>{{user.birthdate | date:'dd/MM/yyyy' }}</td>
+
+      <td>
+        <button class="btn-edit" (click)="editUser(user)">Detalle</button>
+      </td>
+      <td>
+        <button class="btn-delete" (click)="deleteUser(user)">Borrar</button>
+      </td>
+      <td id="border-black">
+        <ng-container *ngIf="user.enabled; else disabledBlock">
+          <button (click)="disableUser(user)" id="status-active">Activado</button>
+        </ng-container>
+        <ng-template #disabledBlock>
+          <button (click)="disableUser(user)" id="status-inactive">Desactivado</button>
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+</div>

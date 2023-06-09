@@ -19,8 +19,6 @@ export class PropertyService {
     }
 
     editProperty(editDto: PropertyRequest,id: number): Observable<PropertyResponse>{
-      debugger;
-      console.log(editDto);
       return this.http.put<PropertyResponse>(`${environment.API_Base_Url}/property/${id}`,editDto);
     }
 

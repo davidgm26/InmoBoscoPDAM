@@ -42,7 +42,11 @@ export class AuthComponent implements OnInit {
       password: this.loginForm.get('password')?.value!
     }
     this.authService.doLogin(loginRequest).subscribe(resp =>{
-        if(resp.rol  == 'USER'){
+      debugger
+      console.log(resp.enabled)
+      //Mirar con Miguel el porque esto no funciona correctamente
+      if(resp.enabled){
+        if(resp.rol  == 'WORKER'){
           this.utils.logged = true;
           localStorage.setItem('token',resp.token);
           localStorage.setItem('refresh_token', resp.refreshToken);
@@ -50,9 +54,11 @@ export class AuthComponent implements OnInit {
         }else{
           this.ngxtoast.error('No tiene autorización para iniciar sesión','Error')
         }
-
+      }else{
+        this.ngxtoast.info('Este usuario se encuentra desactivado', 'Cuenta desactivada')
+      }
     },(error: any) =>{
-      this.ngxtoast.error('Este usuario no se encuentra registrado','Error')
+      this.ngxtoast.error(error.error.message,'Error')
     }
     )
   }

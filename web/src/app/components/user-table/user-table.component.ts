@@ -1,4 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { tap } from 'rxjs';
+import { MatPaginator } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
+import { User } from 'src/app/interfaces/models/userResponse.interface';
+import { UserService } from 'src/app/services/user.service';
+import { CreateUserComponent } from 'src/app/shared/components/create-user/create-user.component';
+import { EditUserFromAdminDialogComponent } from 'src/app/shared/components/edit-user-from-admin-dialog/edit-user-from-admin-dialog.component';
+import { UserConfirmDialogComponent } from 'src/app/shared/components/user-confirm-dialog/user-confirm-dialog.component';
 
 @Component({
   selector: 'app-user-table',
@@ -7,9 +16,70 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserTableComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  page = 0;
+  pageSize = 5;
+  totalElements = 0;
+  userList: User[] = [];
+
+  constructor(
+    private userService: UserService,
+    private dialog: MatDialog,
+    private ngxtoast: ToastrService
+  ) { }
 
   ngOnInit(): void {
+    this.loadData(this.page, this.pageSize)
   }
+
+  ngAfterViewInit() {
+    this.paginator.page
+      .pipe(
+        tap((event) => this.loadData(event.pageIndex, event.pageSize))
+      )
+      .subscribe();
+  }
+  
+
+  loadData(page: number, pageSize: number){
+    this.userService.getAllUsers(page,pageSize).subscribe(resp=>{
+      this.userList = resp.content;
+      this.totalElements = resp.totalElements
+    })
+  }
+  disableUser(user: User){
+    this.userService.changeUserStatus(user.id).subscribe(resp =>{
+    debugger
+    user.enabled = resp.enabled;
+    },(error: any) =>{
+      this.ngxtoast.error('No se ha podido cambiar el estado de esta cuenta','Error')
+    }
+    )
+  }
+
+  deleteUser(user: User){
+    const dialogRef = this.dialog.open(UserConfirmDialogComponent, {
+      data: user
+    });
+
+    dialogRef.componentInstance.confirmed.subscribe(() => {
+      this.loadData(this.page, this.pageSize);
+    });
+  }
+
+  editUser(user: User){
+      this.dialog.open(EditUserFromAdminDialogComponent,{
+      data: user
+    });
+  }
+
+  createUser() {
+    const dialogRef = this.dialog.open(CreateUserComponent, {});
+    dialogRef.afterClosed().subscribe(() => {
+      this.paginator.pageIndex = 0;
+      this.loadData(this.paginator.pageIndex, this.paginator.pageSize);
+    });
+  }
+
 
 }
