@@ -1,20 +1,16 @@
 .table {
   width: 70%;
   border-collapse: collapse;
-  margin: auto;
 }
-
 .table th,
 .table td {
   border: 1px solid #DFE0EB;
   padding: 8px;
   text-align: left;
 }
-
 .table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-
 .table button {
   background-color: #4CAF50;
   border-radius: 25px;
@@ -50,10 +46,18 @@
   background-color: #f44336;
   color: white;
 }
+.contenedor-central{
+  display: flex;
+  flex-direction: column;
+  margin-left: 265px;
+  align-items: center;
+
+}
 .btn-add-user {
-  position: absolute;
-  top: 0;
-  left: 0;
+  width: 100px;
+  margin-top: 87px;
+  transform:translateY(46px);
+  align-self: flex-start;
 }
 
 #status-inactive {

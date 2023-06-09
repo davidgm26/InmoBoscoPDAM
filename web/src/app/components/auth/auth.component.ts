@@ -58,7 +58,7 @@ export class AuthComponent implements OnInit {
         this.ngxtoast.info('Este usuario se encuentra desactivado', 'Cuenta desactivada')
       }
     },(error: any) =>{
-      this.ngxtoast.error('Este usuario no se encuentra registrado','Error')
+      this.ngxtoast.error(error.error.message,'Error')
     }
     )
   }

@@ -1,20 +1,5 @@
-<nav class="navbar">
-  <ul class="nav-menu space-between center">
-    <li>
-      <a routerLink="/admin">Inicio</a>
-    </li>
-    <li>
-      <a routerLink="/perfil">Perfil</a>
-    </li>
-    <li>
-    <li>
-      <a routerLink="/admin/user">Usuarios</a>
-    </li>
-    <li>
-      <a routerLink="/admin/property">Propiedades</a>
-    </li>
-    <li class="logout-option">
-      <a (click)="doLogOut()" class="">Cerrar sesión</a>
-    </li>
-  </ul>
-</nav>
+<div class="contenedor-principal">
+<button mat-button (click)="goToUsers()">Usuarios</button>
+<button mat-button (click)="goToProperties()">Propiedades</button>
+<button mat-button (click)="doLogOut()">Cerrar sesion</button>
+</div>

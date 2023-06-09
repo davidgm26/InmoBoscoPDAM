@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { tap } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/interfaces/models/userResponse.interface';
 import { UserService } from 'src/app/services/user.service';
-import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { CreateUserComponent } from 'src/app/shared/components/create-user/create-user.component';
 import { EditUserFromAdminDialogComponent } from 'src/app/shared/components/edit-user-from-admin-dialog/edit-user-from-admin-dialog.component';
 import { UserConfirmDialogComponent } from 'src/app/shared/components/user-confirm-dialog/user-confirm-dialog.component';
-import { UserTypeSelectionDialogComponent } from 'src/app/shared/components/user-type-selection-dialog/user-type-selection-dialog.component';
 
 @Component({
   selector: 'app-user-table',
@@ -15,6 +15,7 @@ import { UserTypeSelectionDialogComponent } from 'src/app/shared/components/user
   styleUrls: ['./user-table.component.css']
 })
 export class UserTableComponent implements OnInit {
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   page = 0;
   pageSize = 5;
@@ -31,9 +32,19 @@ export class UserTableComponent implements OnInit {
     this.loadData(this.page, this.pageSize)
   }
 
+  ngAfterViewInit() {
+    this.paginator.page
+      .pipe(
+        tap((event) => this.loadData(event.pageIndex, event.pageSize))
+      )
+      .subscribe();
+  }
+  
+
   loadData(page: number, pageSize: number){
     this.userService.getAllUsers(page,pageSize).subscribe(resp=>{
       this.userList = resp.content;
+      this.totalElements = resp.totalElements
     })
   }
   disableUser(user: User){
@@ -62,8 +73,12 @@ export class UserTableComponent implements OnInit {
     });
   }
 
-  createUser(){
-    this.dialog.open(UserTypeSelectionDialogComponent,{});
+  createUser() {
+    const dialogRef = this.dialog.open(CreateUserComponent, {});
+    dialogRef.afterClosed().subscribe(() => {
+      this.paginator.pageIndex = 0;
+      this.loadData(this.paginator.pageIndex, this.paginator.pageSize);
+    });
   }
 
 

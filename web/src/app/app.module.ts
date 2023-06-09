@@ -21,7 +21,6 @@ import { UserConfirmDialogComponent } from './shared/components/user-confirm-dia
 import { EditUserFromAdminDialogComponent } from './shared/components/edit-user-from-admin-dialog/edit-user-from-admin-dialog.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { UserTypeSelectionDialogComponent } from './shared/components/user-type-selection-dialog/user-type-selection-dialog.component';
 import { CreateUserComponent } from './shared/components/create-user/create-user.component';
 
 @NgModule({
@@ -37,7 +36,6 @@ import { CreateUserComponent } from './shared/components/create-user/create-user
     ConfirmationDialogComponent,
     UserConfirmDialogComponent,
     EditUserFromAdminDialogComponent,
-    UserTypeSelectionDialogComponent,
     CreateUserComponent
   ],
   imports: [
