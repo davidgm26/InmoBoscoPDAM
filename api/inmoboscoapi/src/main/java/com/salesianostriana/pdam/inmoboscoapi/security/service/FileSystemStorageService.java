@@ -1,8 +1,8 @@
 package com.salesianostriana.pdam.inmoboscoapi.services;
 
 import com.salesianostriana.pdam.inmoboscoapi.exceptions.StorageException;
-import com.salesianostriana.pdam.inmoboscoapi.others.MediaTypeUrlResource;
-import com.salesianostriana.pdam.inmoboscoapi.others.StorageService;
+import com.salesianostriana.pdam.inmoboscoapi.others.Storage.MediaTypeUrlResource;
+import com.salesianostriana.pdam.inmoboscoapi.others.Storage.StorageService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;

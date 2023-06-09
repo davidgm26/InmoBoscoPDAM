@@ -24,10 +24,15 @@ public class Property {
     private String lon;
     private String name;
     private String title;
-    private int totalMeetBooking;
+
+    @Builder.Default
+    private int totalMeetBooking = 0;
+
     private double price;
     private ArrayList<String> img = new ArrayList<>();
     private double m2;
+
+    @Column(columnDefinition="TEXT", length = 1000)
     private String description;
     private int totalBedRooms;
 

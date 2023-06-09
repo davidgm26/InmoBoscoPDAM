@@ -1,7 +1,7 @@
 package com.salesianostriana.pdam.inmoboscoapi.controllers;
 
 
-import com.salesianostriana.pdam.inmoboscoapi.others.StorageService;
+import com.salesianostriana.pdam.inmoboscoapi.others.Storage.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

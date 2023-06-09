@@ -1,40 +1,42 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.controller;
-
-import com.salesianostriana.pdam.inmoboscoapi.security.dto.JwtUserResponse;
-import com.salesianostriana.pdam.inmoboscoapi.security.dto.LoginRequest;
-import com.salesianostriana.pdam.inmoboscoapi.dto.*;
-import com.salesianostriana.pdam.inmoboscoapi.others.MediaTypeUrlResource;
-import com.salesianostriana.pdam.inmoboscoapi.others.StorageService;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.access.JwtProvider;
+import com.salesianostriana.pdam.inmoboscoapi.security.dto.JwtUserResponse;
+import com.salesianostriana.pdam.inmoboscoapi.dto.*;
+import com.salesianostriana.pdam.inmoboscoapi.others.Storage.MediaTypeUrlResource;
+import com.salesianostriana.pdam.inmoboscoapi.others.Storage.StorageService;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshToken;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshTokenException;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.refresh.RefreshTokenRequest;
 import com.salesianostriana.pdam.inmoboscoapi.security.service.FileService;
 import com.salesianostriana.pdam.inmoboscoapi.security.service.RefreshTokenService;
-import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
+import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import org.springframework.core.io.Resource;
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
+
     private final AuthenticationManager authenticationManager;
 
     private final JwtProvider jwtProvider;
@@ -43,129 +45,17 @@ public class UserController {
 
     private final RefreshTokenService refreshTokenService;
     private final FileService fileService;
-    /*
-        @Operation(summary = "creación de un nuevo usuario")
-        @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                content = {@Content(mediaType = "application/json",
-                        schema = @Schema(implementation = CrearUsuarioRequest.class),
-                        examples = {@ExampleObject(
-                                value = """
-                                            {
-                                                "nombre":"David",
-                                                "apellidos":"García María",
-                                                "password":"12345678",
-                                                "passwordRepeat":"12345678",
-                                                "userName": "Martinex",
-                                                "dni":"85995544X",
-                                                "edad":21,
-                                                "avatar":"https://robohash.org/81.36.52.170.png",\s
-                                                "telefono":"648627905",
-                                                "email": "vivaelsevilla@gmail.com"
-                                            }
-                                        """
-                        )})}
-        )
-        @ApiResponses(value = {
-                @ApiResponse(responseCode = "201",
-                        description = "Se ha creado correctamente el nuevo usuario con rol de usuario",
-                        content = {@Content(mediaType = "application/json",
-                                schema = @Schema(implementation = CrearUsuarioResponse.class),
-                                examples = {@ExampleObject(
-                                        value = """
-                                                {
-                                                    "id": "ac1d8001-8680-169d-8186-8017ac5f0000",
-                                                    "userName": "Martinex",
-                                                    "avatar": "https://robohash.org/81.36.52.170.png",
-                                                    "nombre": "David",
-                                                    "apellido": "García María",
-                                                    "role": "USER",
-                                                    "fechaCreacion": "2023-02-23"
-                                                }
-                                                                                            """
-                                )})}),
-                @ApiResponse(responseCode = "400",
-                        description = "Ha habido algún error al intentar crear al nuevo usuario",
-                        content = @Content)
-        })
-        */
-
-    @PostMapping("/auth/register")
-    public ResponseEntity<CreateUserResponse> createUserwithUserRole(@RequestBody CreateUserRequest createUserRequest) {
-
-        User u = userService.createUserWithUserRole(createUserRequest);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                CreateUserResponse.createUserResponseFromUser(u));
-    }
-
-    @PostMapping("/auth/register/admin")
-    public ResponseEntity<CreateUserResponse> createUserwithWorkerRole(@RequestBody CreateUserRequest createUserRequest) {
-
-        User u = userService.createUserWithWorkerRole(createUserRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
-    }
-
-    @PostMapping("/auth/register/owner")
-    public ResponseEntity<CreateUserResponse> createUserwithOwnerRole(@RequestBody CreateUserRequest createUserRequest) {
-
-        User u = userService.createUserWithOwnerRole(createUserRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
-    }
-
-    @PostMapping("/auth/login")
-    public ResponseEntity<JwtUserResponse> login(@RequestBody LoginRequest loginRequest) {
-        Authentication authentication =
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(
-                                loginRequest.getUsername(), loginRequest.getPassword()
-                        )
-                );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String token = jwtProvider.generateToken(authentication);
-
-        User user = (User) authentication.getPrincipal();
-
-        refreshTokenService.deleteByUser(user);
-
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(JwtUserResponse.of(user, token, refreshToken.getToken()));
-
-    }
 
     @PostMapping("/profile/img")
     public ResponseEntity<?> loadAvatarimg(@RequestPart("file") MultipartFile file, @AuthenticationPrincipal User user) {
 
-        User u = userService.findUserById(user.getId()).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        User u = userService.findUserById(user.getId());
 
         FileResponse fileResponse = fileService.uploadFile(file);
 
         userService.setAvatarToUser(fileResponse.getName(),user);
 
         return ResponseEntity.created(URI.create(fileResponse.getUri())).body(fileResponse);
-
-    }
-
-    @PostMapping("/refreshtoken")
-    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
-        String refreshToken = refreshTokenRequest.getRefreshToken();
-
-        return refreshTokenService.findByToken(refreshToken)
-                .map(refreshTokenService::verify)
-                .map(RefreshToken::getUser)
-                .map(user -> {
-                    String token = jwtProvider.generateToken(user);
-                    refreshTokenService.deleteByUser(user);
-                    RefreshToken refreshToken2 = refreshTokenService.createRefreshToken(user);
-                    return ResponseEntity.status(HttpStatus.CREATED)
-                            .body(JwtUserResponse.builder()
-                                    .token(token)
-                                    .refreshToken(refreshToken2.getToken())
-                                    .build());
-                })
-                .orElseThrow(() -> new RefreshTokenException("Refresh token not found"));
 
     }
 
@@ -183,9 +73,27 @@ public class UserController {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        refreshTokenService.deleteByUser(user);
+        User u = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        refreshTokenService.deleteByUser(u);
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<CreateUserResponse>> getAllUsers() {
+        List<CreateUserResponse> data = userService.findAllUsers();
+        return ResponseEntity.ok(data);
+    }
+
+    @GetMapping("/profile")
+    public CreateUserResponse getUserInfo(@AuthenticationPrincipal User user) {
+        User u = userService.findUserByUsername(user.getUsername()).orElseThrow(() -> new EntityNotFoundException("No se ha encontrado al usuario"));
+        return CreateUserResponse.createUserResponseFromUser(u);
+    }
+
+    @PutMapping("/profile")
+    public CreateUserResponse editUserInfo(@RequestBody EditUserRequest newInfo, @AuthenticationPrincipal User user) {
+        return CreateUserResponse.createUserResponseFromUser(EditUserRequest
+                .createUserFromEditUserRequest(newInfo, user));
+
+    }
 }
