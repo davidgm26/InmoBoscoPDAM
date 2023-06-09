@@ -84,7 +84,7 @@ public class UserController {
         return ResponseEntity.ok(data);
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/me")
     public CreateUserResponse getUserInfo(@AuthenticationPrincipal User user) {
         User u = userService.findUserByUsername(user.getUsername()).orElseThrow(() -> new EntityNotFoundException("No se ha encontrado al usuario"));
         return CreateUserResponse.createUserResponseFromUser(u);
