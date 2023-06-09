@@ -21,6 +21,14 @@ export class NavbarComponent implements OnInit {
     this.authService.doLogOut();  
     this.router.navigate(['login'])
     }
+  
+  goToUsers(){
+    this.router.navigateByUrl("/admin/user")
+  }
+
+  goToProperties(){
+    this.router.navigateByUrl("/admin/property")
+  }
     
   }
 
