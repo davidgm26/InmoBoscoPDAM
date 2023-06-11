@@ -1,4 +1,4 @@
-package com.salesianostriana.pdam.inmoboscoapi.exceptions;
+package com.salesianostriana.pdam.inmoboscoapi.exception;
 
 public class StorageException extends RuntimeException{
 
