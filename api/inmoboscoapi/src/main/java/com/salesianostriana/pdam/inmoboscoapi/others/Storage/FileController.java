@@ -1,4 +1,4 @@
-package com.salesianostriana.pdam.inmoboscoapi.controllers;
+package com.salesianostriana.pdam.inmoboscoapi.others.Storage;
 
 
 import com.salesianostriana.pdam.inmoboscoapi.others.Storage.StorageService;

@@ -5,6 +5,7 @@ import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteriaExtracto
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.AllUserDataDto;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
+import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,9 +47,10 @@ public class AdminController {
     }
 
     @PutMapping("/profile/{id}")
-    public ResponseEntity<AllUserDataDto>editUserFromAdmin(@PathVariable UUID id,@RequestBody CreateUserRequest createUserRequest){
-        return ResponseEntity.ok(AllUserDataDto.fromUser(userService.editUserFindById(id,createUserRequest)));
+    public ResponseEntity<AllUserDataDto>editUserFromAdmin(@PathVariable UUID id, @Valid @RequestBody EditUserRequest editUserRequest){
+        return ResponseEntity.ok(AllUserDataDto.fromUser(userService.editUserFindById(id,editUserRequest)));
     }
+
 
 
 }

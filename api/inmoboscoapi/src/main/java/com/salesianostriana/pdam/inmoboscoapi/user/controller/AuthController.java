@@ -22,6 +22,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -39,7 +40,7 @@ public class AuthController {
 
 
     @PostMapping("/register/worker")
-    public ResponseEntity<CreateUserResponse> createUserwithWorkerRole(@RequestBody CreateUserRequest createUserRequest) {
+    public ResponseEntity<CreateUserResponse> createUserwithWorkerRole(@Valid @RequestBody CreateUserRequest createUserRequest) {
         User u = userService.createUserWithWorkerRole(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
     }
@@ -103,7 +104,7 @@ public class AuthController {
         })
         */
     @PostMapping("/register/user")
-    public ResponseEntity<CreateUserResponse> createUserwithUserRole(@RequestBody CreateUserRequest createUserRequest) {
+    public ResponseEntity<CreateUserResponse> createUserwithUserRole(@Valid @RequestBody CreateUserRequest createUserRequest) {
         User u = userService.createUserWithUserRole(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
     }
