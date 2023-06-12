@@ -12,19 +12,19 @@ import { UtilsService } from '../shared/services/utils.service';
 export class AuthService {
 
   constructor(
-    private htpp:HttpClient,
+    private http:HttpClient,
     private utils: UtilsService,
 
   ) {}
 
   doLogin(loginDto: LoginDto): Observable<LoginResponse>{
-    return this.htpp.post<LoginResponse>(`${environment.API_Base_Url}/auth/login`,loginDto);
+    return this.http.post<LoginResponse>(`${environment.API_Base_Url}/auth/login`,loginDto);
   }
 
   doLogOut(){
     localStorage.removeItem('token');
     localStorage.removeItem('refresh_token');
-    this.utils.logged =  false;
+    localStorage.removeItem('isLoggedIn');
   }
 
 }

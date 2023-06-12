@@ -25,6 +25,7 @@ export interface Property {
   totalBaths:    number;
   propertyType:  string;
   city:          string;
+  owner:         string;
 }
 export interface Pageable {
   sort:       Sort;
