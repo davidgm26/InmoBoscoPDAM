@@ -6,7 +6,7 @@ import { CityResponse } from 'src/app/interfaces/dtos/cityResponse';
 import { Property } from 'src/app/interfaces/models/propertyResponse.interface';
 import { CityService } from 'src/app/services/city.service';
 import { PropertyService } from 'src/app/services/property.service';
-import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from 'src/app/components/admin/confirmation-dialog/confirmation-dialog.component';
 import { EditPropertyDialogComponent } from 'src/app/shared/components/edit-property-dialog/edit-property-dialog.component';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 
