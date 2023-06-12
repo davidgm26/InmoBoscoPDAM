@@ -1,10 +1,13 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.controller;
 
+import com.salesianostriana.pdam.inmoboscoapi.property.dto.PropertyResponse;
+import com.salesianostriana.pdam.inmoboscoapi.property.service.PropertyService;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteria;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteriaExtractor;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.AllUserDataDto;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
+import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +28,7 @@ import java.util.UUID;
 public class AdminController {
 
     private final UserService userService;
+    private final PropertyService propertyService;
 
     @GetMapping("/")
     public ResponseEntity<Page<AllUserDataDto>> getAllUsersInfo(@RequestParam(value = "search", defaultValue = "") String search,
@@ -45,9 +50,18 @@ public class AdminController {
     }
 
     @PutMapping("/profile/{id}")
-    public ResponseEntity<AllUserDataDto>editUserFromAdmin(@PathVariable UUID id,@RequestBody CreateUserRequest createUserRequest){
-        return ResponseEntity.ok(AllUserDataDto.fromUser(userService.editUserFindById(id,createUserRequest)));
+    public ResponseEntity<AllUserDataDto>editUserFromAdmin(@PathVariable UUID id, @Valid @RequestBody EditUserRequest editUserRequest){
+        return ResponseEntity.ok(AllUserDataDto.fromUser(userService.editUserFindById(id,editUserRequest)));
     }
+    @GetMapping("/user/{id}/properties")
+    public ResponseEntity<Page<PropertyResponse>>getAllUserProperties(@PathVariable UUID id, @PageableDefault(size = 5, page = 0) Pageable pageable){
+        return ResponseEntity.ok(propertyService.findPropertiesByUser(userService.findUserById(id).getUsername(),pageable));
+    }
+
+
+
+
+
 
 
 }

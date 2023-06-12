@@ -1,0 +1,27 @@
+.principal{
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+.contenedor-central{
+width: 100%;
+max-height: 100%;
+text-align: center;
+}
+.contenedor-central #img{
+max-width: 35%;
+}
+.title{
+  text-align: center;
+  color: #83D4C0;
+}
+.info {
+  text-align: center;
+  max-width: 75%;
+  margin: 0 auto; /* Agrega esta línea */
+}
+
+.info p {
+  text-align: center;
+}

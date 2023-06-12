@@ -12,28 +12,16 @@ import java.util.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-//@DiscriminatorValue("O")
+@Getter
+@Setter
 @SuperBuilder
 public class Owner extends User {
 
-    @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "owner_id",
-            foreignKey = @ForeignKey(name = "FK_LIKES_USER")),
-            inverseJoinColumns = @JoinColumn(name = "property_id",
-                    foreignKey = @ForeignKey(name = "FK_LIKES_PROPERTY")),
-            name = "likes"
-    )
-    @Builder.Default
-    private List<Property> favourites = new ArrayList<>();
-
-    @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Property> owns = new ArrayList<>();
 
     @OneToOne(mappedBy = "creditCardOwner",cascade = CascadeType.ALL)
     private CreditCard creditCard;
-
-
-
 
 
 

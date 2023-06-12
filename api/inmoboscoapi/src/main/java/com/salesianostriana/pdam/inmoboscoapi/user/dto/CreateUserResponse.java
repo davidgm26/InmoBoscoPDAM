@@ -16,16 +16,7 @@ import java.util.stream.Collectors;
 @SuperBuilder
 public class CreateUserResponse {
 
-    protected String firstname;
-
-    protected String lastname;
-
-    protected String username;
-    protected String avatar;
-
-    protected String email;
-
-    protected String rol;
+    protected String firstname,lastname,username,avatar,email,rol;
 
     protected UUID id;
 

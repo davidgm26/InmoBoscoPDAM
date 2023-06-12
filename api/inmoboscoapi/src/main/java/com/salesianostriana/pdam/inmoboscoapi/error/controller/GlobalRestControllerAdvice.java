@@ -6,6 +6,7 @@ import com.salesianostriana.pdam.inmoboscoapi.error.impl.ApiValidationSubError;
 import com.salesianostriana.pdam.inmoboscoapi.exception.EmptyPropertyListException;
 import com.salesianostriana.pdam.inmoboscoapi.exception.PropertyNotFoundException;
 import com.salesianostriana.pdam.inmoboscoapi.exception.SameUserNameException;
+import com.salesianostriana.pdam.inmoboscoapi.exception.UserHaveProperties;
 import com.salesianostriana.pdam.inmoboscoapi.security.errorhandling.JwtTokenException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -69,6 +70,16 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({UsernameNotFoundException.class})
     public ResponseEntity<?> handleUserNotExistsException(UsernameNotFoundException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorMessage.of(
+                        HttpStatus.UNAUTHORIZED,
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
+
+    @ExceptionHandler({UserHaveProperties.class})
+    public ResponseEntity<?> handleUserHavePropertiesException(UserHaveProperties ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ErrorMessage.of(
                         HttpStatus.UNAUTHORIZED,

@@ -1,4 +1,7 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.controller;
+
+import com.salesianostriana.pdam.inmoboscoapi.property.dto.PropertyResponse;
+import com.salesianostriana.pdam.inmoboscoapi.property.service.PropertyService;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.access.JwtProvider;
 import com.salesianostriana.pdam.inmoboscoapi.security.dto.JwtUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.dto.*;
@@ -14,6 +17,9 @@ import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,9 +30,11 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
+
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -35,6 +43,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    private final PropertyService propertyService;
     private final UserService userService;
 
     private final AuthenticationManager authenticationManager;
@@ -53,15 +62,15 @@ public class UserController {
 
         FileResponse fileResponse = fileService.uploadFile(file);
 
-        userService.setAvatarToUser(fileResponse.getName(),user);
+        userService.setAvatarToUser(fileResponse.getName(), user);
 
         return ResponseEntity.created(URI.create(fileResponse.getUri())).body(fileResponse);
 
     }
 
     @GetMapping("/profile/img")
-    public ResponseEntity<Resource> getUserImg(@AuthenticationPrincipal User user){
-        User user1 = userService.findUserByUsername(user.getUsername()).orElseThrow(()-> new EntityNotFoundException("User not found"));
+    public ResponseEntity<Resource> getUserImg(@AuthenticationPrincipal User user) {
+        User user1 = userService.findUserByUsername(user.getUsername());
 
         MediaTypeUrlResource resource =
                 (MediaTypeUrlResource) storageService.loadAsResource(user1.getAvatar());
@@ -73,7 +82,7 @@ public class UserController {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
-        User u = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User u = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         refreshTokenService.deleteByUser(u);
         return ResponseEntity.noContent().build();
     }
@@ -86,14 +95,17 @@ public class UserController {
 
     @GetMapping("/profile")
     public CreateUserResponse getUserInfo(@AuthenticationPrincipal User user) {
-        User u = userService.findUserByUsername(user.getUsername()).orElseThrow(() -> new EntityNotFoundException("No se ha encontrado al usuario"));
-        return CreateUserResponse.createUserResponseFromUser(u);
+        return CreateUserResponse.createUserResponseFromUser(userService.findUserByUsername(user.getUsername()));
     }
 
     @PutMapping("/profile")
-    public CreateUserResponse editUserInfo(@RequestBody EditUserRequest newInfo, @AuthenticationPrincipal User user) {
-        return CreateUserResponse.createUserResponseFromUser(EditUserRequest
-                .createUserFromEditUserRequest(newInfo, user));
+    public CreateUserResponse editUserInfo(@Valid @RequestBody EditUserRequest newInfo, @AuthenticationPrincipal User user) {
+        return CreateUserResponse.createUserResponseFromUser(EditUserRequest.createUserFromEditUserRequest(newInfo, userService.findUserById(user.getId())));
+  }
 
+    @GetMapping("/me/properties/")
+    public Page<PropertyResponse> getAllPropertiesFromUser(@AuthenticationPrincipal User user,@PageableDefault(size = 5, page = 0) Pageable pageable){
+        return propertyService.findPropertiesByUser(user.getUsername(), pageable);
     }
+
 }
