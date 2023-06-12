@@ -13,6 +13,7 @@
         <th>Habitaciones</th>
         <th>Ciudad</th>
         <th>Tipo</th>
+        <th>Dueño</th>
         <th></th>
         <th></th>
       </tr>
@@ -21,12 +22,14 @@
       <tr *ngFor="let property of propertyList">
         <td>{{property.id}}</td>
         <td>{{ property.name }}</td>
-        <td>{{ property.description }}</td>
+        <td class="desc">{{ property.description }}</td>
         <td>{{ property.price }}</td>
         <td>{{ property.totalBaths }}</td>
         <td>{{ property.totalBedRooms }}</td>
         <td>{{ property.city}}</td>
         <td>{{ property.propertyType}}</td>
+        <td>{{ property.owner}}</td>
+
 
         <td>
           <button class="btn-edit" (click)="editProperty(property)">Editar</button>

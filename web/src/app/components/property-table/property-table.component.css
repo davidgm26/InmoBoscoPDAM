@@ -1,12 +1,18 @@
 .table {
-  width: 70%;
+  min-width: 70%;
+  max-width: 70%;
   border-collapse: collapse;
+  max-height: 90vh;
+  overflow: auto;
 }
+
 .table th,
 .table td {
   border: 1px solid #DFE0EB;
   padding: 8px;
   text-align: left;
+  max-height: 100px;
+  overflow: auto;
 }
 .table tr:nth-child(even) {
   background-color: #f2f2f2;
@@ -29,21 +35,33 @@
   color: white;
   border: 4px solid #727A7C;
 }
+
 .table .btn-edit:hover {
   background-color: #727A7C;
   color: white;
 }
+
 .table .btn-delete {
   background-color: #f44336;
   border: 2px solid #f44336;
 }
+
 .table .btn-delete:hover {
   background-color: #f44336;
   color: white;
 }
-.contenedor-central{
+
+.contenedor-central {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 87px;
+  max-height: 100%;
+}
+.table .desc {
+  max-height: 100px;
+  max-width: 800px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

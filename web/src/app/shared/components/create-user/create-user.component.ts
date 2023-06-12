@@ -15,9 +15,15 @@ const DNI_REGEX = /^\d{8}[A-HJ-NP-TV-Z]$/;
   styleUrls: ['./create-user.component.css']
 })
 export class CreateUserComponent implements OnInit {
-
   @Output() confirmed = new EventEmitter<void>();
-  
+
+  date = new Date();
+  maxDateNgStruct = {
+    year: this.date.getFullYear(),
+    month: this.date.getMonth() + 1,
+    day: this.date.getDate(),
+  };
+
   editForm: FormGroup;
 
   constructor(

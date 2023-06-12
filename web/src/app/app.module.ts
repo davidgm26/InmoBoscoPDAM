@@ -8,12 +8,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { MaterialImportsModule } from './modules/material-imports.module';
 import { AuthComponent } from './components/auth/auth.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { PropertyTableComponent } from './components/property-table/property-table.component';
 import { EditPropertyDialogComponent } from './shared/components/edit-property-dialog/edit-property-dialog.component';
-import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { authInterceptorProviders } from './auth.interceptor';
@@ -22,6 +21,7 @@ import { EditUserFromAdminDialogComponent } from './shared/components/edit-user-
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CreateUserComponent } from './shared/components/create-user/create-user.component';
+import { LandingAdminComponent } from './components/landing-admin/landing-admin.component';
 
 @NgModule({
   declarations: [
@@ -31,12 +31,12 @@ import { CreateUserComponent } from './shared/components/create-user/create-user
     NavbarComponent,
     PropertyTableComponent,
     EditPropertyDialogComponent,
-    AdminIndexComponent,
     UserTableComponent,
     ConfirmationDialogComponent,
     UserConfirmDialogComponent,
     EditUserFromAdminDialogComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    LandingAdminComponent
   ],
   imports: [
     BrowserModule,

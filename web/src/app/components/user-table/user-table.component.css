@@ -58,7 +58,13 @@
   margin-top: 87px;
   transform:translateY(46px);
   align-self: flex-start;
+  background-color: #2E9CBF;
+  border: #2E9CBF 50px;
+  border-radius: 50px;
+  color: white;
+  padding: 8px;
 }
+
 
 #status-inactive {
   background-color: red;
