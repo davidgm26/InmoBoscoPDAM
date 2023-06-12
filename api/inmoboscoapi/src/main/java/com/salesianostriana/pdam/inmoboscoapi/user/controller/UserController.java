@@ -1,5 +1,7 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.controller;
 
+import com.salesianostriana.pdam.inmoboscoapi.property.dto.PropertyResponse;
+import com.salesianostriana.pdam.inmoboscoapi.property.service.PropertyService;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.access.JwtProvider;
 import com.salesianostriana.pdam.inmoboscoapi.security.dto.JwtUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.dto.*;
@@ -15,6 +17,9 @@ import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +43,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    private final PropertyService propertyService;
     private final UserService userService;
 
     private final AuthenticationManager authenticationManager;
@@ -95,7 +101,11 @@ public class UserController {
     @PutMapping("/profile")
     public CreateUserResponse editUserInfo(@Valid @RequestBody EditUserRequest newInfo, @AuthenticationPrincipal User user) {
         return CreateUserResponse.createUserResponseFromUser(EditUserRequest.createUserFromEditUserRequest(newInfo, userService.findUserById(user.getId())));
+  }
 
-
+    @GetMapping("/me/properties/")
+    public Page<PropertyResponse> getAllPropertiesFromUser(@AuthenticationPrincipal User user,@PageableDefault(size = 5, page = 0) Pageable pageable){
+        return propertyService.findPropertiesByUser(user.getUsername(), pageable);
     }
+
 }

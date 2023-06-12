@@ -6,11 +6,13 @@ import com.salesianostriana.pdam.inmoboscoapi.property.model.Property;
 import com.salesianostriana.pdam.inmoboscoapi.property.service.PropertyService;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteria;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteriaExtractor;
+import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -119,6 +121,7 @@ public class PropertyController {
         propertyService.deleteProperty(id);
         return ResponseEntity.noContent().build();
     }
+
 
 
 }

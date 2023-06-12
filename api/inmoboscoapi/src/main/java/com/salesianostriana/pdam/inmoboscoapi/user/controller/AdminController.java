@@ -1,5 +1,7 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.controller;
 
+import com.salesianostriana.pdam.inmoboscoapi.property.dto.PropertyResponse;
+import com.salesianostriana.pdam.inmoboscoapi.property.service.PropertyService;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteria;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteriaExtractor;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.AllUserDataDto;
@@ -26,6 +28,7 @@ import java.util.UUID;
 public class AdminController {
 
     private final UserService userService;
+    private final PropertyService propertyService;
 
     @GetMapping("/")
     public ResponseEntity<Page<AllUserDataDto>> getAllUsersInfo(@RequestParam(value = "search", defaultValue = "") String search,
@@ -50,6 +53,14 @@ public class AdminController {
     public ResponseEntity<AllUserDataDto>editUserFromAdmin(@PathVariable UUID id, @Valid @RequestBody EditUserRequest editUserRequest){
         return ResponseEntity.ok(AllUserDataDto.fromUser(userService.editUserFindById(id,editUserRequest)));
     }
+    @GetMapping("/user/{id}/properties")
+    public ResponseEntity<Page<PropertyResponse>>getAllUserProperties(@PathVariable UUID id, @PageableDefault(size = 5, page = 0) Pageable pageable){
+        return ResponseEntity.ok(propertyService.findPropertiesByUser(userService.findUserById(id).getUsername(),pageable));
+    }
+
+
+
+
 
 
 

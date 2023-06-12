@@ -1,9 +1,11 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.service;
 
-import com.salesianostriana.pdam.inmoboscoapi.exception.EmptyUserListException;
-import com.salesianostriana.pdam.inmoboscoapi.exception.PasswordNotMatchException;
-import com.salesianostriana.pdam.inmoboscoapi.exception.SameUserNameException;
-import com.salesianostriana.pdam.inmoboscoapi.exception.UserNotFoundException;
+import com.salesianostriana.pdam.inmoboscoapi.Owner.model.Owner;
+import com.salesianostriana.pdam.inmoboscoapi.Owner.repository.OwnerRepository;
+import com.salesianostriana.pdam.inmoboscoapi.Owner.service.OwnerService;
+import com.salesianostriana.pdam.inmoboscoapi.exception.*;
+import com.salesianostriana.pdam.inmoboscoapi.property.dto.PropertyResponse;
+import com.salesianostriana.pdam.inmoboscoapi.property.service.PropertyService;
 import com.salesianostriana.pdam.inmoboscoapi.search.spec.GenericSpecificationBuilder;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteria;
 import com.salesianostriana.pdam.inmoboscoapi.user.UserRole;
@@ -34,6 +36,8 @@ public class UserService {
 
     private final StorageService storageService;
 
+    private final OwnerService ownerService;
+
     public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles) {
 
         User user = User.builder()
@@ -62,7 +66,6 @@ public class UserService {
     }
 
     public void addOwnerRole(UUID id) {
-        ;
         User user = findUserById(id);
         user.addUserRole(UserRole.OWNER);
         save(user);
@@ -108,14 +111,6 @@ public class UserService {
         return CreateUserResponse.createUserResponseFromUser(findUserByUsername(username));
     }
 
-    public Optional<User> editPassword(UUID userId, String newPassword) {
-        return userRepository.findById(userId).map(u -> {
-            u.setPassword(passwordEncoder.encode(newPassword));
-            return userRepository.save(u);
-        }).or(Optional::empty);
-
-    }
-
     public User editPassword(EditUserPassword editUserPassword, User u) {
         if (!passwordEncoder.matches(editUserPassword.getNewPassword(), editUserPassword.getRepeatNewPassword()))
             throw new PasswordNotMatchException();
@@ -127,8 +122,15 @@ public class UserService {
     }
 
     public void deleteUserByID(UUID id) {
-        findUserById(id);
-        userRepository.deleteById(id);
+        Owner o = ownerService.findById(id);
+        if (o.isEnabled()) {
+            if (o.getOwns().isEmpty()) {
+                userRepository.deleteById(id);
+            } else {
+                ownerService.deleteOwnerProperty(id);
+                userRepository.deleteById(id);
+            }
+        }
     }
 
 
@@ -162,6 +164,8 @@ public class UserService {
         return userRepository.save(user);
     }
 }
+
+
 
 
 
