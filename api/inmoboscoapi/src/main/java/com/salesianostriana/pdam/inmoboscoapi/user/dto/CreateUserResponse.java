@@ -16,18 +16,11 @@ import java.util.stream.Collectors;
 @SuperBuilder
 public class CreateUserResponse {
 
-    protected String firstname;
-
-    protected String lastname;
-
-    protected String username;
-    protected String avatar;
-
-    protected String email;
-
-    protected String rol;
+    protected String firstname,lastname,username,avatar,email,rol;
 
     protected UUID id;
+
+    protected boolean enabled;
 
     public static CreateUserResponse createUserResponseFromUser(User u){
         return CreateUserResponse.builder()
@@ -38,6 +31,7 @@ public class CreateUserResponse {
                 .email(u.getEmail())
                 .rol(convertRoleToString(u.getRol()))
                 .id(u.getId())
+                .enabled(u.isEnabled())
                 .build();
     }
 
@@ -46,6 +40,7 @@ public class CreateUserResponse {
                 .map(UserRole::name)
                 .collect(Collectors.joining(","));
     }
+
 
 
 }

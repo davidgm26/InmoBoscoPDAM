@@ -1,5 +1,6 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.model;
 
+import com.salesianostriana.pdam.inmoboscoapi.property.model.Property;
 import com.salesianostriana.pdam.inmoboscoapi.user.UserRole;
 import com.salesianostriana.pdam.inmoboscoapi.others.RoleConverterAttribute;
 import lombok.*;
@@ -41,38 +42,46 @@ public class User implements UserDetails{
             }
     )
     @Column(columnDefinition = "uuid")
-    protected UUID id;
+    private UUID id;
 
     @Convert(converter = RoleConverterAttribute.class)
-    protected EnumSet<UserRole> rol;
+    private EnumSet<UserRole> rol;
 
 
-    protected String firstname;
+    private String firstname;
 
-    protected String lastname;
+    private String lastname;
 
-    protected String username;
-    protected String password;
-    protected String dni;
-    protected String avatar;
-    protected LocalDate birthdate;
-    protected String phoneNumber;
-    protected String email;
+    private String username;
+    private String password;
+    private String dni;
+    private String avatar;
+    private LocalDate birthdate;
+    private String phoneNumber;
+    private String email;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorite_properties",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "property_id")
+    )
+    private List<Property> favoriteProperties = new ArrayList<>();
 
     @CreatedDate
-    protected LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @Builder.Default
-    protected LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
+    private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
 
     @Builder.Default
-    protected boolean accountNonExpired = true;
+    private boolean accountNonExpired = true;
     @Builder.Default
-    protected boolean accountNonLocked = true;
+    private boolean accountNonLocked = true;
     @Builder.Default
-    protected boolean credentialsNonExpired = true;
+    private boolean credentialsNonExpired = true;
     @Builder.Default
-    protected boolean enabled = true;
+    private boolean enabled = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

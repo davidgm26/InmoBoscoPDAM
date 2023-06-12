@@ -25,6 +25,7 @@ public class JwtUserResponse extends CreateUserResponse {
         avatar = createUserResponse.getAvatar();
         email = createUserResponse.getEmail();
         rol = createUserResponse.getRol();
+        enabled = true;
 
     }
 

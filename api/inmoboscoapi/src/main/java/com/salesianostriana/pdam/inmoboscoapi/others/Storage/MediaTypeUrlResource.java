@@ -1,6 +1,6 @@
 package com.salesianostriana.pdam.inmoboscoapi.others.Storage;
 
-import com.salesianostriana.pdam.inmoboscoapi.exceptions.StorageException;
+import com.salesianostriana.pdam.inmoboscoapi.exception.StorageException;
 import org.springframework.core.io.UrlResource;
 import org.apache.tika.Tika;
 

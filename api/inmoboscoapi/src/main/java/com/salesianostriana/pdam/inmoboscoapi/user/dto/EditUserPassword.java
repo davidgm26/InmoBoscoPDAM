@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor @NoArgsConstructor
 public class EditUserPassword {
 
-    protected String newPassword;
+    private String newPassword;
 
-    protected String repeatNewPassword;
+    private String repeatNewPassword;
 
 
 
