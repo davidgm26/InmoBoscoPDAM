@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Editar Usuario</h2>
+<h2 mat-dialog-title>Crear Usuario</h2>
 <mat-dialog-content [formGroup]="editForm" class="form-content">
   <div class="form-row">
     <mat-form-field class="form-field">
@@ -40,6 +40,14 @@
       <input matInput [matDatepicker]="picker" formControlName="birthdate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Rol de usuario</mat-label>
+      <mat-select formControlName="rol">
+        <mat-option value="WORKER">Trabajador</mat-option>
+        <mat-option value="USER">Usuario</mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
 </mat-dialog-content>

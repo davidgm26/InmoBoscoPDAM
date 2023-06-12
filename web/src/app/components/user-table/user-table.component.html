@@ -1,13 +1,13 @@
-<button class="btn-add-user" (click)="createUser()">Añadir Usuario</button>
-
+<div class="contenedor-central">
+  <button class="btn-add-user" (click)="createUser()">Añadir Usuario</button>
 <mat-paginator [length]="totalElements"
                [pageSize]="pageSize"
                [pageIndex]="page"
                [pageSizeOptions]="[5, 10, 20]"
+               (page)="loadData($event.pageIndex, $event.pageSize)"
                showFirstLastButtons
                class="table">
 </mat-paginator>
-
 <table class="table">
   <thead>
     <tr>
@@ -48,3 +48,8 @@
     </tr>
   </tbody>
 </table>
+
+
+
+
+</div>

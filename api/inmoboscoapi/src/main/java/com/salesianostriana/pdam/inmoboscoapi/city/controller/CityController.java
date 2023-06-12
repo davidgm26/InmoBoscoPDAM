@@ -22,7 +22,7 @@ public class CityController {
 
 
     @GetMapping("/")
-    public ResponseEntity<List<CityResponse>>getAll(){
+    public ResponseEntity<List<CityResponse>>getAllCities(){
         return ResponseEntity.ok(cityService.findAll().stream().map(CityResponse::of).collect(Collectors.toList()));
     }
 
