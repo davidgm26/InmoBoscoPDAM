@@ -5,9 +5,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/interfaces/models/userResponse.interface';
 import { UserService } from 'src/app/services/user.service';
-import { CreateUserComponent } from 'src/app/shared/components/create-user/create-user.component';
-import { EditUserFromAdminDialogComponent } from 'src/app/shared/components/edit-user-from-admin-dialog/edit-user-from-admin-dialog.component';
-import { UserConfirmDialogComponent } from 'src/app/shared/components/user-confirm-dialog/user-confirm-dialog.component';
+import { UserConfirmDialogComponent } from '../user-confirm-dialog/user-confirm-dialog.component';
+import { EditUserFromAdminDialogComponent } from '../edit-user-from-admin-dialog/edit-user-from-admin-dialog.component';
+import { CreateUserComponent } from '../create-user/create-user.component';
+
 
 @Component({
   selector: 'app-user-table',
@@ -39,7 +40,7 @@ export class UserTableComponent implements OnInit {
       )
       .subscribe();
   }
-  
+
 
   loadData(page: number, pageSize: number){
     this.userService.getAllUsers(page,pageSize).subscribe(resp=>{
