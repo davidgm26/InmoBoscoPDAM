@@ -74,13 +74,13 @@ public class PropertyService {
     }
 
     public void deleteProperty(Long id){
-        propertyRepository.deleteById(id);
+        Property p = findById(id);
+        p.setOwner(null);
+        propertyRepository.delete(p);
     }
 
     public Page<PropertyResponse> findPropertiesByUser(String username,Pageable pageable){
-
         Page<PropertyResponse> result = propertyRepository.findAllUserProperties(username,pageable);
-
         if (result.isEmpty())
             throw new EmptyUserPropertyList(username);
     return result;
