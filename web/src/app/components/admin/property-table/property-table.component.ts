@@ -4,11 +4,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs';
 import { CityResponse } from 'src/app/interfaces/dtos/cityResponse';
 import { Property } from 'src/app/interfaces/models/propertyResponse.interface';
-import { CityService } from 'src/app/services/city.service';
-import { PropertyService } from 'src/app/services/property.service';
 import { ConfirmationDialogComponent } from 'src/app/components/admin/confirmation-dialog/confirmation-dialog.component';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { EditPropertyDialogComponent } from '../edit-property-dialog/edit-property-dialog.component';
+import { PropertyService } from 'src/app/shared/services/property.service';
+import { CityService } from 'src/app/shared/services/city.service';
 
 @Component({
   selector: 'app-property-table',
