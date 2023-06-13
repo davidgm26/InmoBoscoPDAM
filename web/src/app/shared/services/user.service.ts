@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User, UserResponse } from '../interfaces/models/userResponse.interface';
+import { CreateUserRequest } from 'src/app/interfaces/dtos/createUserRequest';
+import { CreateUserResponse } from 'src/app/interfaces/dtos/createUserResponse';
+import { User, UserResponse } from 'src/app/interfaces/models/userResponse.interface';
+
 import { environment } from 'src/environments/environment';
-import { CreateUserRequest } from '../interfaces/dtos/createUserRequest';
-import { CreateUserResponse } from '../interfaces/dtos/createUserResponse';
+
 
 @Injectable({
   providedIn: 'root'

@@ -3,11 +3,10 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url('../../../assets/background.jpg');
+  background-image: url('../../../../assets/background.jpg');
   background-size: cover;
   background-position: center;
 }
-
 .login-content {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 30px;
@@ -15,27 +14,22 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   width: 300px;
 }
-
 .login-title {
   text-align: center;
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
 }
-
 .login-form {
   display: flex;
   flex-direction: column;
 }
-
 .input-wrapper {
   margin-bottom: 20px;
 }
-
 .login-input {
   width: 100%;
 }
-
 .login-button {
   margin-top: 20px;
 }

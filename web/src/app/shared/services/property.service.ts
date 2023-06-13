@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PropertyResponse } from '../interfaces/models/propertyResponse.interface';
 import { environment } from 'src/environments/environment';
-import { PropertyRequest } from '../interfaces/dtos/propertyDto';
 import { Observable } from 'rxjs';
+import { PropertyResponse } from 'src/app/interfaces/models/propertyResponse.interface';
+import { PropertyRequest } from 'src/app/interfaces/dtos/propertyDto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class PropertyService {
     private http: HttpClient
   ) { }
 
-    getProperties(page: number,pageSize: number){
+    getProperties(page: number,pageSize: number): Observable<PropertyResponse>{
       return this.http.get<PropertyResponse>(`${environment.API_Base_Url}/property/?page=${page}&size=${pageSize}`);
     }
 

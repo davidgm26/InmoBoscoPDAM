@@ -11,7 +11,6 @@ import { ConfirmationDialogComponent } from './components/admin/confirmation-dia
 import { authInterceptorProviders } from './auth.interceptor';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { AuthComponent } from './shared/auth/auth.component';
 import { LandingPageComponent } from './components/admin/landing-page/landing-page.component';
 import { PropertyTableComponent } from './components/admin/property-table/property-table.component';
 import { UserTableComponent } from './components/admin/user-table/user-table.component';
@@ -21,6 +20,10 @@ import { EditPropertyDialogComponent } from './components/admin/edit-property-di
 import { UserConfirmDialogComponent } from './components/admin/user-confirm-dialog/user-confirm-dialog.component';
 import { EditUserFromAdminDialogComponent } from './components/admin/edit-user-from-admin-dialog/edit-user-from-admin-dialog.component';
 import { CreateUserComponent } from './components/admin/create-user/create-user.component';
+import { LoginUserComponent } from './components/user/login-user/login-user.component';
+import { LandingUserComponent } from './components/user/landing-user/landing-user.component';
+import { AuthComponent } from './shared/components/auth/auth.component';
+import { PropertyCardComponent } from './components/user/property-card/property-card.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { CreateUserComponent } from './components/admin/create-user/create-user.
     UserConfirmDialogComponent,
     EditUserFromAdminDialogComponent,
     CreateUserComponent,
-    LandingAdminComponent
+    LandingAdminComponent,
+    LoginUserComponent,
+    LandingUserComponent,
+    PropertyCardComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginDto } from '../interfaces/dtos/loginDto';
+import { LoginDto } from '../../interfaces/dtos/loginDto';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { LoginResponse } from '../interfaces/models/loginResponse.interface';
-import { UtilsService } from '../shared/services/utils.service';
+import { LoginResponse } from '../../interfaces/models/loginResponse.interface';
+import { UtilsService } from './utils.service';
 
 @Injectable({
   providedIn: 'root'

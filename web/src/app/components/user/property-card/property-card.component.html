@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="image-container">
+    <img src="" alt="" onerror="this.src='../../../../assets/ErrorImageProperty.jpg'">
+  </div>
+  <div class="info-container">
+    <h3>{{property.propertyType}}</h3>
+    <div class="detail">
+      <mat-icon class="button-icon">location_on</mat-icon>
+      <h3>{{property.city}}</h3>
+    </div>
+    <h3>{{property.name}}</h3>
+  </div>
+  <div class="details-container">
+    <div class="detail">
+      <mat-icon class="button-icon">bed</mat-icon>
+      <span class="value">{{property.totalBedRooms}}</span>
+    </div>
+    <div class="detail">
+      <mat-icon class="button-icon">bathroom</mat-icon>
+      <span class="value">{{property.totalBaths}}</span>
+    </div>
+    <div class="detail">
+      <mat-icon class="button-icon">crop_free</mat-icon>
+      <span class="value">{{property.m2}}</span>
+    </div>
+  </div>
+  <div class="price-container">
+    <span class="price">{{property.price.toFixed(2)}} €</span>
+  </div>
+</div>

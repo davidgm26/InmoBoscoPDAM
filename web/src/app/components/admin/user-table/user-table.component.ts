@@ -4,10 +4,10 @@ import { tap } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/interfaces/models/userResponse.interface';
-import { UserService } from 'src/app/services/user.service';
 import { UserConfirmDialogComponent } from '../user-confirm-dialog/user-confirm-dialog.component';
 import { EditUserFromAdminDialogComponent } from '../edit-user-from-admin-dialog/edit-user-from-admin-dialog.component';
 import { CreateUserComponent } from '../create-user/create-user.component';
+import { UserService } from 'src/app/shared/services/user.service';
 
 
 @Component({
