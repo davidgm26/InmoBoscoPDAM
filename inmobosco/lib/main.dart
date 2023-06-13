@@ -13,7 +13,6 @@ void main() {
   setupAsyncDependencies();
   configureDependencies();
   
-    
     runApp(BlocProvider<AuthenticationBloc>(
         create: (context) {
           //GlobalContext.ctx = context;

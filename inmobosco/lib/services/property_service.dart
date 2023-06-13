@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:inmobosco/config/locator.dart';
 import 'package:inmobosco/models/property_response.dart';
-import 'package:inmobosco/repositories/inmbueble_repository.dart';
+import 'package:inmobosco/repositories/property_repository.dart';
 import 'package:inmobosco/services/localstorage_service.dart';
 
 @singleton

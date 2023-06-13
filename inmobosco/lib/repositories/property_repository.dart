@@ -11,7 +11,7 @@ const _postLimit = 20;
 class PropertyRepository {
   late RestAuthenticatedClient _client;
 
-  InmuebleRepository() {
+  PropertyRepository() {
     _client = getIt<RestAuthenticatedClient>();
   }
 
