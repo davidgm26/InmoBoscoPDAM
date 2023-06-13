@@ -31,5 +31,14 @@ export class LandingUserComponent implements OnInit {
       }
     )
   }
+  onScroll(): void {
+    this.propertyService
+    .getProperties(++this.page,this.pageSize).subscribe(
+      resp => {
+        this.propertyList = resp.content;
+        this.totalElements = resp.totalElements;
+        this.propertyList.push(...resp.content);
+      })
+  }
 
 }

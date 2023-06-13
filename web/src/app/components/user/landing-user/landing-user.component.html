@@ -1,3 +1,9 @@
+<div
+  infinite-scroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="1000"
+  (scrolled)="onScroll()"
+>
 <div class="property-list">
   <app-property-card *ngFor="let property of propertyList" [property]="property"></app-property-card>
 </div>

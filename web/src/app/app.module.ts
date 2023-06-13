@@ -20,10 +20,11 @@ import { EditPropertyDialogComponent } from './components/admin/edit-property-di
 import { UserConfirmDialogComponent } from './components/admin/user-confirm-dialog/user-confirm-dialog.component';
 import { EditUserFromAdminDialogComponent } from './components/admin/edit-user-from-admin-dialog/edit-user-from-admin-dialog.component';
 import { CreateUserComponent } from './components/admin/create-user/create-user.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LoginUserComponent } from './components/user/login-user/login-user.component';
 import { LandingUserComponent } from './components/user/landing-user/landing-user.component';
-import { AuthComponent } from './shared/components/auth/auth.component';
 import { PropertyCardComponent } from './components/user/property-card/property-card.component';
+import { AuthComponent } from './shared/components/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { PropertyCardComponent } from './components/user/property-card/property-
     HttpClientModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    InfiniteScrollModule,
     ToastrModule.forRoot(),
   ],
   providers: [
