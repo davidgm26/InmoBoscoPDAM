@@ -35,6 +35,7 @@ public class PropertyResponse {
                 .name(p.getName())
                 .title(p.getTitle())
                 .m2(p.getM2())
+                .price(p.getPrice())
                 .description(p.getDescription())
                 .totalBaths(p.getTotalBaths())
                 .totalBedRooms(p.getTotalBedRooms())

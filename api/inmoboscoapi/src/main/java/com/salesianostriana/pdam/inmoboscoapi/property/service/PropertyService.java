@@ -1,5 +1,6 @@
 package com.salesianostriana.pdam.inmoboscoapi.property.service;
 
+import com.salesianostriana.pdam.inmoboscoapi.Owner.repository.OwnerRepository;
 import com.salesianostriana.pdam.inmoboscoapi.city.repository.CityRepository;
 import com.salesianostriana.pdam.inmoboscoapi.exception.EmptyPropertyListException;
 import com.salesianostriana.pdam.inmoboscoapi.exception.EmptyUserListException;
@@ -51,9 +52,22 @@ public class PropertyService {
         return propertyRepository.findById(id).orElseThrow(()-> new PropertyNotFoundException(id));
     }
 
-    public Property createProperty(Property property){
-        return propertyRepository.save(property);
+    public Property createProperty(CreatePropertyRequest propertyRequest){
+            return Property.builder()
+                    .lat(propertyRequest.getLat())
+                    .m2(propertyRequest.getM2())
+                    .lon(propertyRequest.getLon())
+                    .propertyType(typeRepository.findFirstByTypeContainsIgnoreCase(propertyRequest.getPropertyType()))
+                    .name(propertyRequest.getName())
+                    .price(propertyRequest.getPrice())
+                    .title(propertyRequest.getTitle())
+                    .city(cityRepository.findFirstByNameContainsIgnoreCase(propertyRequest.getCity()))
+                    .totalBaths(propertyRequest.getTotalBaths())
+                    .totalBedRooms(propertyRequest.getTotalBedRooms())
+                    .description(propertyRequest.getDescription())
+                    .build();
     }
+
 
     public Property editProperty(CreatePropertyRequest property, Long id){
         return propertyRepository.findById(id).map(prop -> {

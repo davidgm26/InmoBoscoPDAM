@@ -1,0 +1,7 @@
+.property-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  justify-items: center;
+  padding: 120px 50px;
+}

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Property } from 'src/app/interfaces/models/propertyResponse.interface';
-import { PropertyService } from 'src/app/services/property.service';
+import { PropertyService } from 'src/app/shared/services/property.service';
 
 
 @Component({

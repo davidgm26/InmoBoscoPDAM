@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,10 +18,10 @@ export class NavbarComponent implements OnInit {
   }
 
   doLogOut(){
-    this.authService.doLogOut();  
-    this.router.navigate(['login'])
+    this.authService.doLogOut();
+    this.router.navigate(['admin-login'])
     }
-  
+
   goToUsers(){
     this.router.navigateByUrl("/admin/user")
   }
@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
   goToProperties(){
     this.router.navigateByUrl("/admin/property")
   }
-    
+
   }
 
 
