@@ -72,6 +72,7 @@ public class SecurityConfig {
                         .antMatchers("/property/**").hasAnyRole("USER","WORKER")
                         .antMatchers("/admin/**").hasRole("WORKER")
                         .antMatchers("/user/**").hasRole("USER")
+                        .antMatchers("/city/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
