@@ -1,25 +1,22 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { UtilsService } from '../services/utils.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class UserGuard implements CanActivate {
 
   constructor(
     private ngxtoast:ToastrService,
     private router: Router,
-    private authService: AuthService,
-    private utils:UtilsService,
   ){}
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
-    if(isLoggedIn){
+    const rol = localStorage.getItem('rol');
+    if(isLoggedIn && rol?.includes('USER') ){
       return true;
     }else{
       this.router.navigate(['login'])
@@ -28,5 +25,5 @@ export class AuthGuard implements CanActivate {
     }
   }
 
-
+  
 }

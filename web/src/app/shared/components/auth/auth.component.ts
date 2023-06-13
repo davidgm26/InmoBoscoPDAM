@@ -43,13 +43,14 @@ export class AuthComponent implements OnInit {
     }
     this.authService.doLogin(loginRequest).subscribe(resp =>{
       debugger
-      console.log(resp.enabled)
       //Mirar con Miguel el porque esto no funciona correctamente
       if(resp.enabled){
+        localStorage.setItem('rol',resp.rol);
         if(resp.rol  == 'WORKER'){
           localStorage.setItem('token',resp.token);
           localStorage.setItem('refresh_token', resp.refreshToken);
           localStorage.setItem('isLoggedIn', 'true');
+
           this.router.navigate(['home'])
         }else{
           this.ngxtoast.error('No tiene autorización para iniciar sesión','Error')

@@ -43,10 +43,9 @@ export class LoginUserComponent implements OnInit {
       password: this.loginForm.get('password')?.value!
     }
     this.authService.doLogin(loginRequest).subscribe(resp =>{
-      debugger
-      console.log(resp.enabled)
       //Mirar con Miguel el porque esto no funciona correctamente
       if(resp.enabled){
+        localStorage.setItem('rol', resp.rol)
         if(resp.rol.includes("USER")){
           localStorage.setItem('token',resp.token);
           localStorage.setItem('refresh_token', resp.refreshToken);

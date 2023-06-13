@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './shared/guards/auth-guard.guard';
+import { AdminGuard } from './shared/guards/admin-guard.guard';
 import { LandingAdminComponent } from './components/admin/landing-admin/landing-admin.component';
 import { LandingPageComponent } from './components/admin/landing-page/landing-page.component';
 import { PropertyTableComponent } from './components/admin/property-table/property-table.component';
@@ -11,8 +11,8 @@ import { AuthComponent } from './shared/components/auth/auth.component';
 
 const routes: Routes = [
   { path: 'admin-login', component: AuthComponent },
-  { path: 'home', canActivate: [AuthGuard], component: LandingAdminComponent },
-  {path: 'admin', component: LandingPageComponent,canActivate: [AuthGuard],
+  { path: 'home', canActivate: [AdminGuard], component: LandingAdminComponent },
+  {path: 'admin', component: LandingPageComponent,canActivate: [AdminGuard],
     children: [
       { path: 'property', component: PropertyTableComponent },
       { path: 'user', component: UserTableComponent}
