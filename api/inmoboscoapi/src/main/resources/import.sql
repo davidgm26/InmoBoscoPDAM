@@ -12,7 +12,7 @@ INSERT INTO City (id, name) VALUES(1, 'A Coruna'),(2, 'Alava'),(3, 'Albacete'),(
 
 INSERT INTO owner (id) VALUES ('2bd9e760-a11e-5d8f-9641-1c54e79c57a1');
 
-INSERT INTO property (id, lat, lon, name, title, price, m2, description, total_bed_rooms, total_baths, type_id, city_id, owner_id, total_meet_booking, total_visits) VALUES (1, '40.4167754', '-3.7037902', 'Apartamento en el centro', 'Hermoso apartamento cerca de todos los servicios', 1500.0, 80.0, 'Este apartamento luminoso y espacioso se encuentra en el corazón de la ciudad.', 2, 1, 2, 1,'2bd9e760-a11e-5d8f-9641-1c54e79c57a1', 0, 50);
+INSERT INTO property (id, lat, lon, name, title, price, m2, description, total_bed_rooms, total_baths, type_id, city_id, owner_id, total_meet_booking, total_visits) VALUES (1, '40.4167754', '-3.7037902', 'Apartamento en el centro', 'Hermoso apartamento cerca de todos los servicios', 1500.89, 80.0, 'Este apartamento luminoso y espacioso se encuentra en el corazón de la ciudad.', 2, 1, 2, 1,'2bd9e760-a11e-5d8f-9641-1c54e79c57a1', 0, 50);
 
 INSERT INTO property (id, lat, lon, name, title, price, m2, description, total_bed_rooms, total_baths, type_id, city_id, owner_id, total_meet_booking, total_visits) VALUES (2, '41.3850639', '2.1734035', 'Casa de lujo en la playa', 'Espectacular casa con vistas al mar', 2500.0, 150.0, 'Esta impresionante casa ofrece vistas panorámicas al mar y todas las comodidades necesarias.', 4, 3, 1, 23,'2bd9e760-a11e-5d8f-9641-1c54e79c57a1', 0, 500);
 
