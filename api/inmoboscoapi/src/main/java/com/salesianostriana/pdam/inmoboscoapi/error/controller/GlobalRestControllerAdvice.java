@@ -3,10 +3,7 @@ package com.salesianostriana.pdam.inmoboscoapi.error.controller;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.salesianostriana.pdam.inmoboscoapi.error.impl.ApiErrorImpl;
 import com.salesianostriana.pdam.inmoboscoapi.error.impl.ApiValidationSubError;
-import com.salesianostriana.pdam.inmoboscoapi.exception.EmptyPropertyListException;
-import com.salesianostriana.pdam.inmoboscoapi.exception.PropertyNotFoundException;
-import com.salesianostriana.pdam.inmoboscoapi.exception.SameUserNameException;
-import com.salesianostriana.pdam.inmoboscoapi.exception.UserHaveProperties;
+import com.salesianostriana.pdam.inmoboscoapi.exception.*;
 import com.salesianostriana.pdam.inmoboscoapi.security.errorhandling.JwtTokenException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,8 +54,8 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body(ErrorMessage.of(HttpStatus.FORBIDDEN, ex.getMessage(), request.getRequestURI()));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorMessage.of(HttpStatus.UNAUTHORIZED, ex.getMessage(), request.getRequestURI()));
 
     }
 
@@ -70,7 +67,16 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({UsernameNotFoundException.class})
     public ResponseEntity<?> handleUserNotExistsException(UsernameNotFoundException ex, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ErrorMessage.of(
+                        HttpStatus.UNAUTHORIZED,
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
+    @ExceptionHandler({UserNotFoundException.class})
+    public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ErrorMessage.of(
                         HttpStatus.UNAUTHORIZED,
                         ex.getMessage(),
@@ -80,7 +86,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({UserHaveProperties.class})
     public ResponseEntity<?> handleUserHavePropertiesException(UserHaveProperties ex, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorMessage.of(
                         HttpStatus.UNAUTHORIZED,
                         ex.getMessage(),
