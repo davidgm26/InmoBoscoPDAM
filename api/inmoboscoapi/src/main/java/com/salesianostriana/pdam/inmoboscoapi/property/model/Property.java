@@ -31,7 +31,9 @@ public class Property {
     private int totalMeetBooking = 0;
 
     private double price;
-    private ArrayList<String> img = new ArrayList<>();
+
+    private String img;
+
     private double m2;
 
     @Column(columnDefinition="TEXT", length = 1000)
