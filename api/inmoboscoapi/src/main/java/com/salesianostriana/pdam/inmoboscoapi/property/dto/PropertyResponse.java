@@ -25,7 +25,7 @@ public class PropertyResponse {
     private String propertyType;
     private String city;
     private String owner;
-
+    private String img;
     public static PropertyResponse convertPropertyResponseFromProperty(Property p) {
         PropertyResponse.PropertyResponseBuilder builder = PropertyResponse.builder()
                 .id(p.getId())
@@ -38,6 +38,7 @@ public class PropertyResponse {
                 .price(p.getPrice())
                 .description(p.getDescription())
                 .totalBaths(p.getTotalBaths())
+                .img(p.getImg())
                 .totalBedRooms(p.getTotalBedRooms())
                 .propertyType(p.getPropertyType().getType());
 

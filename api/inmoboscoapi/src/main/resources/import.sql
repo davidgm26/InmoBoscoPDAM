@@ -18,7 +18,7 @@ INSERT INTO property (id, lat, lon, name, title, price, m2, description, total_b
 
 INSERT INTO property (id, lat, lon, name, title, price, m2, description, total_bed_rooms, total_baths, type_id, city_id, owner_id, total_meet_booking, total_visits) VALUES (3, '39.4699019', '-0.3773957', 'Piso moderno en el barrio histórico', 'Acogedor piso cerca de lugares históricos', 1200.0, 100.0, 'Este piso moderno y elegante se encuentra en el encantador barrio histórico de la ciudad.', 3, 2, 3, 3,'2bd9e760-a11e-5d8f-9641-1c54e79c57a1', 0, 100);
 
-INSERT INTO property (id,lat, lon, name, title, price, m2, description, total_bed_rooms, total_baths, type_id, city_id,total_meet_booking,total_visits) VALUES (4,'37.3890924', '-5.9844589', 'Casa con jardín amplio', 'Amplia casa, ideal para familias', 3000.0, 200.0, 'Esta espaciosa casa cuenta con un amplio jardín y es perfecta para familias.', 4, 3,1,4,0,10);
+INSERT INTO property (id,lat, lon, name, title, price, m2, description, total_bed_rooms, total_baths, type_id, city_id,total_meet_booking,total_visits,img) VALUES (4,'37.3890924', '-5.9844589', 'Casa con jardín amplio', 'Amplia casa, ideal para familias', 3000.0, 200.0, 'Esta espaciosa casa cuenta con un amplio jardín y es perfecta para familias.', 4, 3,1,4,0,10,'foto1.jpg');
 
 INSERT INTO property (id,lat, lon, name, title, price, m2, description, total_bed_rooms, total_baths, type_id, city_id,total_meet_booking,total_visits) VALUES (5,'43.2630126', '-2.9349852', 'Apartamento en el casco antiguo', 'Encantador apartamento en el corazón de la ciudad', 1800.0, 90.0, 'Este encantador apartamento se encuentra en el pintoresco casco antiguo, cerca de todos los lugares de interés.', 2, 1, 2, 5 ,10,6);
 

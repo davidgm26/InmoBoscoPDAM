@@ -12,7 +12,7 @@ public interface PropertyRepository extends JpaRepository<Property,Long>, JpaSpe
 
     @Query("""
         SELECT new com.salesianostriana.pdam.inmoboscoapi.property.dto.PropertyResponse(p.id, p.lat, p.lon, p.name, p.title, p.price, p.m2,
-        p.description, p.totalBedRooms, p.totalBaths, p.propertyType.type, p.city.name,p.owner.username)
+        p.description, p.totalBedRooms, p.totalBaths, p.propertyType.type, p.city.name,p.owner.username,p.img)
         FROM Property p
         WHERE p.owner.username = ?1
         """)

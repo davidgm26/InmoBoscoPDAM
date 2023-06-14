@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { PropertyResponse } from 'src/app/interfaces/models/propertyResponse.interface';
+import { Property, PropertyResponse } from 'src/app/interfaces/models/propertyResponse.interface';
 import { PropertyRequest } from 'src/app/interfaces/dtos/propertyDto';
 
 @Injectable({
@@ -29,7 +29,4 @@ export class PropertyService {
     deleteProperty(id: number){
       return this.http.delete(`${environment.API_Base_Url}/property/${id}`)
     }
-
-
-
 }
