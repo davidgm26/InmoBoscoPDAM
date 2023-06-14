@@ -16,13 +16,13 @@ import java.util.stream.Collectors;
 @Builder
 public class AllUserDataDto{
 
-    protected UUID id;
-    protected String rol,firstname,lastname,username,password,dni,avatar,phoneNumber,email;
-    protected LocalDate birthdate;
+    private  UUID id;
+    private String rol,firstname,lastname,username,password,dni,avatar,phoneNumber,email;
+    private LocalDate birthdate;
 
-    protected LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
-    protected boolean accountNonLocked,enabled;
+    private boolean accountNonLocked,enabled;
 
     public static AllUserDataDto fromUser(User u){
         return AllUserDataDto.builder()

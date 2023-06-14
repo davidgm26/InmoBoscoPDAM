@@ -10,27 +10,26 @@ import java.util.stream.Collectors;
 
 @Converter
 public class RoleConverterAttribute implements AttributeConverter<EnumSet<UserRole>,String> {
-    private final String SEPARATOR = ", ";
+    private static final String SEPARATOR = ",";
 
     @Override
-    public String convertToDatabaseColumn(EnumSet<UserRole> userRole) {
-        if(!userRole.isEmpty()) {
-            return userRole.stream()
-                    .map(UserRole::name)
-                    .collect(Collectors.joining(SEPARATOR));
+    public String convertToDatabaseColumn(EnumSet<UserRole> attribute) {
+        if (attribute == null || attribute.isEmpty()) {
+            return null;
         }
-        return null;
+        return attribute.stream()
+                .map(UserRole::name)
+                .collect(Collectors.joining(SEPARATOR));
     }
 
     @Override
     public EnumSet<UserRole> convertToEntityAttribute(String dbData) {
-        if(dbData != null) {
-            if(!dbData.isBlank()) {
-                return Arrays.stream(dbData.split(SEPARATOR))
-                        .map(UserRole::valueOf)
-                        .collect(Collectors.toCollection(() -> EnumSet.noneOf(UserRole.class)));
-            }
+        if (dbData == null || dbData.isEmpty()) {
+            return null;
         }
-        return EnumSet.noneOf(UserRole.class);
+        String[] roles = dbData.split(SEPARATOR);
+        return Arrays.stream(roles)
+                .map(UserRole::valueOf)
+                .collect(Collectors.toCollection(() -> EnumSet.noneOf(UserRole.class)));
     }
 }

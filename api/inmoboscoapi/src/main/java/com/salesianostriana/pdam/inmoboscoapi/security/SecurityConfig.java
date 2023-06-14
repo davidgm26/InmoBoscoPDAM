@@ -4,6 +4,7 @@ import com.salesianostriana.pdam.inmoboscoapi.security.jwt.access.JwtAuthenticat
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -61,17 +62,20 @@ public class SecurityConfig {
 
         http.cors(Customizer.withDefaults())
                 .csrf().disable()
-                    .exceptionHandling()
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                        .accessDeniedHandler(jwtAccessDeniedHandler)
-                    .and()
-                        .sessionManagement()
-                            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
-                        .authorizeRequests()
-                        .antMatchers("/property/**").hasAnyRole("USER","WORKER")
-                        .antMatchers("/admin/**").hasRole("WORKER")
-                        .anyRequest().authenticated();
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, ("/property/")).permitAll()
+                .antMatchers("/property/**").hasAnyRole("USER", "WORKER")
+                .antMatchers("/admin/**").hasRole("WORKER")
+                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/city/**").permitAll()
+                .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -83,7 +87,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web -> web.ignoring().antMatchers("/h2-console/**","/auth/**"));
+        return (web -> web.ignoring().antMatchers("/h2-console/**", "/auth/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**","/download/**"));
     }
 
 

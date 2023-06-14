@@ -1,0 +1,20 @@
+
+import 'package:inmobosco/services/property_service.dart';
+import 'package:inmobosco/services/services.dart';
+import 'package:get_it/get_it.dart'; 
+import 'package:injectable/injectable.dart';
+import 'package:inmobosco/config/locator.config.dart'; 
+
+final getIt = GetIt.instance;
+
+
+@InjectableInit()
+void configureDependencies() => getIt.init();
+
+void setupAsyncDependencies() {
+  //var localStorageService = await LocalStorageService.getInstance();
+  //getIt.registerSingleton(localStorageService);
+  getIt.registerSingletonAsync<LocalStorageService>(() => LocalStorageService.getInstance());
+  getIt.registerLazySingleton<PropertyService>(() =>PropertyService());
+
+}
