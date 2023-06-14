@@ -39,7 +39,8 @@ public class Property {
     private int totalBedRooms;
 
     private int totalBaths;
-    private int totalVisits;
+    @Builder.Default
+    private int totalVisits = 0;
 
     @ManyToOne
     @JoinColumn(name = "type_id",foreignKey = @ForeignKey(name = "PROPERTY_TYPE") )

@@ -23,11 +23,11 @@ export class NavbarComponent implements OnInit {
     }
 
   goToUsers(){
-    this.router.navigateByUrl("/admin/user")
+    this.router.navigateByUrl("/admin/users")
   }
 
   goToProperties(){
-    this.router.navigateByUrl("/admin/property")
+    this.router.navigateByUrl("/admin/properties")
   }
 
   }

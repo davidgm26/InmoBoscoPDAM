@@ -1,0 +1,18 @@
+<div class="contenedor-principal">
+  <a routerLink="/home" class="title">
+    <img src="../../../../assets/logo blanco.png" alt="">
+  </a>
+  <div *ngIf="userLogged else elseBlock" id="contenedor-principal">
+    <button mat-button class="icon-button" (click)="goToProfile()">
+      <mat-icon class="button-icon">people</mat-icon>Perfil
+    </button>
+    <button mat-button class="icon-button-logOut"  (click)="doLogOut()">
+      <mat-icon class="button-icon">exit_to_app</mat-icon>Cerrar sesión
+    </button>
+  </div>
+  <ng-template #elseBlock>
+    <button mat-button class="icon-button-logOut" (click)="doLogin()">
+      <mat-icon class="button-icon">exit_to_app</mat-icon>Iniciar sesión
+    </button>
+  </ng-template>
+</div>
