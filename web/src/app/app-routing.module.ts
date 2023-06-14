@@ -8,19 +8,28 @@ import { UserTableComponent } from './components/admin/user-table/user-table.com
 import { LoginUserComponent } from './components/user/login-user/login-user.component';
 import { LandingUserComponent } from './components/user/landing-user/landing-user.component';
 import { AuthComponent } from './shared/components/auth/auth.component';
+import { UserGuard } from './shared/guards/user.guard';
+import { UserprofileComponent } from './components/user/userprofile/userprofile.component';
+import { UserLandingPageComponent } from './components/user/user-landing-page/user-landing-page.component';
 
 const routes: Routes = [
   { path: 'admin-login', component: AuthComponent },
   { path: 'home', canActivate: [AdminGuard], component: LandingAdminComponent },
   {path: 'admin', component: LandingPageComponent,canActivate: [AdminGuard],
     children: [
-      { path: 'property', component: PropertyTableComponent },
-      { path: 'user', component: UserTableComponent}
+      { path: 'properties', component: PropertyTableComponent },
+      { path: 'users', component: UserTableComponent}
     ]
+  },
+  {path: 'index',component: LandingUserComponent, },
+  {path: 'user', component: UserLandingPageComponent,canActivate: [UserGuard],
+  children:[
+    {path: 'me',component:UserprofileComponent },
+  ]
   },
   {path: 'index',component: LandingUserComponent},
   {path: 'login',component: LoginUserComponent},
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: '', redirectTo: 'index', pathMatch: 'full' }
 ];
 
 @NgModule({

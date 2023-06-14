@@ -1,0 +1,36 @@
+.contenedor-principal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: #2E9CBF;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  width: 100%;
+}
+.title{
+   text-align: center;
+   text-decoration: none;
+   color: white;
+   max-width: 100px;
+   padding: 10px;
+}
+.title img{
+  width: 50px;
+}
+.icon-button {
+  display: flex;
+  align-items: center;
+}
+.icon-button-logOut {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+
+}
+.button-icon {
+  margin-right: 8px; /* Ajusta el valor según tus necesidades */
+}
+

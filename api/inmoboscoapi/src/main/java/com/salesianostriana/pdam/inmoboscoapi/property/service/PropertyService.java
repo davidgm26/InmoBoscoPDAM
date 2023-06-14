@@ -53,7 +53,7 @@ public class PropertyService {
     }
 
     public Property createProperty(CreatePropertyRequest propertyRequest){
-            return Property.builder()
+            Property p = Property.builder()
                     .lat(propertyRequest.getLat())
                     .m2(propertyRequest.getM2())
                     .lon(propertyRequest.getLon())
@@ -66,6 +66,7 @@ public class PropertyService {
                     .totalBedRooms(propertyRequest.getTotalBedRooms())
                     .description(propertyRequest.getDescription())
                     .build();
+            return propertyRepository.save(p);
     }
 
 

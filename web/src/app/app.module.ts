@@ -25,6 +25,10 @@ import { LoginUserComponent } from './components/user/login-user/login-user.comp
 import { LandingUserComponent } from './components/user/landing-user/landing-user.component';
 import { PropertyCardComponent } from './components/user/property-card/property-card.component';
 import { AuthComponent } from './shared/components/auth/auth.component';
+import { UsernavbarComponent } from './components/user/usernavbar/usernavbar.component';
+import { UserprofileComponent } from './components/user/userprofile/userprofile.component';
+import { UserLandingPageComponent } from './components/user/user-landing-page/user-landing-page.component';
+import { ImgPipe } from './shared/pipes/img.pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,11 @@ import { AuthComponent } from './shared/components/auth/auth.component';
     LandingAdminComponent,
     LoginUserComponent,
     LandingUserComponent,
-    PropertyCardComponent
+    PropertyCardComponent,
+    UsernavbarComponent,
+    UserprofileComponent,
+    UserLandingPageComponent,
+    ImgPipe
   ],
   imports: [
     BrowserModule,
