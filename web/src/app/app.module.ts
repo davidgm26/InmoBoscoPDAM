@@ -28,6 +28,7 @@ import { AuthComponent } from './shared/components/auth/auth.component';
 import { UsernavbarComponent } from './components/user/usernavbar/usernavbar.component';
 import { UserprofileComponent } from './components/user/userprofile/userprofile.component';
 import { UserLandingPageComponent } from './components/user/user-landing-page/user-landing-page.component';
+import { ImgPipe } from './shared/pipes/img.pipe';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { UserLandingPageComponent } from './components/user/user-landing-page/us
     PropertyCardComponent,
     UsernavbarComponent,
     UserprofileComponent,
-    UserLandingPageComponent
+    UserLandingPageComponent,
+    ImgPipe
   ],
   imports: [
     BrowserModule,

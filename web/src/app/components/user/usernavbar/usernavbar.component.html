@@ -1,8 +1,8 @@
 <div class="contenedor-principal">
-  <a routerLink="/home" class="title">
+  <a routerLink="/index" class="title">
     <img src="../../../../assets/logo blanco.png" alt="">
   </a>
-  <div *ngIf="userLogged else elseBlock" id="contenedor-principal">
+  <div *ngIf="userLogged else elseBlock">
     <button mat-button class="icon-button" (click)="goToProfile()">
       <mat-icon class="button-icon">people</mat-icon>Perfil
     </button>
