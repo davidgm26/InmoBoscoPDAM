@@ -44,6 +44,7 @@ public class User implements UserDetails{
     @Column(columnDefinition = "uuid")
     private UUID id;
 
+
     @Convert(converter = RoleConverterAttribute.class)
     private EnumSet<UserRole> rol;
 
@@ -60,7 +61,7 @@ public class User implements UserDetails{
     private String phoneNumber;
     private String email;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_favorite_properties",
             joinColumns = @JoinColumn(name = "user_id"),

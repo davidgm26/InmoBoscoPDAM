@@ -31,7 +31,9 @@ public class Property {
     private int totalMeetBooking = 0;
 
     private double price;
-    private ArrayList<String> img = new ArrayList<>();
+
+    private String img;
+
     private double m2;
 
     @Column(columnDefinition="TEXT", length = 1000)
@@ -39,7 +41,8 @@ public class Property {
     private int totalBedRooms;
 
     private int totalBaths;
-    private int totalVisits;
+    @Builder.Default
+    private int totalVisits = 0;
 
     @ManyToOne
     @JoinColumn(name = "type_id",foreignKey = @ForeignKey(name = "PROPERTY_TYPE") )
