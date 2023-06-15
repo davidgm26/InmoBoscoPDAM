@@ -25,7 +25,7 @@ services:
       - "5050:80"
 
   api:
-    image: inmoboscoapi:1.0
+    build: ./api/inmoboscoapi
     container_name: backend
     ports:
       - 8080:8080
@@ -38,9 +38,9 @@ services:
       - SPRING_DATASOURCE_PASSWORD=user
 
   frontend:
-    image: inmoboscoapifront:1.0
+    build: ./web
     container_name: angular
     ports:
-      - 80:80
+      - 4200:80
     depends_on:
       - api

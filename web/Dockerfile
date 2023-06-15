@@ -3,6 +3,7 @@ RUN mkdir -p /usr/local/app
 WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
 RUN npm install
+RUN npm install -g @angular-cli
 RUN npm run build --prod
 
 
@@ -10,6 +11,7 @@ FROM  nginx:1.23.1
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build-step /usr/local/app/dist/web /usr/share/nginx/html
 
-
 EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
 
