@@ -34,8 +34,6 @@ API programado en Java con [Spring Boot](https://spring.io/projects/spring-boot)
 - Informes y estadísticas: el sistema generará informes y estadísticas sobre las propiedades, clientes y transacciones, brindando una visión completa del negocio inmobiliario.
 
 - Interfaz intuitiva: la interfaz de usuario ha sido diseñada de forma amigable y fácil de usar, permitiendo una navegación fluida y sencilla.
-
-
 ## Requisitos del sistema para desplegarlo en produccion
 
 - Java 17 o superior.
@@ -49,6 +47,8 @@ API programado en Java con [Spring Boot](https://spring.io/projects/spring-boot)
 - Angular 14.2 (No aseguramos el correcto funcionamiento si se usa una versión inferior.)
 - Java 17 o superior.
 
+
+El Repositorio cuenta con una coleccion de Postman para poder probar todas las peticiones.
 ## Instalación y configuración
 
 1. Clona este repositorio en tu máquina local.
