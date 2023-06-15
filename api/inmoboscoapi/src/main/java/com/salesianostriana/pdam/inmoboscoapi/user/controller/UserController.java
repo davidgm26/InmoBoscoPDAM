@@ -249,8 +249,8 @@ public class UserController {
                     content = @Content),
     })
     @PutMapping("/profile")
-    public CreateUserResponse editUserInfo(@Valid @RequestBody EditUserRequest newInfo, @AuthenticationPrincipal User user) {
-        return CreateUserResponse.createUserResponseFromUser(EditUserRequest.createUserFromEditUserRequest(newInfo, userService.findUserById(user.getId())));
+    public ResponseEntity<CreateUserResponse> editUserInfo(@Valid @RequestBody EditUserRequest newInfo, @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(CreateUserResponse.createUserResponseFromUser(userService.editUser(newInfo,user)));
     }
     @Operation(summary = "Busca las propiedades del usuario loggeado")
     @Parameter(description = "Rescata el usuario del contexto de seguridad", name = "id", required = true)
