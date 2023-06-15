@@ -142,7 +142,7 @@ public class PropertyController {
 
     @GetMapping("/")
     public Page<PropertyResponse> getAllProperties(@RequestParam(value = "search", defaultValue = "") String search,
-                                                   @PageableDefault(size = 5, page = 0) Pageable pageable) {
+                                                   @PageableDefault(size = 10, page = 0) Pageable pageable) {
         List<SearchCriteria> params = SearchCriteriaExtractor.extractSearchCriteriaList(search);
         return propertyService.findAll(params, pageable);
     }
