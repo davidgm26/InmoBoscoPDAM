@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Property } from 'src/app/interfaces/models/propertyResponse.interface';
-import { PropertyService } from 'src/app/services/property.service';
+import { PropertyService } from 'src/app/shared/services/property.service';
 
 @Component({
   selector: 'app-confirmation-dialog',

@@ -26,6 +26,7 @@ export interface Property {
   propertyType:  string;
   city:          string;
   owner:         string;
+  img:           string;
 }
 export interface Pageable {
   sort:       Sort;

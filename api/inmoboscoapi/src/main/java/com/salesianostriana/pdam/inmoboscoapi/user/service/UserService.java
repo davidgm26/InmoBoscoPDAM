@@ -122,15 +122,8 @@ public class UserService {
     }
 
     public void deleteUserByID(UUID id) {
-        Owner o = ownerService.findById(id);
-        if (o.isEnabled()) {
-            if (o.getOwns().isEmpty()) {
-                userRepository.deleteById(id);
-            } else {
-                ownerService.deleteOwnerProperty(id);
-                userRepository.deleteById(id);
-            }
-        }
+        User u = findUserById(id);
+        userRepository.delete(u);
     }
 
 
