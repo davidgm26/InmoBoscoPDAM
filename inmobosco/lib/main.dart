@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inmobosco/bloc/authentication/authentication_bloc.dart';
-import 'package:inmobosco/bloc/authentication/authentication_event.dart';
-import 'package:inmobosco/bloc/authentication/authentication_state.dart';
 import 'package:inmobosco/config/locator.dart';
+import 'package:inmobosco/bloc/blocs.dart';
 import 'package:inmobosco/services/services.dart';
 import 'package:inmobosco/pages/pages.dart';
 
 
 
 void main() {
+  //WidgetsFlutterBinding.ensureInitialized();
+  //await SharedPreferences.getInstance();
   setupAsyncDependencies();
   configureDependencies();
+  //await getIt.allReady();
   
+    
     runApp(BlocProvider<AuthenticationBloc>(
         create: (context) {
           //GlobalContext.ctx = context;
           final authService = getIt<JwtAuthenticationService>();
-          final localStorageService = getIt<LocalStorageService>();
-          return AuthenticationBloc(authService,localStorageService)..add(AppLoaded());
+          return AuthenticationBloc(authService)..add(AppLoaded());
         },
         child: MyApp(),
       ));
@@ -45,6 +46,13 @@ class MyApp extends StatelessWidget {
       authBloc..add(SessionExpiredEvent());
       return _instance;
     });
+    /*return MaterialPageRoute<void>(builder: (context) {
+      return BlocProvider<AuthenticationBloc>(create: (context) {
+        final authService = getIt<JwtAuthenticationService>();
+        return AuthenticationBloc(authService)..add(SessionExpiredEvent());
+      }, 
+      child: MyApp(),);
+    });*/
   }
 
   MyApp() {

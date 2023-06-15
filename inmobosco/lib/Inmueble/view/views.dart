@@ -1,2 +1,1 @@
-export './inmueble_list.dart';
-export './inmueble_page.dart';
+export 'property_list.dart';

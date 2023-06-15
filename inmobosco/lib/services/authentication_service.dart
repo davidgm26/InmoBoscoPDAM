@@ -1,55 +1,58 @@
 
+import 'dart:convert';
+//import 'dart:developer';
+
+import 'package:inmobosco/config/locator.dart';
+import 'package:inmobosco/services/localstorage_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:inmobosco/models/all_user_data.dart';
-import 'package:inmobosco/models/login_response.dart';
-import 'package:inmobosco/repositories/authentication_repository.dart';
-import 'package:inmobosco/repositories/user_repository.dart';
-import 'package:inmobosco/services/services.dart';
+
+//import '../exceptions/exceptions.dart';
+import 'package:inmobosco/models/models.dart';
+import 'package:inmobosco/repositories/repositories.dart';
 
 abstract class AuthenticationService {
-  Future<UserDataResponse?> getCurrentUser();
-  Future<LoginResponse> login(String username, String password);
+  Future<User?> getCurrentUser();
+  Future<User> signInWithEmailAndPassword(String email, String password);
   Future<void> signOut();
 }
-
+@Order(2)
 @singleton
 class JwtAuthenticationService extends AuthenticationService {
+
   late AuthenticationRepository _authenticationRepository;
   late LocalStorageService _localStorageService;
   late UserRepository _userRepository;
 
   JwtAuthenticationService() {
-    _authenticationRepository = GetIt.instance<AuthenticationRepository>();
-    _userRepository = GetIt.instance<UserRepository>();
-    GetIt.I
-        .getAsync<LocalStorageService>()
-        .then((value) => _localStorageService = value);
+    _authenticationRepository = getIt<AuthenticationRepository>();
+    _userRepository = getIt<UserRepository>();
+    GetIt.I.getAsync<LocalStorageService>().then((value) => _localStorageService = value);
   }
 
+
   @override
-  Future<UserDataResponse?> getCurrentUser() async {
-    String token = _localStorageService.getFromDisk("token");
+  Future<User?> getCurrentUser() async {
+    print("get current user");
+    String? token = _localStorageService.getFromDisk("user_token");
     if (token != null) {
-      UserDataResponse response = await _userRepository.me();
+      UserResponse response = await _userRepository.me();
       return response;
     }
     return null;
   }
 
   @override
-  Future<LoginResponse> login(String username , String password) async {
-    LoginResponse response =
-        await _authenticationRepository.doLogin(username,password);
-    _localStorageService.saveToDisk('token', response.token);
-        _localStorageService.saveToDisk('refresh_token', response.refreshToken);
-
-    return response;
+  Future<User> signInWithEmailAndPassword(String email, String password) async {
+    LoginResponse response = await _authenticationRepository.doLogin(email, password);
+    await _localStorageService.saveToDisk('user_token', response.token);
+    return User.fromLoginResponse(response);
   }
 
   @override
   Future<void> signOut() async {
-    await _localStorageService.deleteFromDisk('token');
-    await _localStorageService.deleteFromDisk('refresh_token');
+    print("borrando token");
+    await _localStorageService.deleteFromDisk("user_token");
   }
+
 }

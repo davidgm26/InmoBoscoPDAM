@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inmobosco/bloc/authentication/authentication_bloc.dart';
-import 'package:inmobosco/bloc/authentication/authentication_event.dart';
-import 'package:inmobosco/bloc/authentication/authentication_state.dart';
-import 'package:inmobosco/bloc/login/login_bloc.dart';
-import 'package:inmobosco/bloc/login/login_event.dart';
-import 'package:inmobosco/bloc/login/login_state.dart';
 import 'package:inmobosco/config/locator.dart';
+import '../bloc/blocs.dart';
 import '../services/services.dart';
 
 
@@ -59,10 +54,10 @@ class LoginPage extends StatelessWidget {
 class _AuthForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    //final authService = RepositoryProvider.of<AuthenticationService>(context);
     final authService = getIt<JwtAuthenticationService>();
     final authBloc = BlocProvider.of<AuthenticationBloc>(context);
-    
+
     return Container(
       alignment: Alignment.center,
       child: BlocProvider<LoginBloc>(
@@ -121,8 +116,8 @@ class __SignInFormState extends State<_SignInForm> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                Image.network(
-                      'https://www.salesianos.es/wp-content/uploads/2020/02/icon-300x300.png',
+                Image.asset(
+                      'assets/logo_azul.png',
                       height: 220,
                     ),
                   TextFormField(

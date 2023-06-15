@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:inmobosco/config/locator.dart';
-import 'package:inmobosco/models/property_response.dart';
+import 'package:inmobosco/models/models.dart';
 import 'package:inmobosco/repositories/property_repository.dart';
 import 'package:inmobosco/services/localstorage_service.dart';
 
@@ -20,15 +20,8 @@ class PropertyService {
 
 
   Future<PropertyResponse> getAllProperties(page) async{
-    String? token = _localStorageService.getFromDisk("token");
+    String? token = _localStorageService.getFromDisk("user_token");
     PropertyResponse response = await _propertyRepository.fetchProperties(page,token!);
-
-    return response;
-  }
-
-    Future<Property> getOneProperty(page,id) async{
-    String? token = _localStorageService.getFromDisk("token");
-    Property response = await _propertyRepository.getOneProperty(id,token!);
 
     return response;
   }

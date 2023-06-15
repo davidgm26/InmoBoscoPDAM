@@ -1,10 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:inmobosco/bloc/authentication/authentication_bloc.dart';
-import 'package:inmobosco/bloc/authentication/authentication_event.dart';
-import 'package:inmobosco/models/all_user_data.dart';
 import 'package:inmobosco/rest/rest.dart';
 import 'login_event.dart';
 import 'login_state.dart';
+import '../authentication/authentication.dart';
 import '../../exceptions/exceptions.dart';
 import '../../services/services.dart';
 
@@ -28,10 +26,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(LoginLoading());
     try {
-      final user = await _authenticationService.login(event.email, event.password);
-      User u = User(name:  user.firstname!, email: user.email!, accessToken: user.token!, roles:[user.rol!],refreshToken: user.refreshToken!);
+      final user = await _authenticationService.signInWithEmailAndPassword(event.email, event.password);
       if (user != null) {
-        _authenticationBloc.add(UserLoggedIn(user: u));
+        _authenticationBloc.add(UserLoggedIn(user: user));
         emit(LoginSuccess());
         emit(LoginInitial());
       } else {

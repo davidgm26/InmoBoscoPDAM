@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:inmobosco/models/all_user_data.dart';
-
+import '../../models/models.dart';
 
 abstract class AuthenticationState extends Equatable {
   const AuthenticationState();

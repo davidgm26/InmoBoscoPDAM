@@ -8,6 +8,7 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:inmobosco/repositories/authentication_repository.dart' as _i4;
+import 'package:inmobosco/repositories/property_repository.dart' as _i6;
 import 'package:inmobosco/repositories/user_repository.dart' as _i5;
 import 'package:inmobosco/rest/rest_client.dart' as _i3;
 import 'package:inmobosco/services/authentication_service.dart' as _i8;
@@ -30,6 +31,7 @@ extension GetItInjectableX on _i1.GetIt {
     gh.singleton<_i3.RestClient>(_i3.RestClient());
     gh.singleton<_i4.AuthenticationRepository>(_i4.AuthenticationRepository());
     gh.singleton<_i5.UserRepository>(_i5.UserRepository());
+    gh.singleton<_i6.PropertyRepository>(_i6.PropertyRepository());
     gh.singleton<_i7.PropertyService>(_i7.PropertyService());
     gh.singleton<_i8.JwtAuthenticationService>(_i8.JwtAuthenticationService());
     return this;

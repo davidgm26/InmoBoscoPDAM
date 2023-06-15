@@ -25,9 +25,9 @@ class PropertyResponse {
       this.empty});
 
   PropertyResponse.fromJson(Map<String, dynamic> json) {
-    if (json['Property'] != null) {
+    if (json['content'] != null) {
       content = <Property>[];
-      json['Property'].forEach((v) {
+      json['content'].forEach((v) {
         content!.add(new Property.fromJson(v));
       });
     }
@@ -48,7 +48,7 @@ class PropertyResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.content != null) {
-      data['Property'] = this.content!.map((v) => v.toJson()).toList();
+      data['content'] = this.content!.map((v) => v.toJson()).toList();
     }
     if (this.pageable != null) {
       data['pageable'] = this.pageable!.toJson();
@@ -74,8 +74,8 @@ class Property {
   String? lon;
   String? name;
   String? title;
-  int? price;
-  int? m2;
+  double? price;
+  double? m2;
   String? description;
   int? totalBedRooms;
   int? totalBaths;

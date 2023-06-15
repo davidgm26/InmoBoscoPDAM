@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inmobosco/Inmueble/view/inmueble_list.dart';
-import 'package:inmobosco/bloc/authentication/authentication_bloc.dart';
-import 'package:inmobosco/models/all_user_data.dart';
-import 'package:inmobosco/bloc/inmuebles/inmuebles_bloc.dart';
-import 'package:inmobosco/bloc/inmuebles/inmuebles_event.dart';
+import 'package:inmobosco/Inmueble/view/property_list.dart';
+import 'package:inmobosco/bloc/property/property_bloc.dart';
+import 'package:inmobosco/models/user.dart';
+import 'package:inmobosco/repositories/property_repository.dart';
+import 'package:inmobosco/bloc/authentication/authentication.dart';
 import 'package:inmobosco/services/property_service.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,12 +18,14 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('InmoBosco'),
+        leading:IconButton(icon: Icon(Icons.logout),
+        onPressed: () {
+          BlocProvider.of<AuthenticationBloc>(context).add(UserLoggedOut());
+        }),
         backgroundColor: Colors.red,
       ),
       body:
-      BlocProvider(create: (_) => InmuebleBloc(PropertyService())
-      ..add(InmuebleFetched()),
-      child: PropertyList()),
+      PropertyList(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor:Colors.red,
         unselectedItemColor: Colors.white,

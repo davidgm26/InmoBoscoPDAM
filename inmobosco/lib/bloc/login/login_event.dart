@@ -6,8 +6,8 @@ abstract class LoginEvent extends Equatable {
 }
 
 class LoginInWithEmailButtonPressed extends LoginEvent {
-    final String email;
-    final String password;
+  final String email;
+  final String password;
 
   LoginInWithEmailButtonPressed({required this.email, required this.password});
 

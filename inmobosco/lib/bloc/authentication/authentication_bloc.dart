@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:inmobosco/models/all_user_data.dart';
 import 'package:inmobosco/rest/rest.dart';
 import 'authentication_event.dart';
 import 'authentication_state.dart';
@@ -7,12 +6,10 @@ import '../../services/services.dart';
 
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthenticationService _authenticationService;
-  final LocalStorageService _localStorageService;
 
-  AuthenticationBloc(AuthenticationService authenticationService, LocalStorageService localStorageService)
+  AuthenticationBloc(AuthenticationService authenticationService)
       : assert(authenticationService != null),
         _authenticationService = authenticationService,
-        _localStorageService = localStorageService,
         super(AuthenticationInitial()) {
           on<AppLoaded>(_onAppLoaded);
           on<UserLoggedIn>(_onUserLoggedIn);
@@ -25,14 +22,14 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     AppLoaded event,
     Emitter<AuthenticationState> emit,
   ) async {
+    _authenticationService.signOut();
       emit(AuthenticationLoading());
       try {
         await Future.delayed(Duration(milliseconds: 500)); // a simulated delay
         final currentUser = await _authenticationService.getCurrentUser();
-        User u = User(name:  currentUser!.firstname, email: currentUser.email!, accessToken: _localStorageService.getFromDisk('token'), roles:[currentUser.rol!],refreshToken: _localStorageService.getFromDisk('refresh_token'));
 
         if (currentUser != null) {
-          emit(AuthenticationAuthenticated(user: u));
+          emit(AuthenticationAuthenticated(user: currentUser));
         } else {
           emit(AuthenticationNotAuthenticated());
         }
