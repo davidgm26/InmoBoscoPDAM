@@ -161,6 +161,14 @@ public class UserService {
     public User editUser(EditUserRequest newInfo,User u) {
       return  save(EditUserRequest.createUserFromEditUserRequest(newInfo,u));
     }
+
+    public User createUserFromAdmin(CreateUserFromAdminDTO createUserFromAdminDTO){
+       return save(CreateUserFromAdminDTO.createUserFromAdmin(createUserFromAdminDTO));
+
+
+    }
+
+
 }
 
 
