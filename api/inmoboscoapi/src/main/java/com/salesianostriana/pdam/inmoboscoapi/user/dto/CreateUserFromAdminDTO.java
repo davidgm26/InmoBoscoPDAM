@@ -59,18 +59,4 @@ public class CreateUserFromAdminDTO {
 
     private String rol;
 
-    public static User createUserFromAdmin(CreateUserFromAdminDTO createFromAdminUserRequest){
-        return User.builder()
-                .firstname(createFromAdminUserRequest.firstname)
-                .lastname(createFromAdminUserRequest.lastname)
-                .password(createFromAdminUserRequest.password)
-                .username(createFromAdminUserRequest.username)
-                .dni(createFromAdminUserRequest.getDni())
-                .phoneNumber(createFromAdminUserRequest.phoneNumber)
-                .birthdate(LocalDate.parse(createFromAdminUserRequest.getBirthdate()))
-                .email(createFromAdminUserRequest.getEmail())
-                .rol(EnumSet.of(UserRole.valueOf(createFromAdminUserRequest.getRol().toUpperCase())))
-                .build();
-    }
-
 }
