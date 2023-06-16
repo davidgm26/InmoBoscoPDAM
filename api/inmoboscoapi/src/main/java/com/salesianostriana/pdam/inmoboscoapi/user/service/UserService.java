@@ -161,6 +161,25 @@ public class UserService {
     public User editUser(EditUserRequest newInfo,User u) {
       return  save(EditUserRequest.createUserFromEditUserRequest(newInfo,u));
     }
+
+    public User createUserFromAdmin(CreateUserFromAdminDTO createFromAdminUserRequest){
+        return save(
+                User.builder()
+                        .firstname(createFromAdminUserRequest.getFirstname())
+                        .lastname(createFromAdminUserRequest.getLastname())
+                        .password(passwordEncoder.encode(createFromAdminUserRequest.getPassword()))
+                        .username(createFromAdminUserRequest.getUsername())
+                        .dni(createFromAdminUserRequest.getDni())
+                        .phoneNumber(createFromAdminUserRequest.getPhoneNumber())
+                        .birthdate(LocalDate.parse(createFromAdminUserRequest.getBirthdate()))
+                        .email(createFromAdminUserRequest.getEmail())
+                        .rol(EnumSet.of(UserRole.valueOf(createFromAdminUserRequest.getRol().toUpperCase())))
+                        .build()
+        );
+    }
+
+
+
 }
 
 

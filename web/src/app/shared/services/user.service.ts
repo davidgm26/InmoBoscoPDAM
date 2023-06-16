@@ -40,7 +40,9 @@ export class UserService {
   createWorker(createUserRequest :CreateUserRequest){
     return this.http.post<CreateUserResponse>(`${environment.API_Base_Url}/auth/register/worker`,createUserRequest);
   }
-
+  createUserFromAdmin(createUserRequest: CreateUserRequest){
+    return this.http.post<CreateUserResponse>(`${environment.API_Base_Url}/admin/users/`,createUserRequest);
+  }
 
 
 

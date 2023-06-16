@@ -4,6 +4,8 @@ import com.salesianostriana.pdam.inmoboscoapi.property.service.PropertyService;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteria;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteriaExtractor;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.AllUserDataDto;
+import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserFromAdminDTO;
+import com.salesianostriana.pdam.inmoboscoapi.user.dto.CreateUserResponse;
 import com.salesianostriana.pdam.inmoboscoapi.user.dto.EditUserRequest;
 import com.salesianostriana.pdam.inmoboscoapi.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -161,7 +163,7 @@ public class AdminController {
         userService.deleteUserByID(id);
         return ResponseEntity.noContent().build();
     }
-
+/*
     @Operation(summary = "Edita un usuario buscado por id")
     @Parameter(description = "El id del usuario que se quiere banear", name = "id", required = true)
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -248,6 +250,12 @@ public class AdminController {
     public ResponseEntity<AllUserDataDto> editUserFromAdmin(@PathVariable UUID id, @Valid @RequestBody EditUserRequest editUserRequest) {
         return ResponseEntity.ok(AllUserDataDto.fromUser(userService.editUserFindById(id, editUserRequest)));
     }
+*/
+     @PostMapping("/users/")
+     public ResponseEntity<CreateUserResponse> createUserFromAdmin(@Valid @RequestBody CreateUserFromAdminDTO createUserFromAdminDTO){
+         return ResponseEntity.ok(CreateUserResponse.createUserResponseFromUser(userService.createUserFromAdmin(createUserFromAdminDTO)));
+     }
+
 
     @Operation(summary = "Busca las propiedades de un usuario especifico")
     @Parameter(description = "El id del usuario propietario de las propiedades", name = "id", required = true)
