@@ -26,6 +26,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -42,7 +43,7 @@ public class AuthController {
 
     private final RefreshTokenService refreshTokenService;
 
-
+/*
 
     @Operation(summary = "creación de un nuevo Worker")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -92,7 +93,7 @@ public class AuthController {
     public ResponseEntity<CreateUserResponse> createUserwithWorkerRole(@Valid @RequestBody CreateUserRequest createUserRequest) {
         User u = userService.createUserWithWorkerRole(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
-    }
+    }*/
 
 
     /*Sacar el usuario del contexto de seguridad
@@ -153,9 +154,13 @@ public class AuthController {
                     content = @Content)
     })
     @PostMapping("/register/user")
-    public ResponseEntity<CreateUserResponse> createUserwithUserRole(@Valid @RequestBody CreateUserRequest createUserRequest) {
-        User u = userService.createUserWithUserRole(createUserRequest);
+    public ResponseEntity<CreateUserResponse> registerUser(
+            @Valid @RequestPart("user") CreateUserRequest createUserRequest,
+            @RequestPart( value = "file",required=false)MultipartFile file) {
+
+        User u = userService.registerUser(createUserRequest,file);
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.createUserResponseFromUser(u));
+
     }
 
     @Operation(summary = "Inicio de sesion")
