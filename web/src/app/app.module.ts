@@ -29,6 +29,7 @@ import { UsernavbarComponent } from './components/user/usernavbar/usernavbar.com
 import { UserprofileComponent } from './components/user/userprofile/userprofile.component';
 import { UserLandingPageComponent } from './components/user/user-landing-page/user-landing-page.component';
 import { ImgPipe } from './shared/pipes/img.pipe';
+import { RegisterFormComponent } from './shared/components/register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ImgPipe } from './shared/pipes/img.pipe';
     UsernavbarComponent,
     UserprofileComponent,
     UserLandingPageComponent,
-    ImgPipe
+    ImgPipe,
+    RegisterFormComponent
   ],
   imports: [
     BrowserModule,

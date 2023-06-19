@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.time.LocalDate;
@@ -39,7 +40,42 @@ public class UserService {
 
     private final OwnerService ownerService;
 
-    public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles) {
+    public User createUserFromAdmin(CreateUserFromAdminDTO createFromAdminUserRequest){
+        return save(
+                User.builder()
+                        .firstname(createFromAdminUserRequest.getFirstname())
+                        .lastname(createFromAdminUserRequest.getLastname())
+                        .password(passwordEncoder.encode(createFromAdminUserRequest.getPassword()))
+                        .username(createFromAdminUserRequest.getUsername())
+                        .dni(createFromAdminUserRequest.getDni())
+                        .phoneNumber(createFromAdminUserRequest.getPhoneNumber())
+                        .birthdate(LocalDate.parse(createFromAdminUserRequest.getBirthdate()))
+                        .email(createFromAdminUserRequest.getEmail())
+                        .rol(EnumSet.of(UserRole.valueOf(createFromAdminUserRequest.getRol().toUpperCase())))
+                        .build()
+        );
+    }
+
+    public User registerUser(CreateUserRequest createUserRequest, MultipartFile file) {
+
+        if (file ==null){
+            User user = User.builder()
+                    .firstname(createUserRequest.getFirstname())
+                    .lastname(createUserRequest.getLastname())
+                    .username(createUserRequest.getUsername())
+                    .password(passwordEncoder.encode(createUserRequest.getPassword()))
+                    .phoneNumber(createUserRequest.getPhoneNumber())
+                    .dni(createUserRequest.getDni())
+                    .avatar("default.jpeg")
+                    .email(createUserRequest.getEmail())
+                    .birthdate(LocalDate.parse(createUserRequest.getBirthdate()))
+                    .rol(EnumSet.of(UserRole.USER))
+                    .build();
+
+            return save(user);
+        }
+        String fileName = storageService.store(file);
+
 
         User user = User.builder()
                 .firstname(createUserRequest.getFirstname())
@@ -48,35 +84,27 @@ public class UserService {
                 .password(passwordEncoder.encode(createUserRequest.getPassword()))
                 .phoneNumber(createUserRequest.getPhoneNumber())
                 .dni(createUserRequest.getDni())
-                .avatar("default.jpeg")
+                .avatar(fileName)
                 .email(createUserRequest.getEmail())
                 .birthdate(LocalDate.parse(createUserRequest.getBirthdate()))
-                .rol(roles)
+                .rol(EnumSet.of(UserRole.USER))
                 .build();
 
         return save(user);
+
+
     }
 
 
     public User save(User u) {
         return userRepository.save(u);
     }
-
-    public User createUserWithWorkerRole(CreateUserRequest createUserRequest) {
-        return createUser(createUserRequest, EnumSet.of(UserRole.WORKER));
-    }
-
     public void addOwnerRole(UUID id) {
         User user = findUserById(id);
         user.addUserRole(UserRole.OWNER);
         save(user);
 
     }
-
-    public User createUserWithUserRole(CreateUserRequest createUserRequest) {
-        return createUser(createUserRequest, EnumSet.of(UserRole.USER));
-    }
-
     public List<CreateUserResponse> findAllUsers() {
         List<User> data = userRepository.findAll();
         return data.stream().map(CreateUserResponse::createUserResponseFromUser).collect(Collectors.toList());
@@ -161,25 +189,6 @@ public class UserService {
     public User editUser(EditUserRequest newInfo,User u) {
       return  save(EditUserRequest.createUserFromEditUserRequest(newInfo,u));
     }
-
-    public User createUserFromAdmin(CreateUserFromAdminDTO createFromAdminUserRequest){
-        return save(
-                User.builder()
-                        .firstname(createFromAdminUserRequest.getFirstname())
-                        .lastname(createFromAdminUserRequest.getLastname())
-                        .password(passwordEncoder.encode(createFromAdminUserRequest.getPassword()))
-                        .username(createFromAdminUserRequest.getUsername())
-                        .dni(createFromAdminUserRequest.getDni())
-                        .phoneNumber(createFromAdminUserRequest.getPhoneNumber())
-                        .birthdate(LocalDate.parse(createFromAdminUserRequest.getBirthdate()))
-                        .email(createFromAdminUserRequest.getEmail())
-                        .rol(EnumSet.of(UserRole.valueOf(createFromAdminUserRequest.getRol().toUpperCase())))
-                        .build()
-        );
-    }
-
-
-
 }
 
 
