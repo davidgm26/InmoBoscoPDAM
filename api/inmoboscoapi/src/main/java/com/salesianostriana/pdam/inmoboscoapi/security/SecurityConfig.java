@@ -70,11 +70,13 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, ("/property/")).permitAll()
+                .antMatchers(HttpMethod.GET, ("/property/**")).permitAll()
                 .antMatchers("/property/**").hasAnyRole("USER", "WORKER")
                 .antMatchers("/admin/**").hasRole("WORKER")
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/city/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
+
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -87,7 +89,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web -> web.ignoring().antMatchers("/h2-console/**", "/auth/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**","/download/**"));
+        return (web -> web.ignoring().antMatchers("/h2-console/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**","/download/**"));
     }
 
 

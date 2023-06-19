@@ -1,0 +1,72 @@
+<div class="contenedor-principal">
+  <div class="register-content">
+    <div class="register-form">
+      <h1 class="register-title">Registro</h1>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+        <div class="form-row">
+          <mat-form-field class="form-field">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="firstname">
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Apellidos</mat-label>
+            <input matInput formControlName="lastname">
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field class="form-field">
+            <mat-label>Nombre de usuario</mat-label>
+            <input matInput formControlName="username">
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>dni</mat-label>
+            <input matInput formControlName="dni">
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field class="register-input" id="password">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+            <mat-icon matSuffix (click)="togglePasswordVisibility()">
+              {{ hidePassword ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+          </mat-form-field>
+          <mat-form-field class="register-input" id="password">
+            <mat-label>Repita la Contraseña</mat-label>
+            <input matInput [type]="hidePassword2 ? 'password' : 'text'" formControlName="passwordRepeat" required>
+            <mat-icon matSuffix (click)="togglePasswordVisibility2()">
+                {{ hidePassword2 ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+        </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field class="form-field">
+            <mat-label>email</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Numero de telefono</mat-label>
+            <input matInput formControlName="phoneNumber">
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field class="form-field" id="password">
+            <mat-label>Fecha de nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="birthdate" [max]="maxDateNgStruct">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <input style="display: none;" (change)="onFileChange($event)" id="fileInput" #fileInput type="file">
+          <label for="fileInput" class="file-upload-label">
+              Subir archivo
+          </label>
+        </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid"
+          class="register-button">
+          Iniciar Sesión
+        </button>
+      </form>
+    </div>
+    <img src="../../../../assets/backgroundUser.jpg" alt="Imagen de ejemplo" class="formulario-imagen">
+  </div>
+</div>

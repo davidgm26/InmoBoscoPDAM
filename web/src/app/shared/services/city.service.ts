@@ -13,8 +13,8 @@ export class CityService {
     private http:HttpClient
     ) { }
 
-    getAllCities():Observable<CityResponse>{
-      return this.http.get<CityResponse>(`${environment.API_Base_Url}/city/`);
+    getAllCities():Observable<CityResponse []>{
+      return this.http.get<CityResponse [] >(`${environment.API_Base_Url}/city/`);
     }
 
 }

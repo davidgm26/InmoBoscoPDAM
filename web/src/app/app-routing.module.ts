@@ -11,6 +11,7 @@ import { AuthComponent } from './shared/components/auth/auth.component';
 import { UserGuard } from './shared/guards/user.guard';
 import { UserprofileComponent } from './components/user/userprofile/userprofile.component';
 import { UserLandingPageComponent } from './components/user/user-landing-page/user-landing-page.component';
+import { RegisterFormComponent } from './shared/components/register-form/register-form.component';
 
 const routes: Routes = [
   { path: 'admin-login', component: AuthComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
     ]
   },
   {path: 'index',component: LandingUserComponent, },
+  {path: 'register', component: RegisterFormComponent},
   {path: 'user', component: UserLandingPageComponent,canActivate: [UserGuard],
   children:[
     {path: 'me',component:UserprofileComponent },
