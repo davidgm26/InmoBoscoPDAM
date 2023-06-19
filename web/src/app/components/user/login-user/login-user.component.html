@@ -18,6 +18,9 @@
               {{ hidePassword ? 'visibility_off' : 'visibility' }}
             </mat-icon>
           </mat-form-field>
+          <p>
+            Si no tiene cuenta, <a routerLink="/register" id="registro">Registrese aquí</a>
+          </p>
         </div>
 
         <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="login-button">

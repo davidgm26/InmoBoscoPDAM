@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CreateUserRequest } from 'src/app/interfaces/dtos/createUserRequest';
@@ -33,13 +33,26 @@ export class UserService {
     return this.http.put<User>(`${environment.API_Base_Url}/admin/profile/${id}`,userDto);
   }
 
-  createUser(createUserRequest :CreateUserRequest):Observable<CreateUserResponse> {
-    return this.http.post<CreateUserResponse>(`${environment.API_Base_Url}/auth/register/user`,createUserRequest);
+
+  createUser(createUserRequest :CreateUserRequest,file?: File):Observable<CreateUserResponse> {
+
+    const formData = new FormData();
+
+    const body = createUserRequest;
+
+    const blobBody = new Blob([JSON.stringify(body)], {
+      type: "application/vnd.api+json",
+    });
+
+    if (file) {
+      formData.append("file",file);
+    }
+    formData.append("user" ,blobBody)
+
+
+    return this.http.post<CreateUserResponse>(`${environment.API_Base_Url}/auth/register/user`,formData);
   }
 
-  createWorker(createUserRequest :CreateUserRequest){
-    return this.http.post<CreateUserResponse>(`${environment.API_Base_Url}/auth/register/worker`,createUserRequest);
-  }
   createUserFromAdmin(createUserRequest: CreateUserRequest){
     return this.http.post<CreateUserResponse>(`${environment.API_Base_Url}/admin/users/`,createUserRequest);
   }
