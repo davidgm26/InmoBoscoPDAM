@@ -1,9 +1,33 @@
 <div class="principal">
   <app-usernavbar></app-usernavbar>
+  <div class="filter-container">
+    <mat-form-field id="property-type-selector">
+      <mat-label>Tipos de Propiedad</mat-label>
+      <mat-select [(value)]="selectedType">
+        <mat-option value="">" "</mat-option>
+        <mat-option value="Casa">Casa</mat-option>
+        <mat-option value="Piso">Piso</mat-option>
+        <mat-option value="Apartamento">Apartamento</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field id="city-selector">
+      <mat-label>Ciudades</mat-label>
+      <mat-select #citySelect  [(value)]="city">
+        <mat-option value="">" "</mat-option>
+        <mat-option *ngFor="let city of cityList" value={{city}}>{{city}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-icon-button id="search-button" (click)="search()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
   <div class="contenedor-central">
     <div infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
       <div class="property-list">
         <app-property-card *ngFor="let property of propertyList" [property]="property"></app-property-card>
+        <p *ngIf="propertyList.length == 0" style="text-align: center">No se encontraron propiedades con estas características.</p> <!-- Aquí está el nuevo mensaje -->
       </div>
     </div>
   </div>
