@@ -316,5 +316,11 @@ public class PropertyController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/filters/")
+    public ResponseEntity<Page<PropertyResponse>> getPropertiesFiltered(@RequestParam Optional<String> cityName,@RequestParam  Optional<String>propertyType,
+                                                                        @PageableDefault(size = 5, page = 0) Pageable pageable) {
+     return ResponseEntity.ok(propertyService.findPropertiesWithFilters(cityName, propertyType,pageable));
+    }
+
 
 }

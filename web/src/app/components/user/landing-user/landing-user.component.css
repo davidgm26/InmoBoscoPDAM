@@ -5,24 +5,30 @@
   justify-items: center;
   padding: 120px 50px;
 }
-.principal{
+
+.principal {
   display: flex;
-  flex-direction: row;
+  flex-direction: column; /* Aquí se modificó row por column */
   height: 100%;
   width: 100%;
+  align-items: center; /* Para alinear los elementos al centro */
 }
-.contenedor-central{
-width: 100%;
-max-height: 100%;
-text-align: center;
+
+.contenedor-central {
+  width: 100%;
+  max-height: 100%;
+  text-align: center;
 }
-.contenedor-central #img{
-max-width: 35%;
+
+.contenedor-central #img {
+  max-width: 35%;
 }
-.title{
+
+.title {
   text-align: center;
   color: #83D4C0;
 }
+
 .info {
   text-align: center;
   max-width: 75%;
@@ -33,3 +39,28 @@ max-width: 35%;
   text-align: center;
 }
 
+::ng-deep .mat-select-panel {
+  max-height: 200px;
+  overflow: auto;
+}
+
+#buscador {
+  margin-top: 96px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin-top: 98px; /* Para asegurarnos de que ocupe todo el espacio disponible en su contenedor */
+}
+
+#property-type-selector,
+#city-selector {
+  width: 30%; /* ajusta este valor a tus necesidades */
+}
+
+#search-button {
+  margin-left: 10px; /* ajusta este valor a tus necesidades */
+}
