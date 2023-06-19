@@ -100,6 +100,13 @@ public class User implements UserDetails{
         rol.remove(role);
     }
 
+    public void addFavouriteProperty(Property p){
+        this.favoriteProperties.add(p);
+    }
+    public void removeFavouriteProperty(Property p){
+        this.favoriteProperties.remove(p);
+    }
+
     @Override
     public String getUsername() {
         return username;

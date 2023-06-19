@@ -1,6 +1,7 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.controller;
 
 import com.salesianostriana.pdam.inmoboscoapi.property.dto.PropertyResponse;
+import com.salesianostriana.pdam.inmoboscoapi.property.model.Property;
 import com.salesianostriana.pdam.inmoboscoapi.property.service.PropertyService;
 import com.salesianostriana.pdam.inmoboscoapi.security.jwt.access.JwtProvider;
 import com.salesianostriana.pdam.inmoboscoapi.security.dto.JwtUserResponse;
@@ -325,8 +326,13 @@ public class UserController {
 
     })
     @GetMapping("/me/properties/")
-    public Page<PropertyResponse> getAllPropertiesFromUser(@AuthenticationPrincipal User user, @PageableDefault(size = 5, page = 0) Pageable pageable) {
-        return propertyService.findPropertiesByUser(user.getUsername(), pageable);
+    public ResponseEntity<Page<PropertyResponse>> getAllPropertiesFromUser(@AuthenticationPrincipal User user, @PageableDefault(size = 5, page = 0) Pageable pageable) {
+        return ResponseEntity.ok(propertyService.findPropertiesByUser(user.getUsername(), pageable));
     }
 
+    @PostMapping("add/property/{id}")
+    public ResponseEntity<PropertyResponse> addFavouriteProperty(@AuthenticationPrincipal User user,@PathVariable Long id){
+        userService.addFavouriteProperty(user,id);
+        return ResponseEntity.ok();
+    }
 }
