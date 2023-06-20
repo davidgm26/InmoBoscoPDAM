@@ -249,7 +249,7 @@ public class UserController {
                     description = "No se ha encontrado al usuario",
                     content = @Content),
     })
-    @PutMapping("/profile")
+    @PutMapping("/profile/")
     public ResponseEntity<CreateUserResponse> editUserInfo(@Valid @RequestBody EditUserRequest newInfo, @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(CreateUserResponse.createUserResponseFromUser(userService.editUser(newInfo, user)));
     }
