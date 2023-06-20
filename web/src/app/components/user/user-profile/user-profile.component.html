@@ -1,0 +1,31 @@
+<div class="profile-container">
+  <div class="avatar-container">
+    <div class="image-container">
+      <img src="{{user.avatar | imgProfile }}" alt="User Avatar" class="avatar">
+      <input type="file" #fileInput style="display: none" (change)="changeImg()" />
+    </div>
+    <button class="avatar-button" (click)="changeImg()">🖊️</button>
+  </div>
+  <div class="user-details">
+    <ul>
+      <li><strong>Nombre:</strong> {{user.firstname}} {{user.lastname}}</li>
+      <li><strong>Usuario:</strong> {{user.username}}</li>
+      <li><strong>Email:</strong> {{user.email}}</li>
+      <li><strong>Rol:</strong> {{user.rol}}</li>
+      <li><strong>Fecha de nacimiento:</strong> {{user.birthdate}}</li>
+      <li><strong>Número de teléfono:</strong> {{user.phoneNumber}}</li>
+    </ul>
+  </div>
+  <h3>Lista de favoritos:</h3>
+  <div class="carousel-container">
+    <div class="carousel-content" [style.transform]="'translateX(' + currentScroll + 'px)'">
+      <app-favourite-property-card *ngFor="let property of favouriteList"
+      [property]="property"
+      (propertyDeleted)="deleteFromFavourites(property.id)"></app-favourite-property-card>
+    </div>
+    <div class="carousel-buttons">
+      <button (click)="scrollLeft()" [disabled]="currentScroll === 0" class="carbutton"><</button>
+      <button (click)="scrollRight()" class="carbutton">></button>
+    </div>
+  </div>
+</div>

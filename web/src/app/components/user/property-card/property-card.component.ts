@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Property } from 'src/app/interfaces/models/propertyResponse.interface';
 import { PropertyService } from 'src/app/shared/services/property.service';
 
@@ -11,7 +12,10 @@ export class PropertyCardComponent implements OnInit {
 
   @Input() property!: Property;
 
-  constructor(propService: PropertyService) { }
+  constructor(
+    private propService: PropertyService,
+    private router:Router
+    ) { }
 
   ngOnInit(): void {
   }
@@ -20,5 +24,8 @@ export class PropertyCardComponent implements OnInit {
     return `http://localhost:8080/download/${property.img}`
   }
 
+  goToDetail(){
+    return this.router.navigate(['property-detail'])
+  }
 
 }

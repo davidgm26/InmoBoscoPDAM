@@ -1,0 +1,23 @@
+<div class="container">
+  <app-usernavbar></app-usernavbar>
+  <div class="property-detail">
+    <img src="{{property.img | img}}" alt="Property Image" class="property-image">
+    <div class="property-info">
+      <h2>{{property.name}}</h2>
+      <h3>{{property.title}}</h3>
+      <p><strong>Precio:</strong> {{property.price}}</p>
+      <p><strong>Área:</strong> {{property.m2}} m2</p>
+      <p><strong>Descripción:</strong> {{property.description}}</p>
+      <p><strong>Dormitorios:</strong> {{property.totalBedRooms}}</p>
+      <p><strong>Baños:</strong> {{property.totalBaths}}</p>
+      <p><strong>Tipo de propiedad:</strong> {{property.propertyType}}</p>
+      <p><strong>Ciudad:</strong> {{property.city}}</p>
+      <p><strong>Propietario:</strong>{{ property.owner == "" ?' En venta': property.owner}}</p>
+      <div *ngIf="userLogged">
+        <button mat-raised-button color="warn" class="fav-button" (click)="makeFavourite()">
+          Añadir a favoritos
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -26,10 +26,15 @@ import { LandingUserComponent } from './components/user/landing-user/landing-use
 import { PropertyCardComponent } from './components/user/property-card/property-card.component';
 import { AuthComponent } from './shared/components/auth/auth.component';
 import { UsernavbarComponent } from './components/user/usernavbar/usernavbar.component';
-import { UserprofileComponent } from './components/user/userprofile/userprofile.component';
 import { UserLandingPageComponent } from './components/user/user-landing-page/user-landing-page.component';
 import { ImgPipe } from './shared/pipes/img.pipe';
 import { RegisterFormComponent } from './shared/components/register-form/register-form.component';
+import { PropertyDetailComponent } from './shared/components/property-detail/property-detail.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { ImgProfilePipe } from './shared/pipes/img-profile.pipe';
+import { DialougUploadImageComponent } from './shared/components/dialoug-upload-image/dialoug-upload-image.component';
+import { FavouritePropertyCardComponent } from './components/user/favourite-property-card/favourite-property-card.component';
+
 
 @NgModule({
   declarations: [
@@ -49,10 +54,14 @@ import { RegisterFormComponent } from './shared/components/register-form/registe
     LandingUserComponent,
     PropertyCardComponent,
     UsernavbarComponent,
-    UserprofileComponent,
     UserLandingPageComponent,
     ImgPipe,
-    RegisterFormComponent
+    RegisterFormComponent,
+    PropertyDetailComponent,
+    UserProfileComponent,
+    ImgProfilePipe,
+    DialougUploadImageComponent,
+    FavouritePropertyCardComponent
   ],
   imports: [
     BrowserModule,

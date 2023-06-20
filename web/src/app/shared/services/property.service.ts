@@ -47,5 +47,15 @@ export class PropertyService {
       return this.http.get<PropertyResponse>(url);
     }
 
+    getPropertyDetail(id: number):Observable<Property>{
+      return this.http.get<Property>(`${environment.API_Base_Url}/property/${id}`);
+    }
+
+    removeFromFavourite(id: number):Observable<PropertyResponse>{
+    return this.http.delete<PropertyResponse>(`${environment.API_Base_Url}/user/favourites/${id}/`);
+    }
+
+
+
 
 }

@@ -1,3 +1,4 @@
+<button mat-raised-button color="warn" (click)="deleteFromFavourites()">Borrar de la lista</button>
 <div class="card" [routerLink]="['/property',property.id]">
   <div class="image-container">
     <img src="{{property.img | img}}"  alt="">
@@ -11,20 +12,9 @@
     <h3>{{property.name}}</h3>
   </div>
   <div class="details-container">
-    <div class="detail">
-      <mat-icon class="button-icon">bed</mat-icon>
-      <span class="value">{{property.totalBedRooms}}</span>
-    </div>
-    <div class="detail">
-      <mat-icon class="button-icon">bathroom</mat-icon>
-      <span class="value">{{property.totalBaths}}</span>
-    </div>
-    <div class="detail">
-      <mat-icon class="button-icon">crop_free</mat-icon>
-      <span class="value">{{property.m2}}</span>
-    </div>
   </div>
   <div class="price-container">
     <span class="price">{{property.price.toFixed(2)}} €</span>
   </div>
 </div>
+
