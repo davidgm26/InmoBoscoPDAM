@@ -29,4 +29,23 @@ export class PropertyService {
     deleteProperty(id: number){
       return this.http.delete(`${environment.API_Base_Url}/property/${id}`)
     }
+
+    filterProperties( page: number, pageSize: number,city?: String, propertyType?: String): Observable<PropertyResponse>{
+      let url = `${environment.API_Base_Url}/property/filters/?`;
+      console.log(pageSize)
+      if (propertyType) {
+        url += `propertyType=${propertyType}&`;
+      }
+
+      if (city) {
+        url += `cityName=${city}&`;
+      }
+
+      // Añade los parámetros de paginación a la URL
+      url += `page=${page}&pageSize=${pageSize}`;
+
+      return this.http.get<PropertyResponse>(url);
+    }
+
+
 }

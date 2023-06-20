@@ -70,7 +70,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, ("/property/")).permitAll()
+                .antMatchers(HttpMethod.GET, ("/property/**")).permitAll()
                 .antMatchers("/property/**").hasAnyRole("USER", "WORKER")
                 .antMatchers("/admin/**").hasRole("WORKER")
                 .antMatchers("/user/**").hasRole("USER")

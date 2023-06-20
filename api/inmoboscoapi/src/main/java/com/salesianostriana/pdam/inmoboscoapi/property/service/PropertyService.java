@@ -21,6 +21,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -100,6 +101,24 @@ public class PropertyService {
             throw new EmptyUserPropertyList(username);
     return result;
 
+    }
+
+    public Page<PropertyResponse> findPropertiesWithFilters(Optional<String> cityName,Optional<String> type, Pageable pageable){
+        if(cityName.isEmpty()&&type.isEmpty()){
+            Page<Property> aux = propertyRepository.findAll(pageable);
+            return aux.map(PropertyResponse::convertPropertyResponseFromProperty);
+        }
+        if(cityName.isEmpty()){
+            Page<Property>aux = propertyRepository.findAllOneSpecificType(type.get(),pageable);
+            return aux.map(PropertyResponse::convertPropertyResponseFromProperty);
+        }else if(type.isEmpty()){
+
+            Page<Property> aux = propertyRepository.findAllByCity(cityName.get(),pageable);
+            return aux.map(PropertyResponse::convertPropertyResponseFromProperty);
+        }else{
+            Page<Property>aux = propertyRepository.findAllPropertiesWithFilters(type.get(),cityName.get(),pageable);
+            return aux.map(PropertyResponse::convertPropertyResponseFromProperty);
+        }
     }
 }
 
