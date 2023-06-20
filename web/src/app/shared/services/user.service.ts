@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CreateUserRequest } from 'src/app/interfaces/dtos/createUserRequest';
 import { CreateUserResponse } from 'src/app/interfaces/dtos/createUserResponse';
+import { Property } from 'src/app/interfaces/models/propertyResponse.interface';
 import { User, UserResponse } from 'src/app/interfaces/models/userResponse.interface';
 
 import { environment } from 'src/environments/environment';
@@ -57,6 +58,12 @@ export class UserService {
     return this.http.post<CreateUserResponse>(`${environment.API_Base_Url}/admin/users/`,createUserRequest);
   }
 
+  markPropertyAsFavourite(propertyId :number){
+    return this.http.post<Property>(`${environment.API_Base_Url}/user/favourites/add/${propertyId}/`,null);
+  }
+  deletePropertyFromFavourite(propertyId :number){
+    return this.http.delete<Property>(`${environment.API_Base_Url}/user/favourites/add/${propertyId}/`);
+  }
 
 
 

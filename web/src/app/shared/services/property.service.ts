@@ -47,5 +47,10 @@ export class PropertyService {
       return this.http.get<PropertyResponse>(url);
     }
 
+    getPropertyDetail(id: number):Observable<Property>{
+      return this.http.get<Property>(`${environment.API_Base_Url}/property/${id}`)
+    }
+
+
 
 }

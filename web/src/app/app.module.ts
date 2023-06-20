@@ -30,6 +30,7 @@ import { UserprofileComponent } from './components/user/userprofile/userprofile.
 import { UserLandingPageComponent } from './components/user/user-landing-page/user-landing-page.component';
 import { ImgPipe } from './shared/pipes/img.pipe';
 import { RegisterFormComponent } from './shared/components/register-form/register-form.component';
+import { PropertyDetailComponent } from './shared/components/property-detail/property-detail.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { RegisterFormComponent } from './shared/components/register-form/registe
     UserprofileComponent,
     UserLandingPageComponent,
     ImgPipe,
-    RegisterFormComponent
+    RegisterFormComponent,
+    PropertyDetailComponent
   ],
   imports: [
     BrowserModule,
