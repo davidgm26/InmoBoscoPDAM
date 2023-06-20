@@ -73,7 +73,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, ("/property/**")).permitAll()
                 .antMatchers("/property/**").hasAnyRole("USER", "WORKER")
                 .antMatchers("/admin/**").hasRole("WORKER")
-                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/user/**").hasAnyRole("USER","WORKER")
                 .antMatchers("/city/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
 

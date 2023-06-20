@@ -191,11 +191,35 @@ public class UserService {
     public User editUser(EditUserRequest newInfo,User u) {
       return  save(EditUserRequest.createUserFromEditUserRequest(newInfo,u));
     }
-    public void addFavouriteProperty(User user, Long id) {
-        Property p =  propertyService.findById(id);
+    public Property addFavouriteProperty(User user, Long id) {
+        Property p = propertyService.findById(id);
+        if(userRepository.existFavourite(user.getId(),id)){
+            throw new PropertyAlredyInListException(id);
+        }
         user.addFavouriteProperty(p);
+        p.getUsers().add(user);
         save(user);
+        return propertyService.save(p);
     }
+
+    public Page<PropertyResponse> getAllFavouritesProperties(User u, Pageable pageable){
+        Page<Property>aux = userRepository.findFavourites(u.getId(),pageable);
+        return aux.map(PropertyResponse::convertPropertyResponseFromProperty);
+    }
+
+    public void deleteFavouriteProperty(User user, Long id) {
+        Property p = propertyService.findById(id);
+        if(!userRepository.existFavourite(user.getId(),id)){
+            throw new PropertyNotFoundInFavouriteListException(id);
+        }
+        user.removeFavouriteProperty(p);
+        p.getUsers().remove(user);
+        save(user);
+        propertyService.save(p);
+    }
+
+
+
 }
 
 

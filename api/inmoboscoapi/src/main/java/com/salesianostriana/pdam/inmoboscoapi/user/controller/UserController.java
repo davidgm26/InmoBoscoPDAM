@@ -251,8 +251,9 @@ public class UserController {
     })
     @PutMapping("/profile")
     public ResponseEntity<CreateUserResponse> editUserInfo(@Valid @RequestBody EditUserRequest newInfo, @AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(CreateUserResponse.createUserResponseFromUser(userService.editUser(newInfo,user)));
+        return ResponseEntity.ok(CreateUserResponse.createUserResponseFromUser(userService.editUser(newInfo, user)));
     }
+
     @Operation(summary = "Busca las propiedades del usuario loggeado")
     @Parameter(description = "Rescata el usuario del contexto de seguridad", name = "id", required = true)
     @ApiResponses(value = {
@@ -330,9 +331,20 @@ public class UserController {
         return ResponseEntity.ok(propertyService.findPropertiesByUser(user.getUsername(), pageable));
     }
 
-    @PostMapping("add/property/{id}")
-    public ResponseEntity<PropertyResponse> addFavouriteProperty(@AuthenticationPrincipal User user,@PathVariable Long id){
-        userService.addFavouriteProperty(user,id);
-        return ResponseEntity.ok();
+    @PostMapping("/favourites/add/{id}/")
+    public ResponseEntity<PropertyResponse> addFavouriteProperty(@AuthenticationPrincipal User user, @PathVariable Long id) {
+        return ResponseEntity.ok(PropertyResponse.convertPropertyResponseFromProperty(userService.addFavouriteProperty(user, id)));
+    }
+
+    @GetMapping("/favourites/")
+    public ResponseEntity<Page<PropertyResponse>> getAllFavouritesProperties(@AuthenticationPrincipal User user, @PageableDefault(size = 5, page = 0) Pageable pageable) {
+        return ResponseEntity.ok(userService.getAllFavouritesProperties(user, pageable));
+    }
+
+    @DeleteMapping("/favourites/{id}/")
+    public ResponseEntity<Page<PropertyResponse>> removeFavouriteProperty(@AuthenticationPrincipal User user, @PageableDefault(size = 5, page = 0) Pageable pageable,
+                                                                          @PathVariable Long id) {
+        userService.deleteFavouriteProperty(user,id);
+        return ResponseEntity.ok(userService.getAllFavouritesProperties(user, pageable));
     }
 }
