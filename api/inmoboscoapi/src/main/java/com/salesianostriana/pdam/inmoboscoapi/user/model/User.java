@@ -1,10 +1,11 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.model;
 
+import com.salesianostriana.pdam.inmoboscoapi.others.RoleConverterAttribute;
 import com.salesianostriana.pdam.inmoboscoapi.property.model.Property;
 import com.salesianostriana.pdam.inmoboscoapi.user.UserRole;
-import com.salesianostriana.pdam.inmoboscoapi.others.RoleConverterAttribute;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedDate;
@@ -61,7 +62,7 @@ public class User implements UserDetails{
     private String phoneNumber;
     private String email;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_favorite_properties",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -93,13 +94,6 @@ public class User implements UserDetails{
                 .collect(Collectors.toList());
     }
 
-    public void addUserRole(UserRole role){
-        rol.add(role);
-    }
-    public void removeRole(UserRole role){
-        rol.remove(role);
-    }
-
     @Override
     public String getUsername() {
         return username;
@@ -128,5 +122,32 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return getId() != null && Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    public void addUserRole(UserRole role){
+        rol.add(role);
+    }
+    public void removeRole(UserRole role){
+        rol.remove(role);
+    }
+
+    public void addFavouriteProperty(Property p){
+        this.favoriteProperties.add(p);
+    }
+    public void removeFavouriteProperty(Property p) {
+        favoriteProperties.removeIf(property -> property.getId() == p.getId());
     }
 }

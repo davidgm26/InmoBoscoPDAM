@@ -5,6 +5,7 @@ import com.salesianostriana.pdam.inmoboscoapi.Owner.repository.OwnerRepository;
 import com.salesianostriana.pdam.inmoboscoapi.Owner.service.OwnerService;
 import com.salesianostriana.pdam.inmoboscoapi.exception.*;
 import com.salesianostriana.pdam.inmoboscoapi.property.dto.PropertyResponse;
+import com.salesianostriana.pdam.inmoboscoapi.property.model.Property;
 import com.salesianostriana.pdam.inmoboscoapi.property.service.PropertyService;
 import com.salesianostriana.pdam.inmoboscoapi.search.spec.GenericSpecificationBuilder;
 import com.salesianostriana.pdam.inmoboscoapi.search.util.SearchCriteria;
@@ -35,10 +36,11 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-
     private final StorageService storageService;
 
     private final OwnerService ownerService;
+
+    private final PropertyService propertyService;
 
     public User createUserFromAdmin(CreateUserFromAdminDTO createFromAdminUserRequest){
         return save(
@@ -189,6 +191,35 @@ public class UserService {
     public User editUser(EditUserRequest newInfo,User u) {
       return  save(EditUserRequest.createUserFromEditUserRequest(newInfo,u));
     }
+    public Property addFavouriteProperty(User user, Long id) {
+        Property p = propertyService.findById(id);
+        if(userRepository.existFavourite(user.getId(),id)){
+            throw new PropertyAlredyInListException(id);
+        }
+        user.addFavouriteProperty(p);
+        p.getUsers().add(user);
+        save(user);
+        return propertyService.save(p);
+    }
+
+    public Page<PropertyResponse> getAllFavouritesProperties(User u, Pageable pageable){
+        Page<Property>aux = userRepository.findFavourites(u.getId(),pageable);
+        return aux.map(PropertyResponse::convertPropertyResponseFromProperty);
+    }
+
+    public void deleteFavouriteProperty(User user, Long id) {
+        Property p = propertyService.findById(id);
+        if(!userRepository.existFavourite(user.getId(),id)){
+            throw new PropertyNotFoundInFavouriteListException(id);
+        }
+        user.removeFavouriteProperty(p);
+        p.getUsers().remove(user);
+        save(user);
+        propertyService.save(p);
+    }
+
+
+
 }
 
 

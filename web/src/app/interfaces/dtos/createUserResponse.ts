@@ -6,5 +6,7 @@ export class CreateUserResponse {
   email!:     string;
   rol!:       string;
   id!:        string;
+  phoneNumber!: string;
+  birthdate!:  Date;
   enabled!:   boolean;
 }

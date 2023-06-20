@@ -1,0 +1,25 @@
+.property-detail {
+  display: flex;
+  margin: 20px;
+  margin-top: 110px;
+}
+
+.property-image {
+  width: 50%;
+  object-fit: cover;
+}
+
+.property-info {
+  padding: 20px;
+}
+.container{
+  max-height: 100%;
+}
+.fav-button{
+  width: 150px;
+  height: 50px;
+  color: black;
+  background-color: rgb(253, 253, 104);
+  border: 1px yellow;
+  border-radius: 5px;
+}

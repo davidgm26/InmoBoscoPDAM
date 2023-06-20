@@ -2,9 +2,8 @@ package com.salesianostriana.pdam.inmoboscoapi.Owner.service;
 
 import com.salesianostriana.pdam.inmoboscoapi.Owner.model.Owner;
 import com.salesianostriana.pdam.inmoboscoapi.Owner.repository.OwnerRepository;
-import com.salesianostriana.pdam.inmoboscoapi.exception.UserHaveProperties;
+import com.salesianostriana.pdam.inmoboscoapi.exception.UserHavePropertiesException;
 import com.salesianostriana.pdam.inmoboscoapi.user.repository.UserRepository;
-import com.salesianostriana.pdam.inmoboscoapi.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ public class OwnerService {
 
 
     public Owner findById(UUID id){
-        return ownerRepository.findById(id).orElseThrow(UserHaveProperties::new);
+        return ownerRepository.findById(id).orElseThrow(UserHavePropertiesException::new);
     }
 
     public void deleteOwner(UUID id){
@@ -33,7 +32,7 @@ public class OwnerService {
             o.getOwns().forEach(property ->
                     property.setOwner(null));
         }else{
-            throw new UserHaveProperties();
+            throw new UserHavePropertiesException();
         }
 
     }

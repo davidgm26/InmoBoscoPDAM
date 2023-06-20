@@ -1,16 +1,16 @@
 package com.salesianostriana.pdam.inmoboscoapi.property.model;
 
-import com.salesianostriana.pdam.inmoboscoapi.city.model.City;
 import com.salesianostriana.pdam.inmoboscoapi.Owner.model.Owner;
+import com.salesianostriana.pdam.inmoboscoapi.city.model.City;
 import com.salesianostriana.pdam.inmoboscoapi.property.Type;
 import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
-import lombok.Builder;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import lombok.*;
+import java.util.Objects;
 
 @Entity
 @AllArgsConstructor @NoArgsConstructor
@@ -70,5 +70,16 @@ public class Property {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Property property = (Property) o;
+        return false;
+    }
 
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
