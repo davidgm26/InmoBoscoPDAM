@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Subir nueva imagen</h1>
+<div mat-dialog-content>
+  <input type="file" (change)="onFileSelected($event)">
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="submit()">Enviar</button>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Cancelar</button>
+</div>

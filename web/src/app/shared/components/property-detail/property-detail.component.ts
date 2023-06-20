@@ -45,7 +45,7 @@ export class PropertyDetailComponent implements OnInit {
   makeFavourite(){
     this.userService.markPropertyAsFavourite(this.property.id).subscribe(
       resp =>{
-
+        this.ngxToast.success("Se ha añadido a su lista de favoritos")
       },error =>{
         this.ngxToast.error(error.error.message)
       }

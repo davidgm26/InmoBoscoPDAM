@@ -31,7 +31,6 @@ export class LandingUserComponent implements OnInit {
     console.log(this.propertyList)
   }
   loadData(page: number, pageSize: number) {
-    debugger
     this.propertyService.getProperties(page, pageSize).subscribe(
       resp => {
         this.propertyList = resp.content;
