@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/interfaces/models/userResponse.interface';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -21,6 +22,7 @@ export class EditUserFromAdminDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<EditUserFromAdminDialogComponent>,
     private userService: UserService,
+    private ngxToast: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: User
   ) {
     this.editForm = this.formBuilder.group({
@@ -48,6 +50,7 @@ export class EditUserFromAdminDialogComponent implements OnInit {
       this.userService.editUserInfoFromAdmin(this.data.id, this.editForm.value).subscribe((response) => {
         Object.assign(this.data, this.editForm.value);
         this.dialogRef.close(this.editForm.value);
+        this.ngxToast.success('Usuario modificado con éxito')
       });
     }
   }
