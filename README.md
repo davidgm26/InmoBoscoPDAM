@@ -114,6 +114,8 @@ Este usuario tiene privilegios de administrador y acceso completo a todas las fu
 
 - Servicio de mailing cuando un usuario es registrado por un admin.
 
+- Servicio mailing para avisar a un usuario de suspensión de su cuenta.
+
 
 
 
