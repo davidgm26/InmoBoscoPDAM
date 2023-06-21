@@ -2,6 +2,7 @@ package com.salesianostriana.pdam.inmoboscoapi.user.service;
 
 import com.salesianostriana.pdam.inmoboscoapi.Owner.service.OwnerService;
 import com.salesianostriana.pdam.inmoboscoapi.exception.*;
+import com.salesianostriana.pdam.inmoboscoapi.others.MailService.EmailService;
 import com.salesianostriana.pdam.inmoboscoapi.property.dto.PropertyResponse;
 import com.salesianostriana.pdam.inmoboscoapi.property.model.Property;
 import com.salesianostriana.pdam.inmoboscoapi.property.service.PropertyService;
@@ -39,9 +40,12 @@ public class UserService {
 
     private final PropertyService propertyService;
 
+    private final EmailService emailService;
+
     public User createUserFromAdmin(CreateUserFromAdminDTO createFromAdminUserRequest) {
-        return save(
-                User.builder()
+
+
+        User u = User.builder()
                         .firstname(createFromAdminUserRequest.getFirstname())
                         .lastname(createFromAdminUserRequest.getLastname())
                         .password(passwordEncoder.encode(createFromAdminUserRequest.getPassword()))
@@ -51,8 +55,12 @@ public class UserService {
                         .birthdate(LocalDate.parse(createFromAdminUserRequest.getBirthdate()))
                         .email(createFromAdminUserRequest.getEmail())
                         .rol(EnumSet.of(UserRole.valueOf(createFromAdminUserRequest.getRol().toUpperCase())))
-                        .build()
-        );
+                        .build();
+
+        emailService.sendPasswordMail(createFromAdminUserRequest);
+
+        return save(u);
+
     }
 
     public User registerUser(CreateUserRequest createUserRequest, MultipartFile file) {
@@ -105,7 +113,6 @@ public class UserService {
         save(user);
 
     }
-
     public List<CreateUserResponse> findAllUsers() {
         List<User> data = userRepository.findAll();
         return data.stream().map(CreateUserResponse::createUserResponseFromUser).collect(Collectors.toList());
