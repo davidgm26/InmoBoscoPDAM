@@ -108,9 +108,11 @@ Este usuario tiene privilegios de administrador y acceso completo a todas las fu
 
 - Implementacion de la pantalla del perfil del usuarios con las funcionalidades de editar el usuario tanto la foto de perfil como la información.
 
-- Implementacion de la funcionalidad de favoritos
+- Implementacion de la funcionalidad de favoritos.
 
-- Implementacion del filtrado de propiedades por ciudad y por tipo de propiedad
+- Implementacion del filtrado de propiedades por ciudad y por tipo de propiedad.
+
+- Servicio de mailing cuando un usuario es registrado por un admin.
 
 
 
