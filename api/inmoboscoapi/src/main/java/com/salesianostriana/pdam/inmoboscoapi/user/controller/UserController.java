@@ -163,7 +163,7 @@ public class UserController {
                     description = "Se ha expirado el token JWT o no tienes acceso para realizar esta petición debido a tu rol",
                     content = @Content),
     })
-    @GetMapping("/profile")
+    @GetMapping("/profile/")
     public CreateUserResponse getUserInfo(@AuthenticationPrincipal User user) {
         return CreateUserResponse.createUserResponseFromUser(userService.findUserByUsername(user.getUsername()));
     }

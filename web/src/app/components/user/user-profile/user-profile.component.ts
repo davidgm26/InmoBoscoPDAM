@@ -4,6 +4,7 @@ import { CreateUserResponse } from 'src/app/interfaces/dtos/createUserResponse';
 import { Property } from 'src/app/interfaces/models/propertyResponse.interface';
 import { DialougUploadImageComponent } from 'src/app/shared/components/dialoug-upload-image/dialoug-upload-image.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import { EditUserInfoDialogComponent } from '../edit-user-info-dialog/edit-user-info-dialog.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -24,7 +25,7 @@ export class UserProfileComponent implements OnInit {
   }
   changeImg(){
     const dialogRef = this.dialog.open(DialougUploadImageComponent, {
-      width: '250px',
+      width: '550px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -63,4 +64,13 @@ export class UserProfileComponent implements OnInit {
   scrollRight() {
     this.currentScroll -= 200;
    }
+
+   editUserInfo(){
+    const dialogRef = this.dialog.open(EditUserInfoDialogComponent, {
+      width: '500px',
+      data: this.user
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
 }

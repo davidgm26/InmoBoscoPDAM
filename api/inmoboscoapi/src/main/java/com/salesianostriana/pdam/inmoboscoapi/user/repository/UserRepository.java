@@ -23,6 +23,8 @@ public interface UserRepository extends JpaRepository<User, UUID> , JpaSpecifica
     boolean existsByPhoneNumber(String phoneNumber);
 
     boolean existsByUsername(String username);
+
+    boolean existsByDni(String dni);
     @Query("""
             SELECT CASE WHEN (COUNT(u) > 0) THEN true ELSE false END
             FROM User u

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @SuperBuilder
 public class CreateUserResponse {
 
-    protected String firstname,lastname,username,avatar,email,rol;
+    protected String firstname,lastname,username,avatar,email,rol,dni;
 
     @NotEmpty(message = "{CreateUserRequest.birthdate.notempty}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -44,6 +44,7 @@ public class CreateUserResponse {
                 .email(u.getEmail())
                 .rol(convertRoleToString(u.getRol()))
                 .id(u.getId())
+                .dni(u.getDni())
                 .enabled(u.isEnabled())
                 .birthdate(u.getBirthdate().toString())
                 .phoneNumber(u.getPhoneNumber())
