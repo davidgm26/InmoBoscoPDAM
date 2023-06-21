@@ -163,7 +163,7 @@ public class UserController {
                     description = "Se ha expirado el token JWT o no tienes acceso para realizar esta petición debido a tu rol",
                     content = @Content),
     })
-    @GetMapping("/profile")
+    @GetMapping("/profile/")
     public CreateUserResponse getUserInfo(@AuthenticationPrincipal User user) {
         return CreateUserResponse.createUserResponseFromUser(userService.findUserByUsername(user.getUsername()));
     }
@@ -249,7 +249,7 @@ public class UserController {
                     description = "No se ha encontrado al usuario",
                     content = @Content),
     })
-    @PutMapping("/profile")
+    @PutMapping("/profile/")
     public ResponseEntity<CreateUserResponse> editUserInfo(@Valid @RequestBody EditUserRequest newInfo, @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(CreateUserResponse.createUserResponseFromUser(userService.editUser(newInfo, user)));
     }

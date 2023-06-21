@@ -34,6 +34,7 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
 import { ImgProfilePipe } from './shared/pipes/img-profile.pipe';
 import { DialougUploadImageComponent } from './shared/components/dialoug-upload-image/dialoug-upload-image.component';
 import { FavouritePropertyCardComponent } from './components/user/favourite-property-card/favourite-property-card.component';
+import { EditUserInfoDialogComponent } from './components/user/edit-user-info-dialog/edit-user-info-dialog.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { FavouritePropertyCardComponent } from './components/user/favourite-prop
     UserProfileComponent,
     ImgProfilePipe,
     DialougUploadImageComponent,
-    FavouritePropertyCardComponent
+    FavouritePropertyCardComponent,
+    EditUserInfoDialogComponent
   ],
   imports: [
     BrowserModule,

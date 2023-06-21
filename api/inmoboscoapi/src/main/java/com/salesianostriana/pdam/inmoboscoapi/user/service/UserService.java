@@ -1,7 +1,5 @@
 package com.salesianostriana.pdam.inmoboscoapi.user.service;
 
-import com.salesianostriana.pdam.inmoboscoapi.Owner.model.Owner;
-import com.salesianostriana.pdam.inmoboscoapi.Owner.repository.OwnerRepository;
 import com.salesianostriana.pdam.inmoboscoapi.Owner.service.OwnerService;
 import com.salesianostriana.pdam.inmoboscoapi.exception.*;
 import com.salesianostriana.pdam.inmoboscoapi.property.dto.PropertyResponse;
@@ -18,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,7 +39,7 @@ public class UserService {
 
     private final PropertyService propertyService;
 
-    public User createUserFromAdmin(CreateUserFromAdminDTO createFromAdminUserRequest){
+    public User createUserFromAdmin(CreateUserFromAdminDTO createFromAdminUserRequest) {
         return save(
                 User.builder()
                         .firstname(createFromAdminUserRequest.getFirstname())
@@ -60,7 +57,7 @@ public class UserService {
 
     public User registerUser(CreateUserRequest createUserRequest, MultipartFile file) {
 
-        if (file ==null){
+        if (file == null) {
             User user = User.builder()
                     .firstname(createUserRequest.getFirstname())
                     .lastname(createUserRequest.getLastname())
@@ -101,12 +98,14 @@ public class UserService {
     public User save(User u) {
         return userRepository.save(u);
     }
+
     public void addOwnerRole(UUID id) {
         User user = findUserById(id);
         user.addUserRole(UserRole.OWNER);
         save(user);
 
     }
+
     public List<CreateUserResponse> findAllUsers() {
         List<User> data = userRepository.findAll();
         return data.stream().map(CreateUserResponse::createUserResponseFromUser).collect(Collectors.toList());
@@ -178,7 +177,8 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public boolean existsByPhoneNumber(String phoneNumber) {
+    public boolean
+    existsByPhoneNumber(String phoneNumber) {
         return userRepository.existsByPhoneNumber(phoneNumber);
     }
 
@@ -188,12 +188,44 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User editUser(EditUserRequest newInfo,User u) {
-      return  save(EditUserRequest.createUserFromEditUserRequest(newInfo,u));
+    /*
+        public User editUser(EditUserRequest newInfo,User u) {
+          return  save(EditUserRequest.createUserFromEditUserRequest(newInfo,u));
+        }
+        */
+    public User editUser(EditUserRequest newInfo, User user) {
+
+        if (!user.getUsername().equals(newInfo.getUsername())) {
+            if (userExistByUsername(newInfo.getUsername())) {
+                throw new UsernameInUseException();
+            }
+            user.setUsername(newInfo.getUsername());
+        }
+        if (!user.getPhoneNumber().equals(newInfo.getPhoneNumber())) {
+            if (userRepository.existsByPhoneNumber(user.getPhoneNumber())) {
+                throw new PhoneNumberInUseException();
+            }
+            user.setPhoneNumber(newInfo.getPhoneNumber());
+        }
+        if (!user.getEmail().equals(newInfo.getEmail())) {
+            if (userRepository.existsByEmail(user.getEmail())) {
+                throw new PhoneNumberInUseException();
+            }
+            user.setEmail(newInfo.getEmail());
+        }
+        if (!user.getDni().equals(newInfo.getDni())) {
+            if (userRepository.existsByDni(user.getDni())) {
+                throw new PhoneNumberInUseException();
+            }
+            user.setDni(newInfo.getDni());
+        }
+
+        return save(user);
     }
+
     public Property addFavouriteProperty(User user, Long id) {
         Property p = propertyService.findById(id);
-        if(userRepository.existFavourite(user.getId(),id)){
+        if (userRepository.existFavourite(user.getId(), id)) {
             throw new PropertyAlredyInListException(id);
         }
         user.addFavouriteProperty(p);
@@ -202,14 +234,14 @@ public class UserService {
         return propertyService.save(p);
     }
 
-    public Page<PropertyResponse> getAllFavouritesProperties(User u, Pageable pageable){
-        Page<Property>aux = userRepository.findFavourites(u.getId(),pageable);
+    public Page<PropertyResponse> getAllFavouritesProperties(User u, Pageable pageable) {
+        Page<Property> aux = userRepository.findFavourites(u.getId(), pageable);
         return aux.map(PropertyResponse::convertPropertyResponseFromProperty);
     }
 
     public void deleteFavouriteProperty(User user, Long id) {
         Property p = propertyService.findById(id);
-        if(!userRepository.existFavourite(user.getId(),id)){
+        if (!userRepository.existFavourite(user.getId(), id)) {
             throw new PropertyNotFoundInFavouriteListException(id);
         }
         user.removeFavouriteProperty(p);
@@ -217,7 +249,6 @@ public class UserService {
         save(user);
         propertyService.save(p);
     }
-
 
 
 }

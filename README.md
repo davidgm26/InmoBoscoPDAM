@@ -94,6 +94,29 @@ Este usuario en caso de que suba alguna propiedad en nuevas funcionalidades pasa
 
 Este usuario tiene privilegios de administrador y acceso completo a todas las funcionalidades de la aplicación.
 
+
+---
+
+# Actualizaciones :
+
+## V2 
+##### 22/06/2023
+
+- Se ha solucionado un error que existía al querer borrar usuarios que son propietarios de una vivienda.
+
+- Implementacion de la pantalla detallada de las propiedades.
+
+- Implementacion de la pantalla del perfil del usuarios con las funcionalidades de editar el usuario tanto la foto de perfil como la información.
+
+- Implementacion de la funcionalidad de favoritos
+
+- Implementacion del filtrado de propiedades por ciudad y por tipo de propiedad
+
+
+
+
+---
+
 ## Propietario
 
 - David García María
