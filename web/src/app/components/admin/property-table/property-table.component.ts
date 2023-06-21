@@ -51,7 +51,6 @@ export class PropertyTableComponent implements OnInit {
   }
 
   loadData(page: number, pageSize: number) {
-    debugger
     this.propertyService.getProperties(page, pageSize).subscribe(
       resp => {
         this.propertyList = resp.content;

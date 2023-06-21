@@ -42,8 +42,6 @@ export class AuthComponent implements OnInit {
       password: this.loginForm.get('password')?.value!
     }
     this.authService.doLogin(loginRequest).subscribe(resp =>{
-      debugger
-      //Mirar con Miguel el porque esto no funciona correctamente
       if(resp.enabled){
         localStorage.setItem('rol',resp.rol);
         if(resp.rol  == 'WORKER'){
