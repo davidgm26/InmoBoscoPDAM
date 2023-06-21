@@ -68,7 +68,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleUserNotExistsException(UsernameNotFoundException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ErrorMessage.of(
-                        HttpStatus.UNAUTHORIZED,
+                        HttpStatus.BAD_REQUEST,
                         ex.getMessage(),
                         request.getRequestURI()
                 ));
@@ -77,7 +77,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ErrorMessage.of(
-                        HttpStatus.UNAUTHORIZED,
+                        HttpStatus.BAD_REQUEST,
                         ex.getMessage(),
                         request.getRequestURI()
                 ));
@@ -87,7 +87,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handlePropertyNotFoundInFavouriteListException(PropertyNotFoundInFavouriteListException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorMessage.of(
-                        HttpStatus.UNAUTHORIZED,
+                        HttpStatus.BAD_REQUEST,
                         ex.getMessage(),
                         request.getRequestURI()
                 ));
@@ -96,7 +96,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handlePhoneNumberInUseException(PhoneNumberInUseException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorMessage.of(
-                        HttpStatus.UNAUTHORIZED,
+                        HttpStatus.BAD_REQUEST,
                         ex.getMessage(),
                         request.getRequestURI()
                 ));
@@ -106,7 +106,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleUsernameInUseException(UsernameInUseException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorMessage.of(
-                        HttpStatus.UNAUTHORIZED,
+                        HttpStatus.BAD_REQUEST,
                         ex.getMessage(),
                         request.getRequestURI()
                 ));
@@ -115,7 +115,17 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleEmailInUseException(EmailInUseException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorMessage.of(
-                        HttpStatus.UNAUTHORIZED,
+                        HttpStatus.BAD_REQUEST,
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
+
+    @ExceptionHandler({DniInUseException.class})
+    public ResponseEntity<?> handleDniInUseException(DniInUseException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorMessage.of(
+                        HttpStatus.BAD_REQUEST,
                         ex.getMessage(),
                         request.getRequestURI()
                 ));
@@ -125,7 +135,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handlePropertyAlredyInListException(PropertyAlredyInListException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorMessage.of(
-                        HttpStatus.UNAUTHORIZED,
+                        HttpStatus.BAD_REQUEST,
                         ex.getMessage(),
                         request.getRequestURI()
                 ));
@@ -135,7 +145,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleUserHavePropertiesException(UserHavePropertiesException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorMessage.of(
-                        HttpStatus.UNAUTHORIZED,
+                        HttpStatus.CONFLICT,
                         ex.getMessage(),
                         request.getRequestURI()
                 ));
