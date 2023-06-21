@@ -124,16 +124,8 @@ public class UserService {
     }
 
     public User editUserFindById(UUID id, EditUserRequest editUserRequest) {
-        User user = findUserById(id);
-        user.setFirstname(editUserRequest.getFirstname());
-        user.setLastname(editUserRequest.getLastname());
-        user.setUsername(editUserRequest.getUsername());
-        user.setDni(editUserRequest.getDni());
-        user.setPhoneNumber(editUserRequest.getPhoneNumber());
-        user.setEmail(editUserRequest.getEmail());
-        user.setBirthdate(LocalDate.parse(editUserRequest.getBirthdate()));
 
-        return save(user);
+        return save(editUser(editUserRequest,findUserById(id)));
 
     }
 
