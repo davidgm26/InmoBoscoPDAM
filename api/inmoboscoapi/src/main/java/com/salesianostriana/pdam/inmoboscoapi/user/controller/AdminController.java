@@ -163,7 +163,7 @@ public class AdminController {
         userService.deleteUserByID(id);
         return ResponseEntity.noContent().build();
     }
-/*
+
     @Operation(summary = "Edita un usuario buscado por id")
     @Parameter(description = "El id del usuario que se quiere banear", name = "id", required = true)
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -250,7 +250,7 @@ public class AdminController {
     public ResponseEntity<AllUserDataDto> editUserFromAdmin(@PathVariable UUID id, @Valid @RequestBody EditUserRequest editUserRequest) {
         return ResponseEntity.ok(AllUserDataDto.fromUser(userService.editUserFindById(id, editUserRequest)));
     }
-*/
+
      @PostMapping("/users/")
      public ResponseEntity<CreateUserResponse> createUserFromAdmin(@Valid @RequestBody CreateUserFromAdminDTO createUserFromAdminDTO){
          return ResponseEntity.ok(CreateUserResponse.createUserResponseFromUser(userService.createUserFromAdmin(createUserFromAdminDTO)));
