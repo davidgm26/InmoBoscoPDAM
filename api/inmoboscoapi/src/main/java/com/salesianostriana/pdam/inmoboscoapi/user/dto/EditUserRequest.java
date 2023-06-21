@@ -26,7 +26,6 @@ public class EditUserRequest {
     private String lastname;
 
     @NotEmpty(message = "{CreateUserRequest.username.notempty}")
-    @UniqueUsername(message ="{CreateUserRequest.username.unique}")
     private String username;
 
 
@@ -37,7 +36,6 @@ public class EditUserRequest {
     private String dni;
 
     @NotEmpty(message = "{CreateUserRequest.phoneNumber.notempty}")
-    @UniquePhoneNumber(message = "{CreateUserRequest.phoneNumber.unique}" )
     @Size(min = 9,max = 9, message = "{CreateUserRequest.phoneNumber.phoneNumberLenght}")
     private String phoneNumber;
 

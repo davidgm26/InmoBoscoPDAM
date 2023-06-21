@@ -1,0 +1,13 @@
+<div class="contenedor-principal">
+  <h1 class="dialog-title mat-dialog-title">Subir nueva imagen</h1>
+  <div class="dialog-content mat-dialog-content">
+    <input type="file" (change)="onFileSelected($event)">
+  </div>
+  <div class="dialog-actions mat-dialog-actions">
+    <button class="dialog-button mat-button" (click)="submit()">Enviar</button>
+  </div>
+  <div class="dialog-actions mat-dialog-actions">
+    <button class="dialog-button mat-button" (click)="close()">Cancelar</button>
+  </div>
+
+</div>

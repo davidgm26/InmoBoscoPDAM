@@ -2,6 +2,29 @@
   <mat-paginator [length]="totalElements" [pageSize]="pageSize" [pageIndex]="page" [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons class="table">
   </mat-paginator>
+  <div class="filter-container">
+    <mat-form-field id="property-type-selector">
+      <mat-label>Tipos de Propiedad</mat-label>
+      <mat-select [(value)]="selectedType">
+        <mat-option value="">" "</mat-option>
+        <mat-option value="Casa">Casa</mat-option>
+        <mat-option value="Piso">Piso</mat-option>
+        <mat-option value="Apartamento">Apartamento</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field id="city-selector">
+      <mat-label>Ciudades</mat-label>
+      <mat-select #citySelect  [(value)]="city">
+        <mat-option value="">" "</mat-option>
+        <mat-option *ngFor="let city of cityList" value={{city}}>{{city}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-icon-button id="search-button" (click)="search()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
   <table class="table">
     <thead>
       <tr>

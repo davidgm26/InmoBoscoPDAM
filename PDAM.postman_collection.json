@@ -1,0 +1,941 @@
+{
+	"info": {
+		"_postman_id": "e44cf6a2-e85e-45b1-84d5-83caccc4df41",
+		"name": "PDAM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23783540"
+	},
+	"item": [
+		{
+			"name": "Property",
+			"item": [
+				{
+					"name": "GET AllProperties",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/property/?page=0",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"property",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET OneProperty",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/property/1",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"property",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST New Property",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lat\": \"40.4167754\",\r\n    \"lon\": \"-3.7037902\",\r\n    \"name\": \"Piso en Nervión\",\r\n    \"title\": \"Hermoso piso cerca del Ramon Sanchez pizjuan\",\r\n    \"price\": 25050.89,\r\n    \"m2\": 100.0,\r\n    \"description\": \"Este luminoso y espacioso piso se encuentra en las cercanías del estadio del Sevilla FC.\",\r\n    \"totalBedRooms\": 2,\r\n    \"totalBaths\": 1,\r\n    \"propertyType\": \"Piso\",\r\n    \"city\": \"sevilla\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/property/",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"property",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Edit Property",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lat\": \"40.4167754\",\r\n    \"lon\": \"-3.7037902\",\r\n    \"name\": \"Apartamento en el centro\",\r\n    \"title\": \"Hermoso apartamento cerca de todos los servicios\",\r\n    \"price\": 0.0,\r\n    \"m2\": 80.0,\r\n    \"description\": \"Este apartamento luminoso y espacioso se encuentra en el corazooonn de la ciudad.\",\r\n    \"totalBedRooms\": 2,\r\n    \"totalBaths\": 1,\r\n    \"propertyType\": \"Apartamento\",\r\n    \"city\": \"Sevilla\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/property/1",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"property",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Property",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/property/1",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"property",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET PropertyImg",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/download/foto1.jpg",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"download",
+								"foto1.jpg"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "logged",
+					"item": [
+						{
+							"name": "POST RefreshToken",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"refreshToken\": \"{{refresh_token}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/auth/refreshtoken",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"refreshtoken"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST logout",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/user/logout",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST ChangeImg",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/david/Desktop/InmoBoscoPDAM/api/inmoboscoapi/uploads/SAVE_20220426_115618.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/user/profile/img",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"profile",
+										"img"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET GetProfileImg",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/user/profile/img",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"profile",
+										"img"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET GestUserInfo",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/user/profile",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET  UserPropertyList",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/user/me/properties/?page=0",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"me",
+										"properties",
+										""
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT EditMyInfo",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\": \"David\",\r\n    \"lastname\": \"Garcia Mar­a\",\r\n    \"dni\":\"69696965X\",\r\n    \"username\": \"Martine\",\r\n    \"avatar\": \"SAVE_20220426_115618_922058.jpg\",\r\n    \"phoneNumber\":\"966958572\",\r\n    \"email\": \"vivaelsevilla@gmail.com\",\r\n    \"rol\": \"OWNER,USER\",\r\n    \"id\": \"2bd9e760-a11e-5d8f-9641-1c54e79c57a1\",\r\n    \"birthdate\":\"2019-06-12\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/user/profile",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET AllMyProperties",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/user/me/properties/",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"me",
+										"properties",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "without login",
+					"item": [
+						{
+							"name": "POST Register new User",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\":\"David\",\r\n    \"lastname\":\"Beckam Perez\",\r\n    \"password\":\"ofabuloso\",\r\n    \"passwordRepeat\":\"ofabuloso\",\r\n    \"username\":\"FlorentinoGuapo\",\r\n    \"dni\":\"69696969X\",\r\n    \"phoneNumber\":\"622578415\",\r\n    \"avatar\":\"https://robohash.org/81.36.52.120.png\",\r\n    \"email\":\"vivaelmadrid@gmail.com\",\r\n    \"birthdate\":\"2020-06-12\" \r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/auth/register/user",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"register",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST loginUser",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = pm.response.json();\r",
+											"pm.collectionVariables.set(\"token\", json.token);\r",
+											"pm.collectionVariables.set(\"refresh_token\", json.refreshToken)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"Martine\",\r\n    \"password\":\"12345678\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/auth/login",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Ciy",
+			"item": [
+				{
+					"name": "GET AllCities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/city/",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"city",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "WHITOUT LOGIN",
+					"item": [
+						{
+							"name": "POST loginWorker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = pm.response.json();\r",
+											"pm.collectionVariables.set(\"token\", json.token);\r",
+											"pm.collectionVariables.set(\"refresh_token\", json.refreshToken)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"ElBrujo\",\r\n    \"password\":\"admin\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/auth/login",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET ALL USERS",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/admin/?page=0",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Register new worker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\":\"Sara\",\r\n    \"lastname\":\"Maria Braña\",\r\n    \"password\":\"admin\",\r\n    \"passwordRepeat\":\"admin\",\r\n    \"username\":\"Saramb\",\r\n    \"dni\":\"52266233R\",\r\n    \"phoneNumber\":\"682625268\",\r\n    \"avatar\":\"https://robohash.org/ElBrujo\",\r\n    \"email\":\"vivaeljaen@gmail.com\",\r\n    \"birthdate\":\"2005-01-11\" \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/auth/register/worker",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"register",
+								"worker"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Disable User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/admin/ban/ac169001-88b6-108e-8188-b616c83f0001",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"ban",
+								"ac169001-88b6-108e-8188-b616c83f0001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DEL delete user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/admin/delete/ac169001-88b6-108e-8188-b616c83f0001",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"delete",
+								"ac169001-88b6-108e-8188-b616c83f0001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Edit UserProfile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\":\"Diego\",\r\n    \"lastname\":\"Armando Maradona\",\r\n    \"password\":\"lamanodedios\",\r\n    \"username\":\"ElBrujo\",\r\n    \"dni\":\"85226715Q\",\r\n    \"phoneNumber\":\"680254908\",\r\n    \"avatar\":\"https://robohash.org/81.36.52.280.png\",\r\n    \"email\":\"vivamaradona@gmail.com\",\r\n    \"birthdate\":\"1900-10-30\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/admin/profile/2bd9e760-a11e-5d8f-9641-1c54e79c57a1",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"profile",
+								"2bd9e760-a11e-5d8f-9641-1c54e79c57a1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\":\"Diego\",\r\n    \"lastname\":\"Armando Maradona\",\r\n    \"password\":\"lamanodedios\",\r\n    \"passwordRepeat\":\"lamanodedios\",\r\n    \"username\":\"Maradona\",\r\n    \"dni\":\"85226715Q\",\r\n    \"phoneNumber\":\"680254908\",\r\n    \"age\":21,\r\n    \"avatar\":\"https://robohash.org/81.36.52.280.png\",\r\n    \"email\":\"vivamaradona@gmail.com\",\r\n    \"birthdate\":\"1900-10-30\" \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/auth/register/user",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"register",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET GetAllUserProperties",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PDAM_API_BASE_URL}}/admin/user/2bd9e760-a11e-5d8f-9641-1c54e79c57a1/properties?page=0",
+							"host": [
+								"{{PDAM_API_BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"user",
+								"2bd9e760-a11e-5d8f-9641-1c54e79c57a1",
+								"properties"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "refresh_token",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "refresh_token",
+			"value": ""
+		}
+	]
+}

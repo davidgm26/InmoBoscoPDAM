@@ -23,7 +23,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.naming.AuthenticationException;
-import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import java.nio.file.AccessDeniedException;
@@ -84,8 +83,56 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
                 ));
     }
 
-    @ExceptionHandler({UserHaveProperties.class})
-    public ResponseEntity<?> handleUserHavePropertiesException(UserHaveProperties ex, HttpServletRequest request) {
+    @ExceptionHandler({PropertyNotFoundInFavouriteListException.class})
+    public ResponseEntity<?> handlePropertyNotFoundInFavouriteListException(PropertyNotFoundInFavouriteListException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorMessage.of(
+                        HttpStatus.UNAUTHORIZED,
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
+    @ExceptionHandler({PhoneNumberInUseException.class})
+    public ResponseEntity<?> handlePhoneNumberInUseException(PhoneNumberInUseException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorMessage.of(
+                        HttpStatus.UNAUTHORIZED,
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
+
+    @ExceptionHandler({UsernameInUseException.class})
+    public ResponseEntity<?> handleUsernameInUseException(UsernameInUseException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorMessage.of(
+                        HttpStatus.UNAUTHORIZED,
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
+    @ExceptionHandler({EmailInUseException.class})
+    public ResponseEntity<?> handleEmailInUseException(EmailInUseException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorMessage.of(
+                        HttpStatus.UNAUTHORIZED,
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
+
+    @ExceptionHandler({PropertyAlredyInListException.class})
+    public ResponseEntity<?> handlePropertyAlredyInListException(PropertyAlredyInListException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorMessage.of(
+                        HttpStatus.UNAUTHORIZED,
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
+
+    @ExceptionHandler({UserHavePropertiesException.class})
+    public ResponseEntity<?> handleUserHavePropertiesException(UserHavePropertiesException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorMessage.of(
                         HttpStatus.UNAUTHORIZED,

@@ -9,6 +9,7 @@ import { UtilsService } from 'src/app/shared/services/utils.service';
 import { EditPropertyDialogComponent } from '../edit-property-dialog/edit-property-dialog.component';
 import { PropertyService } from 'src/app/shared/services/property.service';
 import { CityService } from 'src/app/shared/services/city.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-property-table',
@@ -21,14 +22,16 @@ export class PropertyTableComponent implements OnInit {
   pageSize = 5;
   totalElements = 0;
   propertyList: Property [] = [];
-  cityList!: CityResponse;
+  cityList: String [] = [];
   filteredPropertyList: any[];
-  citySelected!: CityResponse;
-
+  filtersActive = false;
+  selectedType!:String;
+  city!:String;
   constructor(
     private propertyService: PropertyService,
     private utilsService: UtilsService,
     private dialog: MatDialog,
+    private ngxToast: ToastrService,
     private cityService: CityService,
   ) {
     this.filteredPropertyList = this.propertyList;
@@ -48,12 +51,33 @@ export class PropertyTableComponent implements OnInit {
   }
 
   loadData(page: number, pageSize: number) {
+    debugger
     this.propertyService.getProperties(page, pageSize).subscribe(
       resp => {
         this.propertyList = resp.content;
         this.totalElements = resp.totalElements;
       }
     )
+    this.cityService.getAllCities().subscribe(
+      resp => this.cityList = resp.map(city => city.name)
+    )
+
+  }
+
+
+  search() {
+    this.page = 0;
+    this.propertyList = [];
+    console.log(this.pageSize);
+    this.propertyService.filterProperties(this.page, this.pageSize, this.city, this.selectedType).subscribe(
+      resp => {
+        this.propertyList = resp.content;
+        this.filtersActive = true;
+      },
+      error => {
+        this.ngxToast.error('No se pudo realizar la busqueda');
+      }
+    );
   }
 
   editProperty(property: Property) {

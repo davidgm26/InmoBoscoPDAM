@@ -17,7 +17,6 @@ export class UsernavbarComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    debugger
     if(localStorage.getItem('token') != null){
       this.userLogged = true;
     }

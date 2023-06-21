@@ -56,13 +56,13 @@ export class CreateUserComponent implements OnInit {
       const formattedBirthdate = moment.utc(this.editForm.value.birthdate).format('YYYY-MM-DD');
       this.editForm.patchValue({birthdate: formattedBirthdate});
       if(this.editForm.value.rol == 'WORKER'){
-        this.userService.createWorker(this.editForm.value).subscribe(() => {
+        this.userService.createUserFromAdmin(this.editForm.value).subscribe(() => {
           Object.assign(this.editForm.value);
           this.dialogRef.close(this.editForm.value);
           this.confirmed.emit();
         })
       }else{
-        this.userService.createUser(this.editForm.value).subscribe(() => {
+        this.userService.createUserFromAdmin(this.editForm.value).subscribe(() => {
         Object.assign(this.editForm.value);
         this.dialogRef.close(this.editForm.value);
         this.confirmed.emit();

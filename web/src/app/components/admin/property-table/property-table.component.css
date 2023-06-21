@@ -1,9 +1,40 @@
+@media only screen and (max-width: 600px) {
+  .table {
+    overflow-x: auto;
+    display: block;
+  }
+}
 .table {
   min-width: 70%;
   max-width: 70%;
   border-collapse: collapse;
   max-height: 90vh;
   overflow: auto;
+}
+::ng-deep .mat-select-panel {
+  max-height: 200px;
+  overflow: auto;
+}
+
+#buscador {
+  margin-top: 96px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin-top: 98px; /* Para asegurarnos de que ocupe todo el espacio disponible en su contenedor */
+}
+
+#property-type-selector,
+#city-selector {
+  width: 30%; /* ajusta este valor a tus necesidades */
+}
+
+#search-button {
+  margin-left: 10px; /* ajusta este valor a tus necesidades */
 }
 
 .table th,

@@ -5,6 +5,9 @@ export class CreateUserResponse {
   avatar!:    string;
   email!:     string;
   rol!:       string;
+  dni!:       string;
   id!:        string;
+  phoneNumber!: string;
+  birthdate!:  Date;
   enabled!:   boolean;
 }

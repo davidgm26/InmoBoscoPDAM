@@ -142,7 +142,7 @@ public class PropertyController {
 
     @GetMapping("/")
     public Page<PropertyResponse> getAllProperties(@RequestParam(value = "search", defaultValue = "") String search,
-                                                   @PageableDefault(size = 5, page = 0) Pageable pageable) {
+                                                   @PageableDefault(size = 10, page = 0) Pageable pageable) {
         List<SearchCriteria> params = SearchCriteriaExtractor.extractSearchCriteriaList(search);
         return propertyService.findAll(params, pageable);
     }
@@ -314,6 +314,12 @@ public class PropertyController {
     public ResponseEntity<?> deleteProperty(@PathVariable Long id) {
         propertyService.deleteProperty(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filters/")
+    public ResponseEntity<Page<PropertyResponse>> getPropertiesFiltered(@RequestParam Optional<String> cityName,@RequestParam  Optional<String>propertyType,
+                                                                        @PageableDefault(size = 5, page = 0) Pageable pageable) {
+     return ResponseEntity.ok(propertyService.findPropertiesWithFilters(cityName, propertyType,pageable));
     }
 
 
