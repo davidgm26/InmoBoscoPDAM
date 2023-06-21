@@ -20,7 +20,6 @@ export class AdminGuard implements CanActivate {
     if (isLoggedIn && rol?.includes('WORKER')) {
       return true;
     } else {
-      debugger
       if (rol?.includes('USER')) {
         this.ngxtoast.info('Usted no tiene el permiso necesario para acceder', 'No tiene acceso')
         this.router.navigate(['index'])

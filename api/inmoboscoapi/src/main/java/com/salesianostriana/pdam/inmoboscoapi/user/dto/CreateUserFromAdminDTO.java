@@ -3,6 +3,7 @@ package com.salesianostriana.pdam.inmoboscoapi.user.dto;
 import com.salesianostriana.pdam.inmoboscoapi.user.UserRole;
 import com.salesianostriana.pdam.inmoboscoapi.user.model.User;
 import com.salesianostriana.pdam.inmoboscoapi.user.validation.annotation.PasswordsMatch;
+import com.salesianostriana.pdam.inmoboscoapi.user.validation.annotation.UniqueEmail;
 import com.salesianostriana.pdam.inmoboscoapi.user.validation.annotation.UniquePhoneNumber;
 import com.salesianostriana.pdam.inmoboscoapi.user.validation.annotation.UniqueUsername;
 import lombok.AllArgsConstructor;
@@ -49,6 +50,7 @@ public class CreateUserFromAdminDTO {
 
     private String avatar;
 
+    @UniqueEmail(message= "{CreateUserRequest.email.unique}")
     @NotEmpty(message = "{CreateUserRequest.email.notempty}")
     @Email(message = "{CreateUserRequest.email.format}")
     private String email;

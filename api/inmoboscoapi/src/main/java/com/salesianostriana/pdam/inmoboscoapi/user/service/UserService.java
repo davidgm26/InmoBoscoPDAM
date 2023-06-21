@@ -111,8 +111,8 @@ public class UserService {
         User user = findUserById(id);
         user.addUserRole(UserRole.OWNER);
         save(user);
-
     }
+
     public List<CreateUserResponse> findAllUsers() {
         List<User> data = userRepository.findAll();
         return data.stream().map(CreateUserResponse::createUserResponseFromUser).collect(Collectors.toList());
@@ -183,15 +183,13 @@ public class UserService {
 
     public User changeUserStatus(UUID id) {
         User user = findUserById(id);
+        if(user.isEnabled()){
+            emailService.sendDisbleAccountMail(user);
+        }
         user.setEnabled(!user.isEnabled());
         return userRepository.save(user);
     }
 
-    /*
-        public User editUser(EditUserRequest newInfo,User u) {
-          return  save(EditUserRequest.createUserFromEditUserRequest(newInfo,u));
-        }
-        */
     public User editUser(EditUserRequest newInfo, User user) {
 
         if (!user.getUsername().equals(newInfo.getUsername())) {
@@ -201,20 +199,20 @@ public class UserService {
             user.setUsername(newInfo.getUsername());
         }
         if (!user.getPhoneNumber().equals(newInfo.getPhoneNumber())) {
-            if (userRepository.existsByPhoneNumber(user.getPhoneNumber())) {
+            if (userRepository.existsByPhoneNumber(newInfo.getPhoneNumber())) {
                 throw new PhoneNumberInUseException();
             }
             user.setPhoneNumber(newInfo.getPhoneNumber());
         }
         if (!user.getEmail().equals(newInfo.getEmail())) {
-            if (userRepository.existsByEmail(user.getEmail())) {
-                throw new PhoneNumberInUseException();
+            if (userRepository.existsByEmail(newInfo.getEmail())) {
+                throw new EmailInUseException();
             }
             user.setEmail(newInfo.getEmail());
         }
         if (!user.getDni().equals(newInfo.getDni())) {
-            if (userRepository.existsByDni(user.getDni())) {
-                throw new PhoneNumberInUseException();
+            if (userRepository.existsByDni(newInfo.getDni())) {
+                throw new DniInUseException();
             }
             user.setDni(newInfo.getDni());
         }

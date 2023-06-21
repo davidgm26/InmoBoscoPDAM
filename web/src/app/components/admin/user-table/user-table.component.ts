@@ -50,7 +50,6 @@ export class UserTableComponent implements OnInit {
   }
   disableUser(user: User){
     this.userService.changeUserStatus(user.id).subscribe(resp =>{
-    debugger
     user.enabled = resp.enabled;
     },(error: any) =>{
       this.ngxtoast.error('No se ha podido cambiar el estado de esta cuenta','Error')
