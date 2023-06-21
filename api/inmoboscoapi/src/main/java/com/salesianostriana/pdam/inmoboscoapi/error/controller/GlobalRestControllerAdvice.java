@@ -92,7 +92,34 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
                         request.getRequestURI()
                 ));
     }
+    @ExceptionHandler({PhoneNumberInUseException.class})
+    public ResponseEntity<?> handlePhoneNumberInUseException(PhoneNumberInUseException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorMessage.of(
+                        HttpStatus.UNAUTHORIZED,
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
 
+    @ExceptionHandler({UsernameInUseException.class})
+    public ResponseEntity<?> handleUsernameInUseException(UsernameInUseException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorMessage.of(
+                        HttpStatus.UNAUTHORIZED,
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
+    @ExceptionHandler({EmailInUseException.class})
+    public ResponseEntity<?> handleEmailInUseException(EmailInUseException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorMessage.of(
+                        HttpStatus.UNAUTHORIZED,
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
 
     @ExceptionHandler({PropertyAlredyInListException.class})
     public ResponseEntity<?> handlePropertyAlredyInListException(PropertyAlredyInListException ex, HttpServletRequest request) {
