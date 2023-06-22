@@ -20,7 +20,7 @@ public class RefreshToken {
     private UUID id;
 
     @MapsId
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id", columnDefinition = "uuid")
     private User user;
 
