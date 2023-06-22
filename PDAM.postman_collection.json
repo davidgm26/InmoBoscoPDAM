@@ -18,18 +18,23 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PDAM_API_BASE_URL}}/property/?page=0",
+							"raw": "{{PDAM_API_BASE_URL}}/property/filters/?propertyType=Casa&cityName=Granada",
 							"host": [
 								"{{PDAM_API_BASE_URL}}"
 							],
 							"path": [
 								"property",
+								"filters",
 								""
 							],
 							"query": [
 								{
-									"key": "page",
-									"value": "0"
+									"key": "propertyType",
+									"value": "Casa"
+								},
+								{
+									"key": "cityName",
+									"value": "Granada"
 								}
 							]
 						}
@@ -219,6 +224,71 @@
 					"name": "logged",
 					"item": [
 						{
+							"name": "Favourites",
+							"item": [
+								{
+									"name": "GET FavouriteList",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{PDAM_API_BASE_URL}}/user/favourites/",
+											"host": [
+												"{{PDAM_API_BASE_URL}}"
+											],
+											"path": [
+												"user",
+												"favourites",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST MarkAsFavourite",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{PDAM_API_BASE_URL}}/user/favourites/add/1/",
+											"host": [
+												"{{PDAM_API_BASE_URL}}"
+											],
+											"path": [
+												"user",
+												"favourites",
+												"add",
+												"1",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE removeAsFavourite",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{PDAM_API_BASE_URL}}/user/favourites/2/",
+											"host": [
+												"{{PDAM_API_BASE_URL}}"
+											],
+											"path": [
+												"user",
+												"favourites",
+												"2",
+												""
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
 							"name": "POST RefreshToken",
 							"event": [
 								{
@@ -385,7 +455,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"firstname\": \"David\",\r\n    \"lastname\": \"Garcia Mar­a\",\r\n    \"dni\":\"69696965X\",\r\n    \"username\": \"Martine\",\r\n    \"avatar\": \"SAVE_20220426_115618_922058.jpg\",\r\n    \"phoneNumber\":\"966958572\",\r\n    \"email\": \"vivaelsevilla@gmail.com\",\r\n    \"rol\": \"OWNER,USER\",\r\n    \"id\": \"2bd9e760-a11e-5d8f-9641-1c54e79c57a1\",\r\n    \"birthdate\":\"2019-06-12\"\r\n}",
+									"raw": "{\r\n    \"firstname\": \"Manuel\",\r\n    \"lastname\": \"Garcia Mar­a\",\r\n    \"dni\":\"69696965X\",\r\n    \"username\": \"Martine\",\r\n    \"avatar\": \"SAVE_20220426_115618_922058.jpg\",\r\n    \"phoneNumber\":\"966958572\",\r\n    \"email\": \"vivaelsevilla@gmail.com\",\r\n    \"rol\": \"OWNER,USER\",\r\n    \"id\": \"2bd9e760-a11e-5d8f-9641-1c54e79c57a1\",\r\n    \"birthdate\":\"2019-06-12\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -469,13 +539,8 @@
 								"method": "POST",
 								"header": [],
 								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"firstname\":\"David\",\r\n    \"lastname\":\"Beckam Perez\",\r\n    \"password\":\"ofabuloso\",\r\n    \"passwordRepeat\":\"ofabuloso\",\r\n    \"username\":\"FlorentinoGuapo\",\r\n    \"dni\":\"69696969X\",\r\n    \"phoneNumber\":\"622578415\",\r\n    \"avatar\":\"https://robohash.org/81.36.52.120.png\",\r\n    \"email\":\"vivaelmadrid@gmail.com\",\r\n    \"birthdate\":\"2020-06-12\" \r\n}\r\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
+									"mode": "formdata",
+									"formdata": []
 								},
 								"url": {
 									"raw": "{{PDAM_API_BASE_URL}}/auth/register/user",
@@ -486,6 +551,13 @@
 										"auth",
 										"register",
 										"user"
+									],
+									"query": [
+										{
+											"key": "file",
+											"value": null,
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -514,7 +586,50 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\":\"Martine\",\r\n    \"password\":\"12345678\"\r\n}\r\n",
+									"raw": "{\r\n    \"username\":\"Martinex\",\r\n    \"password\":\"12345678\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PDAM_API_BASE_URL}}/auth/login",
+									"host": [
+										"{{PDAM_API_BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST loginUser 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = pm.response.json();\r",
+											"pm.collectionVariables.set(\"token\", json.token);\r",
+											"pm.collectionVariables.set(\"refresh_token\", json.refreshToken)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"weapon\",\r\n    \"password\":\"12345\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -597,6 +712,9 @@
 				{
 					"name": "GET AllCities",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -790,14 +908,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{PDAM_API_BASE_URL}}/admin/profile/2bd9e760-a11e-5d8f-9641-1c54e79c57a1",
+							"raw": "{{PDAM_API_BASE_URL}}/admin/profile/ac169001-999c-1ade-8188-8ccd60d80000",
 							"host": [
 								"{{PDAM_API_BASE_URL}}"
 							],
 							"path": [
 								"admin",
 								"profile",
-								"2bd9e760-a11e-5d8f-9641-1c54e79c57a1"
+								"ac169001-999c-1ade-8188-8ccd60d80000"
 							]
 						}
 					},
