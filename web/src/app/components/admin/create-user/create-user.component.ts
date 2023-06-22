@@ -2,6 +2,7 @@ import { Component, OnInit , Inject, EventEmitter, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/shared/services/user.service';
 
 
@@ -32,6 +33,7 @@ export class CreateUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CreateUserComponent>,
     private userService: UserService,
+    private ngxToast: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: string
   ) {
     this.createForm = this.formBuilder.group({
@@ -65,6 +67,8 @@ export class CreateUserComponent implements OnInit {
           Object.assign(this.createForm.value);
           this.dialogRef.close(this.createForm.value);
           this.confirmed.emit();
+        },(error: any) => {
+          this.ngxToast.error('No se pudo crear al usuario')
         })
       }else{
         this.userService.createUserFromAdmin(this.createForm.value).subscribe(() => {
