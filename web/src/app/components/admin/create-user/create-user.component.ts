@@ -8,6 +8,8 @@ import { UserService } from 'src/app/shared/services/user.service';
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PHONE_REGEX = /^(?:(?:\+|00)34)?[6-9]\d{8}$/;
 const DNI_REGEX = /^\d{8}[A-HJ-NP-TV-Z]$/;
+const NAME_REGEX = /^[a-zA-ZÁÉÍÓÚáéíóúÑñ\s-]+$/;
+const USERNAME_REGEX = /^[a-zA-Z\s-]+$/;
 
 @Component({
   selector: 'app-create-user',
@@ -24,7 +26,7 @@ export class CreateUserComponent implements OnInit {
     day: this.date.getDate(),
   };
 
-  editForm: FormGroup;
+  createForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,10 +34,10 @@ export class CreateUserComponent implements OnInit {
     private userService: UserService,
     @Inject(MAT_DIALOG_DATA) public data: string
   ) {
-    this.editForm = this.formBuilder.group({
-      firstname:['', [Validators.required]],
-      lastname: ['',[Validators.required]],
-      username: ['',[Validators.required]],
+    this.createForm = this.formBuilder.group({
+      firstname:['', [Validators.required,Validators.pattern(NAME_REGEX)]],
+      lastname: ['',[Validators.required,Validators.pattern(NAME_REGEX)]],
+      username: ['',[Validators.required,Validators.pattern(USERNAME_REGEX)]],
       dni: ['',[Validators.required,Validators.pattern(DNI_REGEX)]],
       phoneNumber: ['',[Validators.required,Validators.pattern(PHONE_REGEX)]],
       email: ['',[Validators.required,Validators.pattern(EMAIL_REGEX)]],
@@ -45,6 +47,9 @@ export class CreateUserComponent implements OnInit {
     });
   }
 
+  maxDate = new Date();
+  minDate = new Date().setFullYear(new Date().getFullYear() - 70);
+
   ngOnInit(): void {}
 
   onCancel(): void {
@@ -52,19 +57,19 @@ export class CreateUserComponent implements OnInit {
   }
 
   onSave(): void {
-    if (this.editForm.valid) {
-      const formattedBirthdate = moment.utc(this.editForm.value.birthdate).format('YYYY-MM-DD');
-      this.editForm.patchValue({birthdate: formattedBirthdate});
-      if(this.editForm.value.rol == 'WORKER'){
-        this.userService.createUserFromAdmin(this.editForm.value).subscribe(() => {
-          Object.assign(this.editForm.value);
-          this.dialogRef.close(this.editForm.value);
+    if (this.createForm.valid) {
+      const formattedBirthdate = moment(this.createForm.value.birthdate).format('YYYY-MM-DD');
+      this.createForm.patchValue({birthdate: formattedBirthdate});
+      if(this.createForm.value.rol == 'WORKER'){
+        this.userService.createUserFromAdmin(this.createForm.value).subscribe(() => {
+          Object.assign(this.createForm.value);
+          this.dialogRef.close(this.createForm.value);
           this.confirmed.emit();
         })
       }else{
-        this.userService.createUserFromAdmin(this.editForm.value).subscribe(() => {
-        Object.assign(this.editForm.value);
-        this.dialogRef.close(this.editForm.value);
+        this.userService.createUserFromAdmin(this.createForm.value).subscribe(() => {
+        Object.assign(this.createForm.value);
+        this.dialogRef.close(this.createForm.value);
         this.confirmed.emit();
       });
       }
