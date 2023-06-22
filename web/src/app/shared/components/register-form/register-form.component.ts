@@ -3,12 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
-import { CreateUserRequest } from 'src/app/interfaces/dtos/createUserRequest';
 import { Router } from '@angular/router';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PHONE_REGEX = /^(?:(?:\+|00)34)?[6-9]\d{8}$/;
 const DNI_REGEX = /^\d{8}[A-HJ-NP-TV-Z]$/;
+const NAME_REGEX = /^[a-zA-ZÁÉÍÓÚáéíóúÑñ\s-]+$/;
+const USERNAME_REGEX = /^[a-zA-Z\s-]+$/;
+
 
 @Component({
   selector: 'app-register-form',
@@ -36,9 +38,9 @@ export class RegisterFormComponent implements OnInit {
     private router: Router,
   ) {
     this.registerForm = this.formBuilder.group({
-      firstname: ['', [Validators.required]],
-      lastname: ['', [Validators.required]],
-      username: ['', [Validators.required]],
+      firstname: ['', [Validators.required,Validators.pattern(NAME_REGEX)]],
+      lastname: ['', [Validators.required,Validators.pattern(NAME_REGEX)]],
+      username: ['',  Validators.required,Validators.pattern(USERNAME_REGEX)],
       dni: ['', [Validators.required, Validators.pattern(DNI_REGEX)]],
       phoneNumber: ['', [Validators.required, Validators.pattern(PHONE_REGEX)]],
       email: ['', [Validators.required, Validators.pattern(EMAIL_REGEX)]],
@@ -48,6 +50,9 @@ export class RegisterFormComponent implements OnInit {
     });
   }
 
+  maxDate = new Date();
+  minDate = new Date().setFullYear(new Date().getFullYear() - 70);
+
   ngOnInit() {}
 
   onSubmit() {
@@ -56,7 +61,7 @@ export class RegisterFormComponent implements OnInit {
     }
     if(this.avatar != null){
       if(this.registerForm.valid){
-        const formattedBirthdate = moment.utc(this.registerForm.value.birthdate).format('YYYY-MM-DD');
+        const formattedBirthdate = moment(this.registerForm.value.birthdate).format('YYYY-MM-DD');
         this.registerForm.patchValue({birthdate: formattedBirthdate});
         this.userService.createUser(this.registerForm.value,this.avatar).subscribe(
           res =>  {},(error =>{
@@ -66,7 +71,7 @@ export class RegisterFormComponent implements OnInit {
         );
       }else{
         if(this.registerForm.valid){
-          const formattedBirthdate = moment.utc(this.registerForm.value.birthdate).format('YYYY-MM-DD');
+          const formattedBirthdate = moment(this.registerForm.value.birthdate).format('YYYY-MM-DD');
           this.registerForm.patchValue({birthdate: formattedBirthdate});
           this.userService.createUser(this.registerForm.value).subscribe(
             res =>  {},(error =>{

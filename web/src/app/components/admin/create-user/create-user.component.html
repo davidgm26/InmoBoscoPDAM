@@ -1,37 +1,53 @@
 <h2 mat-dialog-title>Crear Usuario</h2>
-<mat-dialog-content [formGroup]="editForm" class="form-content">
+<mat-dialog-content [formGroup]="createForm" class="form-content">
   <div class="form-row">
     <mat-form-field class="form-field">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="firstname">
+      <mat-error *ngIf="createForm.controls['firstname'].errors?.['pattern'] && createForm.controls['firstname'].touched">
+        El nombre solo puede contener letras, no admite caracteres especiales.
+      </mat-error>
     </mat-form-field>
-
     <mat-form-field class="form-field">
       <mat-label>Apellidos</mat-label>
       <input matInput formControlName="lastname">
+      <mat-error *ngIf="createForm.controls['lastname'].errors?.['pattern'] && createForm.controls['lastname'].touched">
+        Los apellidos solo puede contener letras, no admite caracteres especiales.
+      </mat-error>
     </mat-form-field>
   </div>
+
   <div class="form-row">
     <mat-form-field class="form-field">
       <mat-label>Nombre de usuario</mat-label>
       <input matInput formControlName="username">
+      <mat-error *ngIf="createForm.controls['username'].errors?.['pattern'] && createForm.controls['username'].touched">
+        El nombre de usuario solo puede contener letras, espacios y guiones.
+      </mat-error>
     </mat-form-field>
-
     <mat-form-field class="form-field">
-      <mat-label>DNI</mat-label>
+      <mat-label>dni</mat-label>
       <input matInput formControlName="dni">
+      <mat-error *ngIf="createForm.controls['dni'].errors?.['pattern'] && createForm.controls['dni'].touched">
+        DNI inválido, el dni debe de estar compuesto por 9 caracteres: 8 digitos y 1 letra al final
+      </mat-error>
     </mat-form-field>
   </div>
 
   <div class="form-row">
     <mat-form-field class="form-field">
-      <mat-label>Número de teléfono</mat-label>
+      <mat-label>Numero de telefono</mat-label>
       <input matInput formControlName="phoneNumber">
+      <mat-error *ngIf="createForm.controls['phoneNumber'].errors?.['pattern'] && createForm.controls['phoneNumber'].touched">
+        Número de teléfono inválido, el número de teléfono debe contener 9 digitos
+      </mat-error>
     </mat-form-field>
-
     <mat-form-field class="form-field">
-      <mat-label>Email</mat-label>
+      <mat-label>email</mat-label>
       <input matInput formControlName="email">
+      <mat-error *ngIf="createForm.controls['email'].errors?.['pattern'] && createForm.controls['email'].touched">
+        Correo electrónico inválido, la estructura debe de ser xxx@...
+      </mat-error>
     </mat-form-field>
   </div>
 
@@ -42,7 +58,6 @@
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-
     <mat-form-field class="form-field">
       <mat-label>Rol de usuario</mat-label>
       <mat-select formControlName="rol">
@@ -52,7 +67,6 @@
     </mat-form-field>
   </div>
 </mat-dialog-content>
-
 <mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancelar</button>
   <button mat-button (click)="onSave()">Crear</button>

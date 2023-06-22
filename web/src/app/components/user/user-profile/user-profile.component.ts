@@ -5,6 +5,7 @@ import { Property } from 'src/app/interfaces/models/propertyResponse.interface';
 import { DialougUploadImageComponent } from 'src/app/shared/components/dialoug-upload-image/dialoug-upload-image.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import { EditUserInfoDialogComponent } from '../edit-user-info-dialog/edit-user-info-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,6 +19,7 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private userService: UserService,
     private dialog: MatDialog,
+    private ngxToast: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -71,6 +73,8 @@ export class UserProfileComponent implements OnInit {
       data: this.user
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.ngxToast.success('Usuario editado correctamente')
     });
+
   }
 }

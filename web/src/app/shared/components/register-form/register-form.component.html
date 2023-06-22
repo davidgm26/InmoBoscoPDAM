@@ -7,20 +7,32 @@
           <mat-form-field class="form-field">
             <mat-label>Nombre</mat-label>
             <input matInput formControlName="firstname">
+            <mat-error *ngIf="registerForm.controls['firstname'].errors?.['pattern'] && registerForm.controls['firstname'].touched">
+              El nombre solo puede contener letras, no admite caracteres especiales.
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="form-field">
             <mat-label>Apellidos</mat-label>
             <input matInput formControlName="lastname">
+            <mat-error *ngIf="registerForm.controls['lastname'].errors?.['pattern'] && registerForm.controls['lastname'].touched">
+              Los apellidos solo puede contener letras, no admite caracteres especiales.
+            </mat-error>
           </mat-form-field>
         </div>
         <div class="form-row">
           <mat-form-field class="form-field">
             <mat-label>Nombre de usuario</mat-label>
             <input matInput formControlName="username">
+            <mat-error *ngIf="registerForm.controls['username'].errors?.['pattern'] && registerForm.controls['username'].touched">
+              El nombre de usuario solo puede contener letras, espacios y guiones.
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="form-field">
             <mat-label>dni</mat-label>
             <input matInput formControlName="dni">
+            <mat-error *ngIf="registerForm.controls['dni'].errors?.['pattern'] && registerForm.controls['dni'].touched">
+              DNI inválido, el dni debe de estar compuesto por 9 caracteres: 8 digitos y 1 letra al final
+            </mat-error>
           </mat-form-field>
         </div>
         <div class="form-row">
@@ -43,16 +55,22 @@
           <mat-form-field class="form-field">
             <mat-label>email</mat-label>
             <input matInput formControlName="email">
+            <mat-error *ngIf="registerForm.controls['email'].errors?.['pattern'] && registerForm.controls['email'].touched">
+              Correo electrónico inválido, la estructura debe de ser xxx@...
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="form-field">
             <mat-label>Numero de telefono</mat-label>
             <input matInput formControlName="phoneNumber">
+            <mat-error *ngIf="registerForm.controls['phoneNumber'].errors?.['pattern'] && registerForm.controls['phoneNumber'].touched">
+              Número de teléfono inválido, el número de teléfono debe contener 9 digitos
+            </mat-error>
           </mat-form-field>
         </div>
         <div class="form-row">
-          <mat-form-field class="form-field" id="password">
+          <mat-form-field appearance="fill" class="form-field">
             <mat-label>Fecha de nacimiento</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="birthdate" [max]="maxDateNgStruct">
+            <input matInput [matDatepicker]="picker" formControlName="birthdate" [min]="minDate" [max]="maxDate">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>

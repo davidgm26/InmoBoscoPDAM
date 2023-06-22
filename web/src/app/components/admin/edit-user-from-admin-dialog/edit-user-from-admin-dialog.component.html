@@ -4,11 +4,16 @@
     <mat-form-field class="form-field">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="firstname">
+      <mat-error *ngIf="editForm.controls['firstname'].errors?.['pattern'] && editForm.controls['firstname'].touched">
+        El nombre solo puede contener letras, no admite caracteres especiales.
+      </mat-error>
     </mat-form-field>
-
     <mat-form-field class="form-field">
       <mat-label>Apellidos</mat-label>
       <input matInput formControlName="lastname">
+      <mat-error *ngIf="editForm.controls['lastname'].errors?.['pattern'] && editForm.controls['lastname'].touched">
+        Los apellidos solo puede contener letras, no admite caracteres especiales.
+      </mat-error>
     </mat-form-field>
   </div>
 
@@ -16,28 +21,38 @@
     <mat-form-field class="form-field">
       <mat-label>Nombre de usuario</mat-label>
       <input matInput formControlName="username">
+      <mat-error *ngIf="editForm.controls['username'].errors?.['pattern'] && editForm.controls['username'].touched">
+        El nombre de usuario solo puede contener letras, espacios y guiones.
+      </mat-error>
     </mat-form-field>
-
     <mat-form-field class="form-field">
-      <mat-label>DNI</mat-label>
+      <mat-label>dni</mat-label>
       <input matInput formControlName="dni">
+      <mat-error *ngIf="editForm.controls['dni'].errors?.['pattern'] && editForm.controls['dni'].touched">
+        DNI inválido, el dni debe de estar compuesto por 9 caracteres: 8 digitos y 1 letra al final
+      </mat-error>
     </mat-form-field>
   </div>
   <div class="form-row">
     <mat-form-field class="form-field">
       <mat-label>Numero de telefono</mat-label>
       <input matInput formControlName="phoneNumber">
+      <mat-error *ngIf="editForm.controls['phoneNumber'].errors?.['pattern'] && editForm.controls['phoneNumber'].touched">
+        Número de teléfono inválido, el número de teléfono debe contener 9 digitos
+      </mat-error>
     </mat-form-field>
-
     <mat-form-field class="form-field">
-      <mat-label>Email</mat-label>
+      <mat-label>email</mat-label>
       <input matInput formControlName="email">
+      <mat-error *ngIf="editForm.controls['email'].errors?.['pattern'] && editForm.controls['email'].touched">
+        Correo electrónico inválido, la estructura debe de ser xxx@...
+      </mat-error>
     </mat-form-field>
   </div>
   <div class="form-row">
     <mat-form-field appearance="fill" class="form-field">
       <mat-label>Fecha de nacimiento</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="birthdate">
+      <input matInput [matDatepicker]="picker" formControlName="birthdate" [min]="minDate" [max]="maxDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>

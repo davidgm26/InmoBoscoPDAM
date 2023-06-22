@@ -4,7 +4,7 @@ INSERT INTO Type (id,type) values (2,'Apartamento');
 
 INSERT INTO Type (id,type) values (3,'Piso');
 
-INSERT INTO User_entity (id, rol, firstname, lastname, username, password, dni, avatar, birthdate, phone_number, email, created_at, last_password_change_at, account_non_expired, account_non_locked, credentials_non_expired, enabled) VALUES ('2bd9e760-a11e-5d8f-9641-1c54e79c57a1', 'USER,OWNER', 'David', 'Garcia Maria', 'Martinex', '{bcrypt}$2a$12$pMq9c8E3b0Kr4nKXuy0HM.ZzXeD9caGj4myXXPKAzXOTjDY7/8O2y', '29551149J', 'default.jpg', '2002-04-26', '644617309', 'vivaelsevilla@gmail.com', '2022-09-03 17:35:43', '2020-06-05 20:24:09.901422', TRUE, TRUE, TRUE, TRUE);
+INSERT INTO User_entity (id, rol, firstname, lastname, username, password, dni, avatar, birthdate, phone_number, email, created_at, last_password_change_at, account_non_expired, account_non_locked, credentials_non_expired, enabled) VALUES ('2bd9e760-a11e-5d8f-9641-1c54e79c57a1', 'USER,OWNER', 'David', 'Garcia Maria', 'Martinex', '{bcrypt}$2a$12$pMq9c8E3b0Kr4nKXuy0HM.ZzXeD9caGj4myXXPKAzXOTjDY7/8O2y', '29551149J', 'chulo1.jpg', '2002-04-26', '644617309', 'vivaelsevilla@gmail.com', '2022-09-03 17:35:43', '2020-06-05 20:24:09.901422', TRUE, TRUE, TRUE, TRUE);
 
 INSERT INTO User_entity (id, rol, firstname, lastname, username, password, dni, avatar, birthdate, phone_number, email, created_at, last_password_change_at, account_non_expired, account_non_locked, credentials_non_expired, enabled) VALUES ('ac169001-999c-1ade-8188-8ccd60d80000', 'WORKER', 'Antonio', 'Martinez Ares','ElBrujo','{bcrypt}$2a$12$ygPoLGjEVtj6t1SvQnb.puJVKj3uzUQKfG3Er.p/nEvPRsaX1pb0e', '85993325Q', 'default.jpg', '1998-06-12', '674526824', 'vivaelcadiz@gmail.com', '2021-07-02 12:35:43', '2021-06-05 20:24:09.901422', TRUE, TRUE, TRUE, TRUE);
 
@@ -12,7 +12,7 @@ INSERT INTO City (id, name) VALUES(1, 'A Coruna'),(2, 'Alava'),(3, 'Albacete'),(
 
 INSERT INTO owner (id) VALUES ('2bd9e760-a11e-5d8f-9641-1c54e79c57a1');
 
-INSERT INTO worker (id,worker_id VALUES ('ac169001-999c-1ade-8188-8ccd60d80000','324432423');
+INSERT INTO worker (id,workerid) VALUES ('ac169001-999c-1ade-8188-8ccd60d80000','324432423');
 
 INSERT INTO property (id, lat, lon, name, title, price, m2, description, total_bed_rooms, total_baths, type_id, city_id, owner_id, total_meet_booking, total_visits) VALUES (1, '40.4167754', '-3.7037902', 'Apartamento en el centro', 'Hermoso apartamento cerca de todos los servicios', 1500.89, 80.0, 'Este apartamento luminoso y espacioso se encuentra en el corazon de la ciudad.', 2, 1, 2, 1,'2bd9e760-a11e-5d8f-9641-1c54e79c57a1', 0, 50);
 
