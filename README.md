@@ -1,4 +1,4 @@
-# InmoBoscoPDAM (Proyecto en actual desarrollo)
+# InmoBoscoPDAM
 
 ## APP compuesta por lado servidor y lado cliente para la gestión de una inmmobiliaria
 
